@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "77500203302",
+    "firebase_url": "https://foodreet-e783e.firebaseio.com",
+    "project_id": "foodreet-e783e",
+    "storage_bucket": "foodreet-e783e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77500203302:android:894d2d3feb5f3347",
+        "android_client_info": {
+          "package_name": "goods.cap.app.goodsgoods"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77500203302-i7rucp6mgtqm52ofikmogjtidev73hhi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8rtsrOgPEFjlYE-Ks4ZbEUGvj0h4nQl4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

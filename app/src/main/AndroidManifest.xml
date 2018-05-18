@@ -20,7 +20,11 @@
         <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.PermissionActivity" />
         <activity android:name=".Activity.StarActivity" />
-        <activity android:name=".Activity.ForgotActivity"></activity>
+        <activity android:name=".Activity.ForgotActivity" />
+        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.NoticeActivity" />
+        <activity android:name=".Activity.PostActivity" />
+        <activity android:name=".Activity.StatActivity"></activity>
     </application>
 
 </manifest>

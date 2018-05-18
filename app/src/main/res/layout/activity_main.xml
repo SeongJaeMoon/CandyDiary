@@ -1,18 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/background_tabs" />
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/colors"
+        android:layout_below="@+id/tabs"
+        tools:context=".MainActivity" />
+
+    <LinearLayout
+        android:id="@+id/colors"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dip"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="4dip"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="4dip"
+            android:layout_weight="1"
+            android:background="#FF666666"
+            android:tag="#FF666666" />
+        <!--android:onClick="onColorClicked"-->
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="4dip"
+            android:layout_weight="1"
+            android:background="#FF96AA39"
+            android:tag="#FF96AA39" />
+
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="4dip"
+            android:layout_weight="1"
+            android:background="#FFC74B46"
+            android:tag="#FFC74B46" />
+
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="4dip"
+            android:layout_weight="1"
+            android:background="#FFF4842D"
+            android:tag="#FFF4842D" />
+        </LinearLayout>
 </android.support.constraint.ConstraintLayout>
