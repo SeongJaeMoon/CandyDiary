@@ -4,15 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/mainTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/main_title"
-        android:textColor="@color/colorPrimary"/>
-
     <GridView
-        android:id="@+id/gridMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -21,7 +13,8 @@
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
         android:columnWidth="100dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:id="@+id/grid">
     </GridView>
 
 </FrameLayout>

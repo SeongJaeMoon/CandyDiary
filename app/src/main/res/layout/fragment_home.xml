@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment android:name="goods.cap.app.goodsgoods.Fragment.MainFragment"
+            android:id="@+id/mainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="245dp"
+            android:layout_alignParentTop="true"/>
+
+        <fragment android:name="goods.cap.app.goodsgoods.Fragment.SubFragment"
+            android:id="@+id/subFragment"
+            android:layout_below="@+id/mainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="245dp" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

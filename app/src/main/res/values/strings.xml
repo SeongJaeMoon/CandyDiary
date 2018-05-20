@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">오늘의밥상</string>
+    <string name="settings">설정</string>
+    <string name="detail">더보기</string>
+    <string name="main_title">오늘의 추천 요리법 입니다.</string>
+    <string name="sub_title">오늘의 추천 식재료 입니다.</string>
 </resources>

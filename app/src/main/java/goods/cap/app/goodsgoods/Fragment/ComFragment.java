@@ -1,4 +1,6 @@
 package goods.cap.app.goodsgoods.Fragment;
 
-public class ComFragment {
+import android.support.v4.app.Fragment;
+
+public class ComFragment extends Fragment {
 }

@@ -1,4 +1,6 @@
 package goods.cap.app.goodsgoods.Fragment;
 
-public class StarFragment {
+import android.support.v4.app.Fragment;
+
+public class StarFragment extends Fragment {
 }
