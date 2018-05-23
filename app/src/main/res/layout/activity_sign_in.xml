@@ -6,4 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SignInActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/loginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/logInPassword"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/tv_style"
+            android:ems="10"
+            android:hint="@string/email_account"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            android:textColorHint="@color/common_google_signin_btn_text_light_focused" />
+
+        <EditText
+            android:id="@+id/logInPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnLogIn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/tv_style"
+            android:ems="10"
+            android:hint="@string/pw_account"
+            android:inputType="textPassword"
+            android:padding="15dp"
+            android:textColorHint="@color/common_google_signin_btn_text_light_focused" />
+
+        <Button
+            android:id="@+id/btnLogIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnGoogleSignIn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/login_btn_style"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnGoogleSignIn"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnLogInNewAccount"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+        </com.google.android.gms.common.SignInButton>
+
+        <TextView
+            android:id="@+id/btnLogInNewAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/new_account"
+            android:textAllCaps="false"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/temp_logo" />
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

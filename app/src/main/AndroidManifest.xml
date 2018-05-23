@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/temp_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/temp_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
@@ -26,7 +26,11 @@
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.NoticeActivity" />
         <activity android:name=".Activity.PostActivity" />
-        <activity android:name=".Activity.StatActivity"></activity>
+        <activity android:name=".Activity.StatActivity" />
+        <activity android:name=".Activity.UserProfileActivity" />
+        <activity android:name=".Activity.SearchActivity" />
+        <activity android:name=".Activity.SignUpActivity" />
+        <activity android:name=".Activity.DetailItemActivity"></activity>
     </application>
 
 </manifest>

@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/mainTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/main_title"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/ng"/>
 
-        <fragment android:name="goods.cap.app.goodsgoods.Fragment.MainFragment"
-            android:id="@+id/mainFragment"
-            android:layout_width="match_parent"
-            android:layout_height="245dp"
-            android:layout_alignParentTop="true"/>
+    <GridView
+        android:id="@+id/gridMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="auto_fit"
+        android:columnWidth="100dp"
+        android:layout_gravity="center">
+    </GridView>
 
-        <fragment android:name="goods.cap.app.goodsgoods.Fragment.SubFragment"
-            android:id="@+id/subFragment"
-            android:layout_below="@+id/mainFragment"
-            android:layout_width="match_parent"
-            android:layout_height="245dp" />
-
-    </RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

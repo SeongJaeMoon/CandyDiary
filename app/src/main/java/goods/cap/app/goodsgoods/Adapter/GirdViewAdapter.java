@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import goods.cap.app.goodsgoods.Model.Recipe;
 
 import goods.cap.app.goodsgoods.R;
 
@@ -21,13 +22,13 @@ public class GirdViewAdapter extends ArrayAdapter{
     private Context context; //연결할 화면 context
     private int resourceId; //이미지 연결용 R.id
     private LayoutInflater inflater;
-    private List<String> data;
+    private List<Recipe> data;
 
     static class ViewHolder {
         ImageView image;
     }
     //그리드 뷰 어뎁터 생성자
-    public GirdViewAdapter(Context context, List<String>data, int resourceId){
+    public GirdViewAdapter(Context context, List<Recipe>data, int resourceId){
         //슈퍼클래스 생성자 호출 필요.
         super(context, resourceId, data);
         this.resourceId = resourceId;
