@@ -8,7 +8,9 @@
         android:id="@+id/imgTitle"
         android:text=""
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:fontFamily="@font/ng"/>
 
     <ImageView
         android:contentDescription="@string/app_name"
@@ -20,10 +22,12 @@
     </ImageView>
 
     <Button
+        android:id="@+id/btnImgDetail"
         android:text="@string/detail"
         android:textColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/ng"/>
 
 </LinearLayout>

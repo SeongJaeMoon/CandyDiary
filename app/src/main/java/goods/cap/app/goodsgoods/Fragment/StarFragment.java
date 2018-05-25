@@ -25,18 +25,64 @@ public class StarFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_star, container, false);
         return view;
     }
 
     @Override
-    public void onAttach(Context context){
-        super.onAttach(context);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            for (String key : savedInstanceState.keySet()) {
+                Log.i(logger, "key : " + key);
+            }
+        }
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
     }
 }

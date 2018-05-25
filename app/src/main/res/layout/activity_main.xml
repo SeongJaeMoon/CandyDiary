@@ -22,6 +22,7 @@
         android:layout_marginBottom="16dp">
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/groceryFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_colorNormal="@color/accent"
@@ -30,11 +31,12 @@
         fab:fab_colorPressed="@color/white_pressed"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recipeFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_colorNormal="@color/accent"
         fab:fab_size="mini"
-        fab:fab_title="@string/food_sort"
+        fab:fab_title="@string/grocery_sort"
         fab:fab_colorPressed="@color/white_pressed"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

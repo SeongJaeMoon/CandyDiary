@@ -1,4 +1,8 @@
 package goods.cap.app.goodsgoods.Helper;
 
-public class RecipeHelper {
+import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+
+public interface RecipeHelper {
+    public abstract void success(RecipeResponseModel response);
+    public abstract void failure(String message);
 }

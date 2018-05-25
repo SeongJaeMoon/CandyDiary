@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private FloatingActionsMenu fab;
+    private FloatingActionButton groceryFab;
+    private FloatingActionButton recipeFab;
+
     private BackHandler backHandler;
 
     @Override
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionsMenu) findViewById(R.id.fab_icon);
+        recipeFab = (FloatingActionButton) findViewById(R.id.recipeFab);
+        groceryFab = (FloatingActionButton) findViewById(R.id.groceryFab);
+        recipeFab.setTitle(getResources().getString(R.string.recipe_sort));
+        groceryFab.setTitle(getResources().getString(R.string.grocery_sort));
+
         drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
         navigationView = (NavigationView) findViewById(R.id.mainNavigationView);
 
@@ -103,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MainAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
+        // pager.setCurrentItem(0);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
         tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -111,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.i(logger, "position:" + position);
+
             }
 
             // 헌재 페이지에서 스크롤이 시작되면 호출되는 메서드
@@ -133,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_profile: startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
                         break;
                     case R.id.nav_logout: Logout();
+                        break;
+                    case R.id.nav_contact:
                         break;
                 }
                 return true;
@@ -169,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
     }
+
     class MainAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
         private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_favorite_black_18dp,
@@ -185,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            Log.i(logger, "Fragment position:" + position);
             Fragment f = null;
             switch (position) {
                 case 0:

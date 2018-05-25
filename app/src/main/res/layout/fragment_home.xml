@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/mainTitle"
@@ -9,10 +17,14 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="@string/main_title"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ng"/>
 
     <GridView
+        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="false"
+        android:layout_below="@id/mainTitle"
         android:id="@+id/gridMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,4 +37,5 @@
         android:layout_gravity="center">
     </GridView>
 
-</FrameLayout>
+ </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
