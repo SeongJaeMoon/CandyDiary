@@ -29,12 +29,10 @@ public abstract class HttpCallback <S> implements Callback {
         Log.w(logger, "Response : " + response.toString());
 
         Object obj = response.body();
-
         Log.w(logger, "ResponseBody : " + obj.toString());
 
         if (obj != null) {
             S objectResponse = (S) obj;
-
             onRecipeObject(call, objectResponse);
         }
     }

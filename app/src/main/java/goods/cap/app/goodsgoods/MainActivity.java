@@ -1,5 +1,6 @@
 package goods.cap.app.goodsgoods;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private FloatingActionsMenu fab;
-    private FloatingActionButton groceryFab;
-    private FloatingActionButton recipeFab;
+//    private FloatingActionButton groceryFab;
+//    private FloatingActionButton recipeFab;
 
     private BackHandler backHandler;
 
@@ -67,10 +68,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fab = (FloatingActionsMenu) findViewById(R.id.fab_icon);
-        recipeFab = (FloatingActionButton) findViewById(R.id.recipeFab);
-        groceryFab = (FloatingActionButton) findViewById(R.id.groceryFab);
+
+        FloatingActionButton recipeFab = new FloatingActionButton(this);
+        FloatingActionButton groceryFab = new FloatingActionButton(this);
+
         recipeFab.setTitle(getResources().getString(R.string.recipe_sort));
+        recipeFab.setSize((FloatingActionButton.SIZE_MINI));
         groceryFab.setTitle(getResources().getString(R.string.grocery_sort));
+        groceryFab.setSize((FloatingActionButton.SIZE_MINI));
+
+        fab.addButton(recipeFab);
+        fab.addButton(groceryFab);
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
         navigationView = (NavigationView) findViewById(R.id.mainNavigationView);
@@ -174,17 +183,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
     }
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
     }
 
     class MainAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
 
-        private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_favorite_black_18dp,
+        private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_star_black_18dp,
                 R.drawable.ic_people_outline_black_18dp, R.drawable.ic_menu_black_18dp};
 
         public MainAdapter(android.support.v4.app.FragmentManager fm) {
@@ -222,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
         public int getPageIconResId(int position) {
             return tabIcons[position];
         }
+
+        @Override
+        public int getItemPosition(@NonNull Object object){
+            Log.w(logger, "position : " + object);
+            return POSITION_NONE;
+        }
     }
 
     @Override
@@ -238,6 +251,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         Log.w(logger, "onResume");
+        if(adapter != null){
+            Log.w(logger, "notifyDataSetChanged");
+            adapter.notifyDataSetChanged();
+        }
     }
     @Override
     protected void onStart() {

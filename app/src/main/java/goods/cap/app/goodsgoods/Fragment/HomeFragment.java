@@ -2,6 +2,7 @@ package goods.cap.app.goodsgoods.Fragment;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,9 +30,10 @@ import goods.cap.app.goodsgoods.Model.Grocery;
 import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
 import goods.cap.app.goodsgoods.Model.Recipe;
 import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
 import goods.cap.app.goodsgoods.R;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     private static final String logger = HomeFragment.class.getSimpleName();
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -37,8 +41,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private GridView gridView;
     private List<Recipe> recipeList;
     private List<Grocery> groceryList;
-    private SwipeRefreshLayout swipeRefreshLayout;
-
+    private MultiSwipeRefreshLayout swipeRefreshLayout;
+    private boolean isLoaded;
+    private static final String API_KEY = "d43e3638a6db0b8a56a6fce44d37a02949b592cfbcf66f0eb5ef58aba9fb980f";
 
     public static HomeFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -46,29 +51,33 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         Log.i(logger, "page : "+ args);
+
         return fragment;
     }
 
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
+        Log.w(logger, "onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.w(logger, "onCreate");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        Log.w(logger, "onCreateView");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
+        swipeRefreshLayout = (MultiSwipeRefreshLayout)view.findViewById(R.id.swipe_container);
         gridView = (GridView)view.findViewById(R.id.gridMain);
         mainText = (TextView)view.findViewById(R.id.mainTitle);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setSwipeableChildren(R.id.gridMain);
         gridView.setOnItemClickListener(this);
 
         return view;
@@ -87,6 +96,26 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.w(logger, "onViewCreated");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isLoaded = isVisibleToUser;
+        if(isResumed()) {
+            if (isLoaded) {
+                Log.w(logger, "isVisible");
+                initData();
+            } else {
+                Log.w(logger, "isNotVisible");
+            }
+        }
+    }
+
+    @Override
     public void onRefresh() {
         initData();
         if (swipeRefreshLayout.isRefreshing()) {
@@ -97,9 +126,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initData(){
         final Activity activity = getActivity();
         Log.w(logger, "activity : " + activity);
-        MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh),"");
+        MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
+                getResources().getString(R.string.data_refresh), API_KEY);
 
-        //        mainHttp.getGrocery(new GroceryHelper() {
+//        mainHttp.getGrocery(new GroceryHelper() {
 //            @Override
 //            public void success(GroceryResponseModel response) {
 //
@@ -129,6 +159,26 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 mainText.setText(getResources().getString(R.string.data_error));
             }
         });
+
+//        mainHttp.getRecipeWithQuery(new RecipeHelper() {
+//
+//            @Override
+//            public void success(RecipeResponseModel response) {
+//                recipeList = response.getQuery().getRow();
+//                if(recipeList == null){
+//                    Log.w(logger, "recipeList is null");
+//                }else {
+//                    GirdViewAdapter adapter = new GirdViewAdapter(activity, recipeList, R.layout.grid_single);
+//                    gridView.setAdapter(adapter);
+//                    mainText.setText(getResources().getString(R.string.main_title));
+//                }
+//            }
+//
+//            @Override
+//            public void failure(String message) {
+//                mainText.setText(getResources().getString(R.string.data_error));
+//            }
+//        });
     }
 
     @Override
@@ -139,36 +189,43 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onStart(){
         super.onStart();
+        Log.w(logger, "onStart");
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        Log.w(logger, "onResume");
     }
 
     @Override
     public void onPause(){
         super.onPause();
+        Log.w(logger, "onPause");
     }
 
     @Override
     public void onStop(){
         super.onStop();
+        Log.w(logger, "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.w(logger, "onDestroyView");
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
+        Log.w(logger, "onDestroy");
     }
 
     @Override
     public void onDetach(){
         super.onDetach();
+        Log.w(logger, "onDetach");
     }
 
     private static boolean isTablet(Context context) {

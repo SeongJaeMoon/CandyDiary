@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
- <RelativeLayout
-     android:layout_width="match_parent"
-     android:layout_height="match_parent">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/mainTitle"
         android:layout_width="match_parent"
@@ -33,9 +31,8 @@
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
-        android:columnWidth="100dp"
+        android:columnWidth="150dp"
         android:layout_gravity="center">
     </GridView>
-
- </RelativeLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>
+</goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout>

@@ -37,6 +37,7 @@ public class StarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        Log.w(logger, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_star, container, false);
         return view;
     }

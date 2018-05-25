@@ -27,11 +27,11 @@
             android:layout_below="@+id/my_toolbar"
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="52dip"
+            android:layout_height="50dip"
             app:pstsDividerColor="@color/colorPrimary"
             app:pstsIndicatorColor="@color/colorPrimaryDark"
             app:pstsUnderlineColor="@color/accent"
-            app:pstsTabPaddingLeftRight="32dip"/>
+            app:pstsTabPaddingLeftRight="35dip"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"

@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static ApiClient apiClient;
-    private final String URL = "http://211.237.50.150:7080/openapi/sample/json/";
+    private final String RECIPE_URL = "http://211.237.50.150:7080/openapi/";
 
     private HttpAPI httpAPI;
 
@@ -53,7 +53,7 @@ public class ApiClient {
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(URL)
+                    .baseUrl(RECIPE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient)
                     .build();
