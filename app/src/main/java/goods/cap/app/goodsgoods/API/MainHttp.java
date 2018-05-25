@@ -22,6 +22,8 @@ public class MainHttp {
     private String dialogTitle;
     private String dialogMessage;
     private String query;
+    private int startIndex;
+    private int endIndex;
 
     public MainHttp(Context context, String dialogTitle, String dialogMessage, String API_KEY) {
         this.context = context;
@@ -30,6 +32,8 @@ public class MainHttp {
         this.dialogMessage = dialogMessage;
     }
 
+    public void setStartIndex(int startIndex){ this.startIndex = startIndex; }
+    public void setEndIndex(int endIndex){ this.endIndex = endIndex; }
     public void setQuery(String query) {
         this.query = query;
     }
@@ -76,7 +80,7 @@ public class MainHttp {
         try {
             Call objCall = null;
             final ProgressDialog dialog;
-            objCall = objApi.getApi(context).getRecipe(API_KEY, 1, 10);
+            objCall = objApi.getApi(context).getRecipe(API_KEY, startIndex, endIndex);
 
             if (objCall != null) {
                 dialog = new ProgressDialog(context);

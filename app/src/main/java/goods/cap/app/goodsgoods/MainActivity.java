@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -74,8 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
         recipeFab.setTitle(getResources().getString(R.string.recipe_sort));
         recipeFab.setSize((FloatingActionButton.SIZE_MINI));
+        recipeFab.setIcon(R.drawable.ic_image_search);
+        recipeFab.setColorNormal(getResources().getColor(R.color.colorPrimary));
+        recipeFab.setColorPressed(getResources().getColor(R.color.colorAccent));
         groceryFab.setTitle(getResources().getString(R.string.grocery_sort));
+        groceryFab.setIcon(R.drawable.ic_image_search);
         groceryFab.setSize((FloatingActionButton.SIZE_MINI));
+        groceryFab.setColorNormal(getResources().getColor(R.color.colorPrimary));
+        groceryFab.setColorPressed(getResources().getColor(R.color.colorAccent));
 
         fab.addButton(recipeFab);
         fab.addButton(groceryFab);

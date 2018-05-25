@@ -1,26 +1,20 @@
 package goods.cap.app.goodsgoods.Fragment;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
 import goods.cap.app.goodsgoods.Helper.GroceryHelper;
@@ -32,18 +26,23 @@ import goods.cap.app.goodsgoods.Model.Recipe;
 import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
 import goods.cap.app.goodsgoods.R;
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
-public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener{
 
     private static final String logger = HomeFragment.class.getSimpleName();
     public static final String ARG_PAGE = "ARG_PAGE";
     private TextView mainText;
-    private GridView gridView;
+    private GridViewWithHeaderAndFooter gridView;
     private List<Recipe> recipeList;
     private List<Grocery> groceryList;
     private MultiSwipeRefreshLayout swipeRefreshLayout;
     private boolean isLoaded;
     private static final String API_KEY = "d43e3638a6db0b8a56a6fce44d37a02949b592cfbcf66f0eb5ef58aba9fb980f";
+    private GirdViewAdapter girdViewAdapter;
+    private TextView footer;
+    private final static int limitCount = 537;
+    private boolean isLimitCount = false;
 
     public static HomeFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -51,7 +50,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         Log.i(logger, "page : "+ args);
-
         return fragment;
     }
 
@@ -69,16 +67,33 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         Log.w(logger, "onCreateView");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = (MultiSwipeRefreshLayout)view.findViewById(R.id.swipe_container);
-        gridView = (GridView)view.findViewById(R.id.gridMain);
+        gridView = (GridViewWithHeaderAndFooter)view.findViewById(R.id.gridMain);
         mainText = (TextView)view.findViewById(R.id.mainTitle);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setSwipeableChildren(R.id.gridMain);
         gridView.setOnItemClickListener(this);
+
+        //layoutInflater = LayoutInflater.from(getActivity().inflate(R.layout_data_footer, null));
+        View temp = inflater.inflate(R.layout.data_footer, null);
+        temp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.i(logger, "more data");
+                        if(!isLimitCount) addData();
+                        break;
+                }
+                return false;
+            }
+        });
+        footer = (TextView)view.findViewById(R.id.moreData);
+        gridView.addFooterView(temp);
 
         return view;
     }
@@ -93,6 +108,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         super.onActivityCreated(savedInstanceState);
         // 뷰에 데이터를 넣는 작업 등을 추가
         initData();
+
     }
 
     @Override
@@ -128,19 +144,8 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         Log.w(logger, "activity : " + activity);
         MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
                 getResources().getString(R.string.data_refresh), API_KEY);
-
-//        mainHttp.getGrocery(new GroceryHelper() {
-//            @Override
-//            public void success(GroceryResponseModel response) {
-//
-//            }
-//
-//            @Override
-//            public void failure(String message) {
-//
-//            }
-//        });
-
+        mainHttp.setStartIndex(1);
+        mainHttp.setEndIndex(10);
         mainHttp.getRecipe(new RecipeHelper() {
             @Override
             public void success(RecipeResponseModel response) {
@@ -148,39 +153,67 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
                 if(recipeList == null){
                     Log.w(logger, "recipeList is null");
                 }else {
-                    GirdViewAdapter adapter = new GirdViewAdapter(activity, recipeList, R.layout.grid_single);
-                    gridView.setAdapter(adapter);
+                    girdViewAdapter = new GirdViewAdapter(activity, recipeList, R.layout.grid_single);
+                    gridView.setAdapter(girdViewAdapter);
                     mainText.setText(getResources().getString(R.string.main_title));
                 }
             }
-
             @Override
             public void failure(String message) {
                 mainText.setText(getResources().getString(R.string.data_error));
             }
         });
-
-//        mainHttp.getRecipeWithQuery(new RecipeHelper() {
-//
-//            @Override
-//            public void success(RecipeResponseModel response) {
-//                recipeList = response.getQuery().getRow();
-//                if(recipeList == null){
-//                    Log.w(logger, "recipeList is null");
-//                }else {
-//                    GirdViewAdapter adapter = new GirdViewAdapter(activity, recipeList, R.layout.grid_single);
-//                    gridView.setAdapter(adapter);
-//                    mainText.setText(getResources().getString(R.string.main_title));
-//                }
-//            }
-//
-//            @Override
-//            public void failure(String message) {
-//                mainText.setText(getResources().getString(R.string.data_error));
-//            }
-//        });
     }
 
+    private void addData(){
+        final Activity activity = getActivity();
+        Log.w(logger, "activity : " + activity);
+        MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
+                getResources().getString(R.string.data_refresh), API_KEY);
+        if(limitCount > this.recipeList.size() && this.recipeList.size() < 530){
+            Log.w(logger, "recipeList size : " + recipeList.size());
+            mainHttp.setStartIndex(recipeList.size());
+            mainHttp.setEndIndex(recipeList.size() + 9);
+            mainHttp.getRecipe(new RecipeHelper() {
+                @Override
+                public void success(RecipeResponseModel response) {
+                    List<Recipe> templist = response.getQuery().getRow();
+                    if(templist == null){
+                        Log.w(logger, "templist is null");
+                    }else {
+                        recipeList.addAll(templist);
+                        girdViewAdapter.notifyDataSetChanged();
+                    }
+                }
+                @Override
+                public void failure(String message) {
+                    mainText.setText(getResources().getString(R.string.data_error));
+                }
+            });
+        }else{
+            Log.w(logger, "recipeList size : " + recipeList.size());
+            mainHttp.setStartIndex(recipeList.size());
+            mainHttp.setEndIndex(recipeList.size() + 6);
+            mainHttp.getRecipe(new RecipeHelper() {
+                @Override
+                public void success(RecipeResponseModel response) {
+                    List<Recipe> templist = response.getQuery().getRow();
+                    if(templist == null){
+                        Log.w(logger, "templist is null");
+                    }else {
+                        recipeList.addAll(templist);
+                        girdViewAdapter.notifyDataSetChanged();
+                        footer.setText(getResources().getString(R.string.data_limit));
+                        isLimitCount = true;
+                    }
+                }
+                @Override
+                public void failure(String message) {
+                    mainText.setText(getResources().getString(R.string.data_error));
+                }
+            });
+        }
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -233,4 +266,5 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
 }

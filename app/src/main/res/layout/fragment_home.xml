@@ -19,7 +19,7 @@
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ng"/>
 
-    <GridView
+    <in.srain.cube.views.GridViewWithHeaderAndFooter
         android:layout_marginTop="15dp"
         android:layout_alignParentTop="false"
         android:layout_below="@id/mainTitle"
@@ -33,6 +33,6 @@
         android:numColumns="auto_fit"
         android:columnWidth="150dp"
         android:layout_gravity="center">
-    </GridView>
+    </in.srain.cube.views.GridViewWithHeaderAndFooter>
 </RelativeLayout>
 </goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout>
