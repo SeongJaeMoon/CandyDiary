@@ -31,6 +31,11 @@
         <activity android:name=".Activity.SearchActivity" />
         <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.DetailItemActivity"></activity>
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
+
     </application>
 
 </manifest>

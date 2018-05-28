@@ -1,6 +1,7 @@
 package goods.cap.app.goodsgoods.Model;
 
 public class Grocery {
+
     private int row_num;//출력순서
     private String recipe_id;//레시피 코드
     private String irdnt_sn; //재료순번

@@ -18,6 +18,7 @@ public abstract class HttpCallback <S> implements Callback {
     public HttpCallback(Activity activity){
         this.activity = activity;
     }
+
     public HttpCallback(Context context){
         this.context = context;
     }

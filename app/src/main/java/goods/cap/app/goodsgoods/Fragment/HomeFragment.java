@@ -2,7 +2,9 @@ package goods.cap.app.goodsgoods.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -11,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
 import goods.cap.app.goodsgoods.Helper.GroceryHelper;
@@ -24,9 +31,12 @@ import goods.cap.app.goodsgoods.Model.Grocery;
 import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
 import goods.cap.app.goodsgoods.Model.Recipe;
 import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+import goods.cap.app.goodsgoods.Model.Firebase;
+import goods.cap.app.goodsgoods.Model.FireResponseModel;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
 import goods.cap.app.goodsgoods.R;
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
+
 
 public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener{
 
@@ -37,12 +47,11 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     private List<Recipe> recipeList;
     private List<Grocery> groceryList;
     private MultiSwipeRefreshLayout swipeRefreshLayout;
-    private boolean isLoaded;
-    private static final String API_KEY = "d43e3638a6db0b8a56a6fce44d37a02949b592cfbcf66f0eb5ef58aba9fb980f";
     private GirdViewAdapter girdViewAdapter;
     private TextView footer;
-    private final static int limitCount = 537;
+    private static final int limitCount = 537;
     private boolean isLimitCount = false;
+    private SharedPreferences sharedPreferences;
 
     public static HomeFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -63,7 +72,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.w(logger, "onCreate");
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     @Override
@@ -107,8 +116,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         }
         super.onActivityCreated(savedInstanceState);
         // 뷰에 데이터를 넣는 작업 등을 추가
-        initData();
-
     }
 
     @Override
@@ -118,18 +125,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        isLoaded = isVisibleToUser;
-        if(isResumed()) {
-            if (isLoaded) {
-                Log.w(logger, "isVisible");
-                initData();
-            } else {
-                Log.w(logger, "isNotVisible");
-            }
-        }
-    }
+    public void setUserVisibleHint(boolean isVisibleToUser) { super.setUserVisibleHint(isVisibleToUser); }
 
     @Override
     public void onRefresh() {
@@ -143,7 +139,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         final Activity activity = getActivity();
         Log.w(logger, "activity : " + activity);
         MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
-                getResources().getString(R.string.data_refresh), API_KEY);
+                getResources().getString(R.string.data_refresh), Config.API_KEY);
         mainHttp.setStartIndex(1);
         mainHttp.setEndIndex(10);
         mainHttp.getRecipe(new RecipeHelper() {
@@ -169,7 +165,8 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         final Activity activity = getActivity();
         Log.w(logger, "activity : " + activity);
         MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
-                getResources().getString(R.string.data_refresh), API_KEY);
+                getResources().getString(R.string.data_refresh), Config.API_KEY);
+
         if(limitCount > this.recipeList.size() && this.recipeList.size() < 530){
             Log.w(logger, "recipeList size : " + recipeList.size());
             mainHttp.setStartIndex(recipeList.size());
@@ -229,12 +226,29 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public void onResume(){
         super.onResume();
         Log.w(logger, "onResume");
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("dataList", null);
+        if(json == null){
+            initData();
+        }else {
+            Recipe[] recipe = gson.fromJson(json, Recipe[].class);
+            recipeList = new ArrayList<Recipe>(Arrays.asList(recipe));
+            girdViewAdapter = new GirdViewAdapter(getActivity(), recipeList, R.layout.grid_single);
+            gridView.setAdapter(girdViewAdapter);
+        }
     }
 
     @Override
     public void onPause(){
         super.onPause();
         Log.w(logger, "onPause");
+        if(recipeList != null && recipeList.size() > 0) {
+            Gson gson = new Gson();
+            String recipe = gson.toJson(recipeList);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("dataList", recipe);
+            editor.apply();
+        }
     }
 
     @Override
@@ -253,6 +267,8 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public void onDestroy(){
         super.onDestroy();
         Log.w(logger, "onDestroy");
+        //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //sp.edit().remove("dataList").apply();
     }
 
     @Override

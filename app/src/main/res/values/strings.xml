@@ -1,10 +1,12 @@
 <resources>
     <!--Main contents-->
-    <string name="app_name">오늘의밥상</string>
+    <string name="app_name">건강밥상</string>
     <string name="settings">설정</string>
     <string name="detail">더보기</string>
     <string name="main_title">오늘의 추천 요리법 입니다.</string>
     <string name="sub_title">오늘의 추천 식재료 입니다.</string>
+    <string name="main_title2">오늘의 추천 식단 입니다.</string>
+    <string name="main_title3">오늘의 추천 건강식품 입니다.</string>
     <string name="star">즐겨찾기</string>
     <string name="community">커뮤니티</string>
     <string name="notice">공지사항</string>
@@ -20,6 +22,8 @@
     <string name="navi_main">메인메뉴</string>
     <string name="recipe_sort">조리법 기준으로 보기</string>
     <string name="grocery_sort">식자재 기준으로 보기</string>
+    <string name="food_sort">건강식품 기준으로 보기</string>
+    <string name="diet_sort">식단 기준으로 보기</string>
     <string name="data_refresh_title">잠시만 기다려주세요.</string>
     <string name="data_refresh">데이터를 가져오는 중입니다&#8230;</string>
     <string name="data_limit">마지막 목록입니다.</string>
@@ -35,4 +39,8 @@
 
     <!--Search-->
     <string name="search_hint">검색어를 입력해주세요.</string>
+
+    <!--DetailItem-->
+    <string name="level">난이도</string>
+    <string name="web_view">웹으로 보기</string>
 </resources>

@@ -2,6 +2,10 @@ package goods.cap.app.goodsgoods.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
 import goods.cap.app.goodsgoods.Model.Grocery;
@@ -63,16 +69,18 @@ public class GirdViewAdapter extends ArrayAdapter{
     }
 
     @Override
-    public View getView(final int position, final View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, @NonNull ViewGroup parent) {
 
         View row = convertView;
         ViewHolder holder = null;
         if (row == null) {
             row = inflater.inflate(resourceId, parent, false);
+
             holder = new ViewHolder();
             holder.image = (ImageView) row.findViewById(R.id.grid_image);
             holder.text = (TextView) row.findViewById(R.id.imgTitle);
             holder.button = (Button) row.findViewById(R.id.btnImgDetail);
+
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,9 +98,11 @@ public class GirdViewAdapter extends ArrayAdapter{
             //Recycler View
             holder = (ViewHolder) row.getTag();
         }
+
         Glide.with(context)
                 .load(data.get(position).getImg_url())
                 .into(holder.image);
+
         return row;
     }
 }

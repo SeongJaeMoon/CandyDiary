@@ -1,7 +1,5 @@
 package goods.cap.app.goodsgoods.Model;
 
-
-import com.google.firebase.storage.StorageException;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -54,6 +52,28 @@ public class Recipe {
     @SerializedName("DET_URL")
     @Expose
     private String det_url;//상세 URL
+
+    public Recipe(){}
+
+    public Recipe(Integer row_num, Integer recipe_id, String recipe_nm_ko, String sumry, String nation_code, String nation_nm, String ty_code, String ty_nm, String cooking_time, String calorie, String qnt,
+                  String level_nm, String irdnt_code, String pc_nm, String img_url, String det_url) {
+        this.row_num = row_num;
+        this.recipe_id = recipe_id;
+        this.recipe_nm_ko = recipe_nm_ko;
+        this.sumry = sumry;
+        this.nation_code = nation_code;
+        this.nation_nm = nation_nm;
+        this.ty_code = ty_code;
+        this.ty_nm = ty_nm;
+        this.cooking_time = cooking_time;
+        this.calorie = calorie;
+        this.qnt = qnt;
+        this.level_nm = level_nm;
+        this.irdnt_code = irdnt_code;
+        this.pc_nm = pc_nm;
+        this.img_url = img_url;
+        this.det_url = det_url;
+    }
 
     public Integer getRow_num() {
         return row_num;

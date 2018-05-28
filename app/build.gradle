@@ -47,6 +47,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'in.srain.cube:grid-view-with-header-footer:1.0.12'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -54,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private FloatingActionsMenu fab;
-//    private FloatingActionButton groceryFab;
-//    private FloatingActionButton recipeFab;
-
     private BackHandler backHandler;
+    private int isPostion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,21 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton recipeFab = new FloatingActionButton(this);
         FloatingActionButton groceryFab = new FloatingActionButton(this);
+        FloatingActionButton dietFab = new FloatingActionButton(this);
+        FloatingActionButton foodFab = new FloatingActionButton(this);
 
-        recipeFab.setTitle(getResources().getString(R.string.recipe_sort));
-        recipeFab.setSize((FloatingActionButton.SIZE_MINI));
-        recipeFab.setIcon(R.drawable.ic_image_search);
-        recipeFab.setColorNormal(getResources().getColor(R.color.colorPrimary));
-        recipeFab.setColorPressed(getResources().getColor(R.color.colorAccent));
-        groceryFab.setTitle(getResources().getString(R.string.grocery_sort));
-        groceryFab.setIcon(R.drawable.ic_image_search);
-        groceryFab.setSize((FloatingActionButton.SIZE_MINI));
-        groceryFab.setColorNormal(getResources().getColor(R.color.colorPrimary));
-        groceryFab.setColorPressed(getResources().getColor(R.color.colorAccent));
+        setFab(recipeFab, getResources().getString(R.string.recipe_sort));
+        setFab(groceryFab, getResources().getString(R.string.grocery_sort));
+        setFab(dietFab, getResources().getString(R.string.diet_sort));
+        setFab(foodFab, getResources().getString(R.string.food_sort));
 
         fab.addButton(recipeFab);
         fab.addButton(groceryFab);
-
+        fab.addButton(dietFab);
+        fab.addButton(foodFab);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
         navigationView = (NavigationView) findViewById(R.id.mainNavigationView);
@@ -109,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                fab.setVisibility(View.VISIBLE);
+                if(isPostion == 0) fab.setVisibility(View.VISIBLE);
             }
         };
 
@@ -136,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.i(logger, "position:" + position);
+                isPostion = position;
 
             }
 
@@ -143,6 +139,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+                if(position != 0){
+                    fab.setAlpha(1 - positionOffset);
+                    fab.setVisibility(View.GONE);
+                }else {
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
 
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
@@ -187,19 +189,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setFab(FloatingActionButton button, String title){
+        button.setTitle(title);
+        button.setSize((FloatingActionButton.SIZE_MINI));
+        button.setIcon(R.drawable.ic_image_search);
+        button.setColorNormal(getResources().getColor(R.color.colorPrimary));
+        button.setColorPressed(getResources().getColor(R.color.colorAccent));
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) { super.onRestoreInstanceState(savedInstanceState); }
 
-    class MainAdapter extends FragmentStatePagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
+    //implements PagerSlidingTabStrip.IconTabProvider
+    class MainAdapter extends FragmentStatePagerAdapter {
 
-        private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_star_black_18dp,
-                R.drawable.ic_people_outline_black_18dp, R.drawable.ic_menu_black_18dp};
+//        private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_star_black_18dp,
+//                R.drawable.ic_people_outline_black_18dp, R.drawable.ic_menu_black_18dp};
+
+        private final CharSequence tabs[] = {"추천보기", "즐겨찾기", "커뮤니티", "공지사항"};
 
         public MainAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
@@ -207,7 +218,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return tabIcons.length;
+            return tabs.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position){
+            return tabs[position];
         }
 
         @Override
@@ -232,10 +248,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return f;
         }
-        @Override
-        public int getPageIconResId(int position) {
-            return tabIcons[position];
-        }
+
+//        @Override
+//        public int getPageIconResId(int position) {
+//            return tabIcons[position];
+//        }
 
         @Override
         public int getItemPosition(@NonNull Object object){
