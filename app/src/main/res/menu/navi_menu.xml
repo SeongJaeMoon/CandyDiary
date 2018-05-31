@@ -3,18 +3,20 @@
 
     <item android:title="@string/navi_main">
         <menu>
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/profile" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_input_black_24dp"
-            android:title="@string/logout" />
-        <item
-            android:id="@+id/nav_contact"
-            android:icon="@drawable/ic_question_answer_black_24dp"
-            android:title="@string/contact"/>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/profile" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_input_black_24dp"
+                android:title="@string/logout" />
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/ic_question_answer_black_24dp"
+                android:title="@string/statistic_menu"/>
         </menu>
+    </item>
+    <item android:title="@string/recent_title">
     </item>
 </menu>

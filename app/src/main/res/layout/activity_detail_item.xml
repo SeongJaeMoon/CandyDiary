@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimaryDark"
+            app:contentScrim="@color/colorAccent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <include
@@ -33,16 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 app:layout_collapseMode="pin">
-
-                <ImageButton
-                    android:id="@+id/detail_progressbar"
-                    android:layout_width="@dimen/progressbar_small"
-                    android:layout_height="@dimen/progressbar_small"
-                    android:layout_gravity="end"
-                    android:contentDescription="@string/app_name"
-                    app:srcCompat="@drawable/ic_star_black_18dp"
-                    android:background="@android:color/white"
-                    android:layout_marginEnd="@dimen/standard_margin" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

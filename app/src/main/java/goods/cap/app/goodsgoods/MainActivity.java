@@ -3,12 +3,13 @@ package goods.cap.app.goodsgoods;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,15 +17,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
+import goods.cap.app.goodsgoods.Adapter.RecentAdapter;
 import goods.cap.app.goodsgoods.Fragment.ComFragment;
 import goods.cap.app.goodsgoods.Fragment.HomeFragment;
 import goods.cap.app.goodsgoods.Fragment.NoticeFragment;
 import goods.cap.app.goodsgoods.Fragment.StarFragment;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -32,11 +34,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.util.List;
+
+import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
+import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 
 /* main 화면, created by supermoon. */
@@ -48,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MainAdapter adapter;
-    private DrawerLayout drawerLayout;
+    @BindView(R.id.mainDrawerLayout)DrawerLayout drawerLayout;
+    @BindView(R.id.mainNavigationView)NavigationView navigationView;
+    @BindView(R.id.mainRecyclerView) RecyclerView recyclerView;
+    @BindView(R.id.list_view_drawer)RecyclerView drawerListView;
+    @BindView(R.id.fab_icon) FloatingActionsMenu fab;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private NavigationView navigationView;
-    private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private FloatingActionsMenu fab;
     private BackHandler backHandler;
     private int isPostion;
 
@@ -62,29 +70,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        fab = (FloatingActionsMenu) findViewById(R.id.fab_icon);
-
-        FloatingActionButton recipeFab = new FloatingActionButton(this);
-        FloatingActionButton groceryFab = new FloatingActionButton(this);
         FloatingActionButton dietFab = new FloatingActionButton(this);
+        FloatingActionButton petFab = new FloatingActionButton(this);
         FloatingActionButton foodFab = new FloatingActionButton(this);
 
-        setFab(recipeFab, getResources().getString(R.string.recipe_sort));
-        setFab(groceryFab, getResources().getString(R.string.grocery_sort));
-        setFab(dietFab, getResources().getString(R.string.diet_sort));
-        setFab(foodFab, getResources().getString(R.string.food_sort));
+        setFab(dietFab, getResources().getString(R.string.diet_sort), 0);
+        setFab(foodFab, getResources().getString(R.string.food_sort), 0);
+        setFab(petFab, getResources().getString(R.string.pet_sort), 1);
 
-        fab.addButton(recipeFab);
-        fab.addButton(groceryFab);
         fab.addButton(dietFab);
         fab.addButton(foodFab);
+        fab.addButton(petFab);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
-        navigationView = (NavigationView) findViewById(R.id.mainNavigationView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        drawerListView.setHasFixedSize(true);
+        drawerListView.setLayoutManager(linearLayoutManager);
+        //SQLite의 저장된 최근 본 항목 초기화.
+        setRecentAdapter();
 
         backHandler = new BackHandler(this, getResources().getString(R.string.confirm_back));
 
@@ -93,12 +98,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 fab.setAlpha(1 - slideOffset);
+
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 fab.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -112,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = (RecyclerView) findViewById(R.id.mainRecyclerView);
-
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -122,23 +127,18 @@ public class MainActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MainAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
-        // pager.setCurrentItem(0);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
         tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
             // 새로운 페이지가 선택되면 호출되는 메서드.
             @Override
             public void onPageSelected(int position) {
                 Log.i(logger, "position:" + position);
                 isPostion = position;
-
             }
-
             // 헌재 페이지에서 스크롤이 시작되면 호출되는 메서드
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
                 if(position != 0){
                     fab.setAlpha(1 - positionOffset);
                     fab.setVisibility(View.GONE);
@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     fab.setVisibility(View.VISIBLE);
                 }
             }
-
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -189,12 +188,30 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setFab(FloatingActionButton button, String title){
+    private void setFab(FloatingActionButton button, String title, int role){
         button.setTitle(title);
         button.setSize((FloatingActionButton.SIZE_MINI));
-        button.setIcon(R.drawable.ic_image_search);
+        if(role == 0){
+            button.setIcon(R.drawable.ic_image_search);
+        }else{
+            button.setIcon(R.drawable.ic_pets_white_18dp);
+        }
         button.setColorNormal(getResources().getColor(R.color.colorPrimary));
         button.setColorPressed(getResources().getColor(R.color.colorAccent));
+    }
+
+    private List<Recent> getRecentList(Context context){
+        List<Recent> ret = null;
+        RecentDBHelper recentDBHelper = new RecentDBHelper(context);
+        try {
+            recentDBHelper.open();
+            ret = recentDBHelper.getImgList();
+        }catch (Exception e){
+            Log.w(logger, e.getMessage());
+        }finally {
+            recentDBHelper.close();
+        }
+        return ret;
     }
 
     @Override
@@ -205,12 +222,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) { super.onRestoreInstanceState(savedInstanceState); }
 
     //implements PagerSlidingTabStrip.IconTabProvider
-    class MainAdapter extends FragmentStatePagerAdapter {
+    public class MainAdapter extends FragmentStatePagerAdapter {
 
-//        private int tabIcons[] = {R.drawable.ic_restaurant_18dp, R.drawable.ic_star_black_18dp,
-//                R.drawable.ic_people_outline_black_18dp, R.drawable.ic_menu_black_18dp};
-
-        private final CharSequence tabs[] = {"추천보기", "즐겨찾기", "커뮤니티", "공지사항"};
+        private final CharSequence tabs[] = {"식단보기", "즐겨찾기", "커뮤니티", "공지사항"};
 
         public MainAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
@@ -249,17 +263,13 @@ public class MainActivity extends AppCompatActivity {
             return f;
         }
 
-//        @Override
-//        public int getPageIconResId(int position) {
-//            return tabIcons[position];
-//        }
-
         @Override
         public int getItemPosition(@NonNull Object object){
             Log.w(logger, "position : " + object);
             return POSITION_NONE;
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -270,7 +280,6 @@ public class MainActivity extends AppCompatActivity {
             backHandler.onBackPressed();
         }
     }
-
     @Override
     protected void onResume(){
         super.onResume();
@@ -289,6 +298,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.w(logger, "onDestroy");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.edit().remove("dataList").apply();
     }
     @Override
     protected void onStop(){
@@ -304,6 +315,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.w(logger, "onRestart");
+        setRecentAdapter();
+    }
+
+    private void setRecentAdapter(){
+        List<Recent> recentDrawerMenu = recentDrawerMenu = getRecentList(this);
+        if(recentDrawerMenu == null){
+            RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), null);
+            drawerListView.setAdapter(recentAdapter);
+        }else {
+            RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), recentDrawerMenu);
+            drawerListView.setAdapter(recentAdapter);
+            recentAdapter.notifyDataSetChanged();
+        }
     }
 
     private void Logout(){

@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
-    android:background="@color/button_material_dark"
-    card_view:cardUseCompatPadding="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/step_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/step_image"
-                android:textSize="15sp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"/>
-
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:contentDescription="@string/app_name"
-                android:id="@+id/step_image"
+    android:layout_height="match_parent"
+    android:paddingEnd="5dp"
+    android:paddingStart="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+                android:layout_height="wrap_content">
+                <!--음식 이미지-->
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/app_name"
+                    android:id="@+id/step_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>
 
-            <TextView
-                android:id="@+id/step_text"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/step_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <!--식단 이름-->
+                <TextView
+                    android:id="@+id/step_num"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/detail_properties_textview"/>
 
-            <TextView
-                android:id="@+id/step_tip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/step_text"
-                android:layout_marginTop="10dp" />
+                <!--식단 구성-->
+                <TextView
+                    android:id="@+id/step_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/detail_properties_textview"/>
 
-        </RelativeLayout>
+                <!--식단 요리 방법-->
+                <TextView
+                    android:id="@+id/step_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/detail_properties_textview"/>
 
-    </android.support.v7.widget.CardView>
+                <ImageView
+                    android:id="@+id/arrow_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="160dp"
+                    android:contentDescription="@string/detail"
+                    app:srcCompat="@drawable/ic_arrow_forward_black_24dp"/>
+                </LinearLayout>
+</ScrollView>
+
+

@@ -1,6 +1,6 @@
 <resources>
     <!--Main contents-->
-    <string name="app_name">건강밥상</string>
+    <string name="app_name">식습관</string>
     <string name="settings">설정</string>
     <string name="detail">더보기</string>
     <string name="main_title">오늘의 추천 요리법 입니다.</string>
@@ -9,6 +9,7 @@
     <string name="main_title3">오늘의 추천 건강식품 입니다.</string>
     <string name="star">즐겨찾기</string>
     <string name="community">커뮤니티</string>
+    <string name="statistic">통계보기</string>
     <string name="notice">공지사항</string>
     <string name="profile">프로필</string>
     <string name="logout">로그아웃</string>
@@ -21,6 +22,7 @@
     <string name="confirm_back">\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.</string>
     <string name="navi_main">메인메뉴</string>
     <string name="recipe_sort">조리법 기준으로 보기</string>
+    <string name="pet_sort">반려견 집밥 기준으로 보기</string>
     <string name="grocery_sort">식자재 기준으로 보기</string>
     <string name="food_sort">건강식품 기준으로 보기</string>
     <string name="diet_sort">식단 기준으로 보기</string>
@@ -28,6 +30,8 @@
     <string name="data_refresh">데이터를 가져오는 중입니다&#8230;</string>
     <string name="data_limit">마지막 목록입니다.</string>
     <string name="data_error">앗, 데이터를 가져오는데 실패했습니다. 다시 시도해주세요.</string>
+    <string name="statistic_menu">통계보기</string>
+    <!--Food-->
     <!--Sign Up-->
     <string name="new_account">새로운 계정 만들기</string>
     <string name="name_account">이름</string>
@@ -39,8 +43,20 @@
 
     <!--Search-->
     <string name="search_hint">검색어를 입력해주세요.</string>
-
+    <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>
+    <string name="search_something">식단명, 음식명, 재료명&#8230;</string>
+    <string name="search_nothing">검색 기록을 찾을 수 없습니다.</string>
+    <string name="search_no">앗, 아직 검색 기록이 없습니다.</string>
     <!--DetailItem-->
     <string name="level">난이도</string>
     <string name="web_view">웹으로 보기</string>
+    <string name="star_item">즐겨찾기 추가</string>
+    <string name="calrorie_view">열량 정보를 보시려면 클릭하세요.</string>
+    <!--Recent-->
+    <string name="recent_title">최근 본 항목</string>
+
+    <!--etc-->
+    <string name="donation">pub-1405827106256391</string>
+    <string name="admob">ca-app-pub-1405827106256391/6607646045</string>
+
 </resources>

@@ -1,5 +1,8 @@
 package goods.cap.app.goodsgoods.API;
 
+import goods.cap.app.goodsgoods.Model.Diet;
+import goods.cap.app.goodsgoods.Model.DietDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.DietResponseModel;
 import goods.cap.app.goodsgoods.Model.FoodResponseModel;
 import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
 import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
@@ -38,20 +41,26 @@ public interface HttpAPI {
 
 
     /**
-     * @param: 키, 시작 인덱스, 종료 인덱스, 타입(xml, json), 음식 타입, 재료명, 레시피 코드
+     * @param: 키, 식단 구분코드, 조회할 페이지 번호, 한 페이지에 제공할 건수
      *
      */
-    @GET("openapi")
-    Call<GroceryResponseModel> getGrocery(@Query("API_KEY") String apiKey,
-                                          @Query("START_INDEX") int startIndex,
-                                          @Query("END_INDEX") int endIndex,
-                                          @Query("TYPE")String type);
+    @GET("recomendDietList")
+    Call<DietResponseModel>getDiet(@Query("apiKey")String apiKey,
+                                   @Query("dietSeCode")Integer dietSeCode,
+                                   @Query("pageNo")Integer pageNo,
+                                   @Query("numOfRows")Integer numOfRows);
 
-    @GET("openapi")
-    Call<GroceryResponseModel> getGroceryWithQuery(@Query("API_KEY") String apiKey,
-                                          @Query("START_INDEX") int startIndex,
-                                          @Query("END_INDEX") int endIndex,
-                                          @Query("TYPE")String type,
-                                          @Query("IRDNT_NM") String irdnt_nm,
-                                          @Query("RECIPE_ID")String recipe_id);
+    @GET("recomedDietList")
+    Call<DietDtlResponseModel>getDietWithQuery(@Query("apiKey")String apiKey,
+                                               @Query("dietSeCode")Integer dietSeCode,
+                                               @Query("pageNo")Integer pageNo,
+                                               @Query("numOfRows")Integer numOfRows);
+    /**
+     * @param: 키, 컨텐츠 번호
+     *
+     */
+    @GET("recomendDietDtl")
+    Call<DietDtlResponseModel>getDietDtl(@Query("apiKey") String apiKey,
+                                         @Query("cntntsNo") String cntntsNo);
+
 }

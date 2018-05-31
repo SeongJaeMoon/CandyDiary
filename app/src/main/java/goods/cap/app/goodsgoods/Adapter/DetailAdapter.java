@@ -2,7 +2,6 @@ package goods.cap.app.goodsgoods.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,43 +11,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-import goods.cap.app.goodsgoods.Model.Food;
+import goods.cap.app.goodsgoods.Model.DietDtl;
 import goods.cap.app.goodsgoods.R;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
 
     private static final String logger = DetailAdapter.class.getSimpleName();
-    private List<Food> data;
+    private List<DietDtl> data;
     private Context context; //연결할 화면 context
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        //private ImageView stepImg;
-        //private TextView stepNum;
+        private ImageView stepImg;
+        private TextView stepNum;
         private TextView stepText;
-        //private TextView stepTip;
+        private TextView stepTip;
+        private ImageView stepArrow;
 
         public ViewHolder(View v) {
             super(v);
-            //stepImg = (ImageView)v.findViewById(R.id.step_image);
-            //stepNum = (TextView)v.findViewById(R.id.stepNum);
-            stepText = (TextView)v.findViewById(R.id.stepText);
-            //stepTip = (TextView)v.findViewById(R.id.stepTip);
+            stepImg = (ImageView)v.findViewById(R.id.step_image);
+            stepNum = (TextView)v.findViewById(R.id.step_num);
+            stepText = (TextView)v.findViewById(R.id.step_text);
+            stepTip = (TextView)v.findViewById(R.id.step_tip);
+            stepArrow = (ImageView)v.findViewById(R.id.arrow_img);
         }
     }
 
-    public DetailAdapter(Context context, List<Food> data){
+    public DetailAdapter(Context context, List<DietDtl> data){
         this.context = context;
         this.data = data;
     }
@@ -56,30 +52,27 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @NonNull
     @Override
     public DetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_cardview, parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.custom_cardview, parent,false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DetailAdapter.ViewHolder holder, int position) {
 
-//        RequestOptions ro = new RequestOptions()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .override(256, 140)
-//                .fitCenter();
-//
-//        Glide.with(context)
-//                .setDefaultRequestOptions(ro)
-//                .load(data.get(position).getStepImgURL())
-//                .into(holder.stepImg);
-        StringBuilder sb = new StringBuilder();
-//        holder.stepNum.setText(String.format(Locale.KOREA, "%d", data.get(position).getCookingNo()));
-        for(Food f : data){
-            sb.append(String.format(Locale.KOREA, "(%d). %s\n", f.getCookingNo(),f.getCookingDC()));
+        RequestOptions ro = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter();
+
+        Glide.with(context)
+                .setDefaultRequestOptions(ro)
+                .load(data.get(position).getRtnImageDc())
+                .into(holder.stepImg);
+        if(position == data.size() - 1){
+            holder.stepArrow.setVisibility(View.GONE);
         }
-//        holder.stepText.setText(data.get(position).getCookingDC());
-//        holder.stepTip.setText(data.get(position).getStepTIP());
-        holder.stepText.setText(sb.toString());
+        holder.stepText.setText(data.get(position).getMatrlInfo());
+        holder.stepNum.setText(data.get(position).getCntntsSj());
+        holder.stepTip.setText(data.get(position).getCkngMthInfo());
     }
 
     @Override

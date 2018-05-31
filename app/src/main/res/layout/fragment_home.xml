@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/mainTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="@string/main_title"
+        android:text="@string/main_title2"
         android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ng"/>
@@ -31,8 +33,9 @@
         android:verticalSpacing="2dp"
         android:horizontalSpacing="2dp"
         android:numColumns="auto_fit"
-        android:columnWidth="150dp"
+        android:columnWidth="400dp"
         android:layout_gravity="center">
     </in.srain.cube.views.GridViewWithHeaderAndFooter>
+
 </RelativeLayout>
 </goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout>

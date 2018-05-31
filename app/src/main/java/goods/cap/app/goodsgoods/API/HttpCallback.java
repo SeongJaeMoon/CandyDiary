@@ -60,7 +60,7 @@ public abstract class HttpCallback <S> implements Callback {
     protected abstract void onRecipeObject(Call call, S response);
 
     /**
-     * 네트워크 예외가 서버와 통신 중이거나 예상치 못한 상황이 발생하면 호출
+     * 네트워크 예외가 서버와 통신 중이거나 예상치 못한 상황이 발생하면 호출.
      * 요청 중 혹은, 응답을 처리하는 중 예외가 발생.
      */
     //protected abstract void onFailureRecipe(Call call, Throwable t);

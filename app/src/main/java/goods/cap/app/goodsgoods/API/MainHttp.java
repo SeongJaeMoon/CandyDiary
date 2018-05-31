@@ -4,8 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
+import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
+import goods.cap.app.goodsgoods.Helper.DietHelper;
 import goods.cap.app.goodsgoods.Helper.FoodHelper;
 import goods.cap.app.goodsgoods.Helper.GroceryHelper;
+import goods.cap.app.goodsgoods.Model.Diet;
+import goods.cap.app.goodsgoods.Model.DietDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.DietResponseModel;
 import goods.cap.app.goodsgoods.Model.FoodResponseModel;
 import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
 import goods.cap.app.goodsgoods.Model.Recipe;
@@ -28,6 +33,9 @@ public class MainHttp {
     private int startIndex;
     private int endIndex;
     private int recipeId;
+    private int pageNo;
+    private int numOfRows;
+    private String cntntsNo;
 
     public MainHttp(Context context, String dialogTitle, String dialogMessage, String API_KEY) {
         this.context = context;
@@ -42,44 +50,10 @@ public class MainHttp {
         this.query = query;
     }
     public void setRecipeId(int recipeId){this.recipeId = recipeId;}
+    public void setPageNo(int pageNo){this.pageNo = pageNo;}
+    public void setNumOfRows(int numOfRows){this.numOfRows = numOfRows;}
+    public void setCntntsNo(String cntntsNo){this.cntntsNo = cntntsNo;}
 
-
-    public void getGrocery(final GroceryHelper groceryCallback) {
-        final ApiClient objApi = ApiClient.getInstance();
-        try {
-            Call objCall = null;
-
-            objCall = objApi.getApi(context).getGrocery(API_KEY, 1, 5, "json");
-
-            if (objCall != null) {
-                objCall.enqueue(new HttpCallback<GroceryResponseModel>(context) {
-
-                    @Override
-                    public void onFailure(Call call, Throwable t) {
-                        groceryCallback.failure("Failed");
-                        super.onFailure(call, t);
-                    }
-
-                    @Override
-                    protected void onRecipeResponse(Call call, retrofit2.Response response) {
-                        if (!response.isSuccessful()) groceryCallback.failure("Failed");
-                    }
-
-                    @Override
-                    protected void onRecipeObject(Call call, GroceryResponseModel response) {
-                        groceryCallback.success(response);
-                    }
-
-                    @Override
-                    protected void common(){
-
-                    }
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
     public void getRecipe(final RecipeHelper recipeCallback) {
         final ApiClient objApi = ApiClient.getInstance();
         try {
@@ -169,7 +143,6 @@ public class MainHttp {
             e.printStackTrace();
         }
     }
-
     public void getFood(final FoodHelper foodCallback){
         final ApiClient objApi = ApiClient.getInstance();
         try {
@@ -204,6 +177,101 @@ public class MainHttp {
                         dialog.dismiss();
                         Log.w(logger, "onFoodObject : " + response.toString());
                         foodCallback.success(response);
+                    }
+
+                    @Override
+                    protected void common(){
+
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getDiet(final DietHelper dietCallback){
+        final ApiData objApi = ApiData.getInstance();
+        try {
+            Call objCall = null;
+            final ProgressDialog dialog;
+            objCall = objApi.getApi(context).getDiet(API_KEY, Config.dietCode1, this.pageNo, 10);
+
+            if (objCall != null) {
+                dialog = new ProgressDialog(context);
+                dialog.setTitle(dialogTitle);
+                dialog.setMessage(dialogMessage);
+                dialog.show();
+
+                objCall.enqueue(new HttpCallback<DietResponseModel>(context) {
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        dialog.dismiss();
+                        dietCallback.failure("Failed");
+                        Log.w(logger, t.getCause() + "," + t.getMessage());
+                        super.onFailure(call, t);
+                    }
+
+                    @Override
+                    protected void onRecipeResponse(Call call, retrofit2.Response response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onDietResponse : " + response.toString());
+                        if (!response.isSuccessful()) dietCallback.failure("Failed");
+                    }
+
+                    @Override
+                    protected void onRecipeObject(Call call, DietResponseModel response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onDietObject : " + response.toString());
+                        dietCallback.success(response);
+                    }
+
+                    @Override
+                    protected void common(){
+
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void getDietDtl(final DietDtlHelper dietCallback){
+        final ApiData objApi = ApiData.getInstance();
+        try {
+            Call objCall = null;
+            final ProgressDialog dialog;
+            objCall = objApi.getApi(context).getDietDtl(API_KEY, cntntsNo);
+
+            if (objCall != null) {
+                dialog = new ProgressDialog(context);
+                dialog.setTitle(dialogTitle);
+                dialog.setMessage(dialogMessage);
+                dialog.show();
+
+                objCall.enqueue(new HttpCallback<DietDtlResponseModel>(context) {
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        dialog.dismiss();
+                        dietCallback.failure("Failed");
+                        Log.w(logger, t.getCause() + "," + t.getMessage());
+                        super.onFailure(call, t);
+                    }
+
+                    @Override
+                    protected void onRecipeResponse(Call call, retrofit2.Response response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onDietResponse : " + response.toString());
+                        if (!response.isSuccessful()) dietCallback.failure("Failed");
+                    }
+
+                    @Override
+                    protected void onRecipeObject(Call call, DietDtlResponseModel response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onDietObject : " + response.toString());
+                        dietCallback.success(response);
                     }
 
                     @Override

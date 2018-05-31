@@ -33,6 +33,8 @@ public class NoticeFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//            drawerList.setAdapter(new RecentAdapter(getSupportActionBar().getThemedContext(),
+//                    android.R.layout.simple_list_item_1, recentDrawerMenu));
     }
 
     @Override

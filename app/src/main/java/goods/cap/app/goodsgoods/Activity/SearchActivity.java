@@ -8,8 +8,8 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.view.View;
 
-import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -49,6 +49,13 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
         return false;
     }
 
+    static class SearchViewHolder extends RecyclerView.ViewHolder{
+
+        public SearchViewHolder(View itemView) {
+            super(itemView);
+        }
+
+    }
     @Override
     protected void onStart() {
         super.onStart();

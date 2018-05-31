@@ -16,15 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+
     <!--음식 이름-->
     <TextView
-        android:id="@+id/item_title"
+        android:id="@+id/diet_cn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text=""
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:layout_centerHorizontal="true"
-        android:textSize="30sp"
         style="@style/detail_properties_textview"
         app:layout_constraintTop_toTopOf="@+id/wallpaper"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,48 +33,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/wallpaper"
         app:layout_constraintVertical_bias="0.45" />
-    <!--음식 종류-->
-    <TextView
-        android:id="@+id/item_nation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text=""
-        android:textSize="60sp"
-        android:textColor="@android:color/white"
-        style="@style/detail_properties_textview"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintHorizontal_bias="0.31"
-        app:layout_constraintVertical_bias="0.32999998" />
-    <!-- 좋아요 -->
-    <!--tools:src="@drawable/ic_star_white_18dp"-->
-    <ImageView
-        android:id="@+id/current_star_icon"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintRight_toRightOf="@+id/wallpaper"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/item_nation"
-        app:layout_constraintTop_toTopOf="@+id/item_nation"
-        app:layout_constraintHorizontal_bias="0.0" />
-    <!--미리 보기 설명-->
-    <TextView
-        android:id="@+id/current_item_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text=""
-        android:textColor="@color/white"
-        style="@style/detail_properties_textview"
-        app:layout_constraintRight_toRightOf="@+id/wallpaper"
-        app:layout_constraintLeft_toLeftOf="@+id/wallpaper"
-        app:layout_constraintBottom_toBottomOf="@+id/wallpaper"
-        app:layout_constraintTop_toBottomOf="@+id/item_nation" />
-
 </android.support.constraint.ConstraintLayout>

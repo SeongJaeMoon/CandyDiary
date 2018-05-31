@@ -48,13 +48,20 @@
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/mainNavigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/navi_header"
-        app:menu="@menu/navi_menu">
-    </android.support.design.widget.NavigationView>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/mainNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/navi_header"
+            app:menu="@menu/navi_menu">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="420dp"
+                android:id="@+id/list_view_drawer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:choiceMode="singleChoice" />
+        </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

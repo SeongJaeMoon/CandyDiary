@@ -15,9 +15,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-
-    private static ApiClient apiClient;
+    //레시피 재료, 과정, 식자재 정보 URL
     private static final String RECIPE_URL = "http://211.237.50.150:7080/openapi/";
+    private static ApiClient apiClient;
 
     private HttpAPI httpAPI;
 
