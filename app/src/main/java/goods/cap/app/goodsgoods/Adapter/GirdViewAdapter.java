@@ -1,19 +1,12 @@
 package goods.cap.app.goodsgoods.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,11 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 import goods.cap.app.goodsgoods.API.Config;
-import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
-import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.Grocery;
-import goods.cap.app.goodsgoods.Model.Recipe;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
 
 import goods.cap.app.goodsgoods.R;
 
@@ -47,7 +36,6 @@ public class GirdViewAdapter extends ArrayAdapter{
     static class ViewHolder {
         TextView text;
         ImageView image;
-        Button button;
     }
     //그리드 뷰 어뎁터 생성자
     public GirdViewAdapter(Context context, List<Diet>data, int resourceId){
@@ -56,7 +44,7 @@ public class GirdViewAdapter extends ArrayAdapter{
         this.resourceId = resourceId;
         this.context = context;
         this.data = data;
-        inflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override

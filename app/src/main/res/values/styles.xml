@@ -33,6 +33,7 @@
           <item name="android:layout_centerHorizontal">true</item>
           <item name="android:layout_marginTop">@dimen/standard_margin</item>
           <item name="android:textColor">@android:color/black</item>
+          <item name="android:fontFamily">@font/ng</item>
      </style>
 
 </resources>

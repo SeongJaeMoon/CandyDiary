@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,18 +27,9 @@ import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
 import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
 import goods.cap.app.goodsgoods.Helper.DietHelper;
-import goods.cap.app.goodsgoods.Helper.GroceryHelper;
-import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
-import goods.cap.app.goodsgoods.Helper.RecipeHelper;
-import goods.cap.app.goodsgoods.MainActivity;
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.DietResponseModel;
-import goods.cap.app.goodsgoods.Model.Grocery;
-import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
-import goods.cap.app.goodsgoods.Model.Recipe;
-import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
-import goods.cap.app.goodsgoods.Model.Firebase;
-import goods.cap.app.goodsgoods.Model.FireResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Diet.DietResponseModel;
+import goods.cap.app.goodsgoods.Model.Recipe.Recipe;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
 import goods.cap.app.goodsgoods.R;
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
@@ -54,7 +43,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public static final String ARG_PAGE = "ARG_PAGE";
     private TextView mainText;
     private GridViewWithHeaderAndFooter gridView;
-    private List<Recipe> recipeList;
     private List<Diet> dietList;
     private MultiSwipeRefreshLayout swipeRefreshLayout;
     private GirdViewAdapter girdViewAdapter;
@@ -227,7 +215,9 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), DetailItemActivity.class);
         Gson gson = new Gson();
-        String diet = gson.toJson(dietList.get(position));
+        Diet temp = dietList.get(position);
+        temp.setFilePath(Config.getAbUrl(dietList.get(position).getRtnImageDc(), dietList.get(0).getRtnStreFileNm()));
+        String diet = gson.toJson(temp);
         intent.putExtra("diet", diet);
         getActivity().startActivity(intent);
     }

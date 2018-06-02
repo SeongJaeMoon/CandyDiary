@@ -1,6 +1,6 @@
 package goods.cap.app.goodsgoods.Helper;
 
-import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+import goods.cap.app.goodsgoods.Model.Recipe.RecipeResponseModel;
 
 public interface RecipeHelper {
     public abstract void success(RecipeResponseModel response);

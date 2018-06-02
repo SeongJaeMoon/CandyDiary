@@ -13,10 +13,10 @@ public class Config {
     특별한 날 이벤트: 254004,
     기분이 좋아지는 식단: 254005 */
     public static final int dietCode1 = 254001; //limit 103
-    public static final int dietCode2 = 254002; //
-    public static final int dietCode3 = 254003; //
-    public static final int dietCode4 = 254004; //
-    public static final int dietCode5 = 254005; //
+    public static final int dietCode2 = 254002; //limit 91
+    public static final int dietCode3 = 254003; //limit 42
+    public static final int dietCode4 = 254004; //limit 23
+    public static final int dietCode5 = 254005; //limit 10
 
     public static String getAbUrl(String oldPath, String newPath){
         int len = oldPath.length();

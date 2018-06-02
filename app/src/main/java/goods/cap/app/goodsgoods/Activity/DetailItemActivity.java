@@ -14,45 +14,61 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
+import goods.cap.app.goodsgoods.Adapter.CommentAdapter;
 import goods.cap.app.goodsgoods.Adapter.DetailAdapter;
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.DietDtl;
-import goods.cap.app.goodsgoods.Model.DietDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
 import goods.cap.app.goodsgoods.R;
 
 import goods.cap.app.goodsgoods.Util.CustomDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
+import me.gujun.android.taggroup.TagGroup;
 
 
 /* 특정 식단 선택 Detail 화면, created by supermoon. */
-
+// cntntsNo -> 크롤링 <-> Firebase DB 저장 (child tree 구성).
 public class DetailItemActivity extends AppCompatActivity {
 
-    private static final String logger = DetailItemActivity.class.getSimpleName();
-
-    @BindView(R.id.diet_cn)TextView diet_cn;
+    @BindView(R.id.diet_cn)TagGroup diet_cn;
     @BindView(R.id.detail_toolbar)Toolbar toolbar;
     @BindView(R.id.coordinator_layout)CoordinatorLayout coordinatorLayout;
     @BindView(R.id.wallpaper)ImageView wallpaper;
     @BindView(R.id.detail_list) RecyclerView recyclerView;
     @BindView(R.id.detail_calorie)TextView calorieView;
+    @BindView(R.id.likes)TextView likes;
+    @BindView(R.id.comments)TextView comments;
+    @BindView(R.id.like_img)ImageView likeImg;
+    @BindView(R.id.comment_img)ImageView commentImg;
+    @BindView(R.id.share_img)ImageView shareImg;
+    @BindView(R.id.comment_detail)TextView commentDetail;
+    private static final String logger = DetailItemActivity.class.getSimpleName();
     private RecyclerView.Adapter adapter;
     private CustomDialog customDialog;
     private String[] calorie;
+    private FirebaseDatabase db;
+    private DatabaseReference dbref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +81,10 @@ public class DetailItemActivity extends AppCompatActivity {
             final String jsonData = intent.getStringExtra("diet");
             final Diet diet = gson.fromJson(jsonData, Diet.class);
 
-            String oldPath = diet.getRtnImageDc();
-            String newPath = diet.getRtnStreFileNm();
-            String filePath = Config.getAbUrl(oldPath, newPath);
-            setRecent(filePath, diet.getFdNm(),1);
-
-            CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            collapsingToolbarLayout.setTitleEnabled(false);
-            toolbar.setTitle(diet.getFdNm());
-            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setHeadLayout(diet.getFdNm());
+            setRecent(diet);
+            String[] tag_group = diet.getCntntsSj().split(",");
+            diet_cn.setTags(tag_group);
 
             RequestOptions ro = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -83,12 +92,22 @@ public class DetailItemActivity extends AppCompatActivity {
 
             Glide.with(this)
                     .setDefaultRequestOptions(ro)
-                    .load(filePath)
+                    .load(diet.getFilePath())
                     .into(wallpaper);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
             initData(diet.getCntntsNo());
+
+            commentImg.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailItemActivity.this, CommentActivity.class);
+                    intent.putExtra("cntntno", diet.getCntntsNo());
+                    intent.putExtra("fdnm", diet.getFdNm());
+                    startActivity(intent);
+                }
+            });
 
             calorieView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,16 +124,12 @@ public class DetailItemActivity extends AppCompatActivity {
     }
 
     private void initData(String cntntsNo){
-
-        MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title),
-                getResources().getString(R.string.data_refresh), Config.API_KEY2);
+        MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
         mainHttp.setCntntsNo(cntntsNo);
         mainHttp.getDietDtl(new DietDtlHelper() {
             @Override
             public void success(DietDtlResponseModel response) {
                 List<DietDtl> list = response.getBody().getItems().getDietDtlList();
-                diet_cn.setText(list.get(0).getDietCn());
-                animationTitle(diet_cn);
                 adapter = new DetailAdapter(DetailItemActivity.this, list);
                 recyclerView.setAdapter(adapter);
                 calorie = list.get(0).getDietNtrsmallInfo().split(",");
@@ -141,13 +156,13 @@ public class DetailItemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setRecent(String url, String summary, int recent) {
+    private void setRecent(Diet diet) {
         RecentDBHelper recentDBHelper = new RecentDBHelper(this);
         try {
             recentDBHelper.open();
-            if(recentDBHelper.isRecentExists(url)) {
-                recentDBHelper.addRecent(url, summary, recent);
-                //삭제 코드
+            if(recentDBHelper.isRecentExists(diet.getCntntsNo())) {
+                recentDBHelper.addRecent(diet.getFilePath(), diet.getFdNm(), diet.getCntntsNo(), diet.getCntntsSj(),0);
+                //데이터 삭제 코드
                 recentDBHelper.deletOlder();
             }
         } catch (Exception e) {
@@ -157,11 +172,6 @@ public class DetailItemActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-    }
-
     private void animationTitle(TextView view){
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(2000);
@@ -169,6 +179,20 @@ public class DetailItemActivity extends AppCompatActivity {
         animation.setRepeatMode(Animation.REVERSE);
         animation.setRepeatCount(Animation.INFINITE);
         view.startAnimation(animation);
+    }
+
+    private void setHeadLayout(String title){
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitleEnabled(false);
+        toolbar.setTitle(title);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
     @Override

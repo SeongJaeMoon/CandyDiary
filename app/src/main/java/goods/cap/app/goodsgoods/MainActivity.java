@@ -34,7 +34,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -43,10 +42,16 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.List;
 
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 
 /* main 화면, created by supermoon. */
+
+/*===========================================================================
+* 모델 클래스 정리, DB 모델링 정리, DetailItemActivity Scroll Over 정리 필요.
+*
+* */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,16 +79,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton dietFab = new FloatingActionButton(this);
-        FloatingActionButton petFab = new FloatingActionButton(this);
         FloatingActionButton foodFab = new FloatingActionButton(this);
 
-        setFab(dietFab, getResources().getString(R.string.diet_sort), 0);
-        setFab(foodFab, getResources().getString(R.string.food_sort), 0);
-        setFab(petFab, getResources().getString(R.string.pet_sort), 1);
+        setFab(dietFab, getResources().getString(R.string.diet_sort));
+        setFab(foodFab, getResources().getString(R.string.food_sort));
 
         fab.addButton(dietFab);
         fab.addButton(foodFab);
-        fab.addButton(petFab);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         drawerListView.setHasFixedSize(true);
@@ -98,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 fab.setAlpha(1 - slideOffset);
-
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 fab.setVisibility(View.GONE);
-
+                Log.i(logger,"opend");
+                setRecentAdapter();
             }
 
             @Override
@@ -118,12 +120,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MainAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -188,24 +188,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setFab(FloatingActionButton button, String title, int role){
+    private void setFab(FloatingActionButton button, String title){
         button.setTitle(title);
         button.setSize((FloatingActionButton.SIZE_MINI));
-        if(role == 0){
-            button.setIcon(R.drawable.ic_image_search);
-        }else{
-            button.setIcon(R.drawable.ic_pets_white_18dp);
-        }
+        button.setIcon(R.drawable.ic_image_search);
         button.setColorNormal(getResources().getColor(R.color.colorPrimary));
         button.setColorPressed(getResources().getColor(R.color.colorAccent));
     }
 
-    private List<Recent> getRecentList(Context context){
-        List<Recent> ret = null;
+    private List<Diet> getRecentList(Context context){
+        List<Diet> ret = null;
         RecentDBHelper recentDBHelper = new RecentDBHelper(context);
         try {
             recentDBHelper.open();
-            ret = recentDBHelper.getImgList();
+            ret = recentDBHelper.getDietList();
         }catch (Exception e){
             Log.w(logger, e.getMessage());
         }finally {
@@ -315,15 +311,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.w(logger, "onRestart");
-        setRecentAdapter();
+
     }
 
     private void setRecentAdapter(){
-        List<Recent> recentDrawerMenu = recentDrawerMenu = getRecentList(this);
+        List<Diet> recentDrawerMenu = getRecentList(MainActivity.this);
         if(recentDrawerMenu == null){
             RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), null);
             drawerListView.setAdapter(recentAdapter);
         }else {
+            Log.i(logger, "setRecentAdapter 호출");
             RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), recentDrawerMenu);
             drawerListView.setAdapter(recentAdapter);
             recentAdapter.notifyDataSetChanged();

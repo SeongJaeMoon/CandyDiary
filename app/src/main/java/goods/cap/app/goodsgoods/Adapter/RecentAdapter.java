@@ -15,18 +15,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
-import goods.cap.app.goodsgoods.Model.Recent;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.R;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder>{
 
         private Context context;
-        private List<Recent> data;
+        private List<Diet> data;
 
-        public RecentAdapter(Context context, List<Recent> data){
+        public RecentAdapter(Context context, List<Diet> data){
             super();
             this.context = context;
             this.data = data;
@@ -54,20 +55,19 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-
             if(data != null) {
                 Glide.with(context)
-                        .load(data.get(position).getUrl())
+                        .load(data.get(position).getFilePath())
                         .into(holder.recentImg);
-                holder.recentText.setText(data.get(position).getSummary());
+                holder.recentText.setText(data.get(position).getFdNm());
                 holder.recentImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DetailItemActivity.class);
                         Gson gson = new Gson();
-                        String diet = gson.toJson(data.get(position));
-                        intent.putExtra("diet", diet);
-                        Log.w("dietData", diet);
+                        String recent = gson.toJson(data.get(holder.getAdapterPosition()));
+                        intent.putExtra("diet", recent);
+                        Log.w("dietData", recent);
                         context.startActivity(intent);
                     }
                 });

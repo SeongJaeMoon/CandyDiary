@@ -1,9 +1,12 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Recipe;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import goods.cap.app.goodsgoods.Model.Recipe.Result;
+import goods.cap.app.goodsgoods.Model.Recipe.Recipe;
 
 public class Query {
     @SerializedName("totalCnt")

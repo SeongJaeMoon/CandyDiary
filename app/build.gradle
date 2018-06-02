@@ -49,13 +49,15 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'in.srain.cube:grid-view-with-header-footer:1.0.12'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation ('com.squareup.retrofit2:converter-simplexml:2.3.0'){
+    implementation('com.squareup.retrofit2:converter-simplexml:2.3.0') {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.0'
+    implementation 'com.android.support:support-v4:27.1.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

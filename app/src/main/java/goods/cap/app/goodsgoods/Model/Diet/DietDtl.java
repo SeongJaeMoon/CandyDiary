@@ -1,4 +1,4 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Diet;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -31,7 +31,7 @@ public class DietDtl {
     @Element(name = "matrlInfo", data = true, required = false)
     private String matrlInfo; //재료 정보
     @Element(name = "rtnImageDc", data = true, required = false)
-    private String rtnImageDc; //이미 설명
+    private String rtnImageDc; //이미지 설명
     @Element(name = "dietNm", data = true, required = false)
     private String dietNm; //식단 명
     @Element(name = "naInfo", data = true, required = false)

@@ -84,7 +84,7 @@ public class CustomDialog extends Dialog{
 
         Random random = new Random();
         for (int i = 1; i < len; ++i){
-            entries.add(new PieEntry(Float.parseFloat(dietVal.get(i)), dietUnit.get(i) + dietKey.get(i)));
+            entries.add(new PieEntry(Float.parseFloat(dietVal.get(i)), dietKey.get(i)));
             colors.add(Color.rgb(random.nextInt(255) + 1,random.nextInt(255) + 1, random.nextInt(255) + 1));
         }
         PieDataSet pieDataSet = new PieDataSet(entries, "Result");

@@ -10,19 +10,31 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DatabaseReference;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.R;
+import me.gujun.android.taggroup.TagGroup;
 
-public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, TagGroup.OnTagClickListener {
 
+    @BindView(R.id.tag_group)TagGroup tagGroup;
     private final String logger = SearchActivity.class.getSimpleName();
-    private RecyclerView rvSearch;
+    @BindView(R.id.rvSearch)RecyclerView rvSearch;
+    private DatabaseReference mdbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        rvSearch = (RecyclerView) findViewById(R.id.rvSearch);
+        ButterKnife.bind(this);
+
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
+
+        String[] tagList = {"수험생을 위한 식단", "美를 위한 다이어트 식단", "가정을 위한 식단", "특별한 날 이벤트 식단", "기분이 좋아지는 식단"};
+        tagGroup.setTags(tagList);
+        tagGroup.setOnTagClickListener(this);
     }
 
     @Override
@@ -47,6 +59,11 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void onTagClick(String tag) {
+
     }
 
     static class SearchViewHolder extends RecyclerView.ViewHolder{

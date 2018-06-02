@@ -1,6 +1,7 @@
 <resources>
     <!--Main contents-->
-    <string name="app_name">식습관</string>
+    <string name="app_name">이런食으로</string>
+    <string name="app_name2">이런식으로</string>
     <string name="settings">설정</string>
     <string name="detail">더보기</string>
     <string name="main_title">오늘의 추천 요리법 입니다.</string>
@@ -40,7 +41,6 @@
     <string name="regist_account">등록하기</string>
     <!--Sign In-->
     <string name="login">로그인</string>
-
     <!--Search-->
     <string name="search_hint">검색어를 입력해주세요.</string>
     <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>
@@ -48,15 +48,22 @@
     <string name="search_nothing">검색 기록을 찾을 수 없습니다.</string>
     <string name="search_no">앗, 아직 검색 기록이 없습니다.</string>
     <!--DetailItem-->
-    <string name="level">난이도</string>
+    <string name="like">좋아요</string>
+    <string name="share">공유</string>
+    <string name="comment">댓글</string>
+    <string name="com_show">댓글보기</string>
     <string name="web_view">웹으로 보기</string>
     <string name="star_item">즐겨찾기 추가</string>
-    <string name="calrorie_view">열량 정보를 보시려면 클릭하세요.</string>
+    <string name="calrorie_view">열량 정보를 보려면 터치하세요.</string>
+    <string name="comment_send">작성하기</string>
+    <string name="comment_hint">댓글을 작성해보세요.</string>
+    <string name="data_miss">앗, 아직 댓글이 없습니다.\n1등으로 댓글을 작성해보세요!</string>
+    <string name="edit_comment">댓글을 작성해주세요.</string>
     <!--Recent-->
     <string name="recent_title">최근 본 항목</string>
-
     <!--etc-->
     <string name="donation">pub-1405827106256391</string>
     <string name="admob">ca-app-pub-1405827106256391/6607646045</string>
-
+    <!--manager-->
+    <string name="manager">식단관리</string>
 </resources>

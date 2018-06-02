@@ -1,9 +1,12 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Food;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import goods.cap.app.goodsgoods.Model.Food.Food;
+import goods.cap.app.goodsgoods.Model.Recipe.Result;
 
 public class FoodQuery {
 

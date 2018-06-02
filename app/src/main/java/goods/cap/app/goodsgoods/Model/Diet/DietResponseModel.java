@@ -1,4 +1,4 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Diet;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

@@ -7,16 +7,11 @@ import android.util.Log;
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.DietHelper;
 import goods.cap.app.goodsgoods.Helper.FoodHelper;
-import goods.cap.app.goodsgoods.Helper.GroceryHelper;
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.DietDtlResponseModel;
-import goods.cap.app.goodsgoods.Model.DietResponseModel;
-import goods.cap.app.goodsgoods.Model.FoodResponseModel;
-import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
-import goods.cap.app.goodsgoods.Model.Recipe;
-import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.DietResponseModel;
+import goods.cap.app.goodsgoods.Model.Food.FoodResponseModel;
+import goods.cap.app.goodsgoods.Model.Recipe.RecipeResponseModel;
 import goods.cap.app.goodsgoods.Helper.RecipeHelper;
-import goods.cap.app.goodsgoods.R;
 import retrofit2.Call;
 
 /* API 컨트롤, created by supermoon. */

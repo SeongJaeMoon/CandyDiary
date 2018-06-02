@@ -1,11 +1,12 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Diet;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementArray;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.List;
+
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
 
 @Root(strict = false)
 public class Items {

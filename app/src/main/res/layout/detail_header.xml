@@ -17,20 +17,36 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <!--음식 이름-->
-    <TextView
+    <!--음식 설명, 24004, 24005-->
+    <!--<TextView-->
+    <!--android:id="@+id/diet_cn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text=""-->
+    <!--android:textColor="@android:color/holo_blue_dark"-->
+    <!--android:textSize="15sp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:textAlignment="center"-->
+    <!--android:fontFamily="@font/ng"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/wallpaper"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintLeft_toLeftOf="@+id/wallpaper"-->
+    <!--app:layout_constraintVertical_bias="0.45" />-->
+
+    <me.gujun.android.taggroup.TagGroup
         android:id="@+id/diet_cn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text=""
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        style="@style/detail_properties_textview"
+        style="@style/TagGroup.Beauty_Red.Inverse"
         app:layout_constraintTop_toTopOf="@+id/wallpaper"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/wallpaper"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintVertical_bias="0.45"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="5dp" />
+
 </android.support.constraint.ConstraintLayout>

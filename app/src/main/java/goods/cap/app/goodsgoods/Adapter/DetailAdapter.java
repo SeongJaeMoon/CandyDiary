@@ -3,7 +3,6 @@ package goods.cap.app.goodsgoods.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
-import java.util.Locale;
 
-import goods.cap.app.goodsgoods.Model.DietDtl;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
 import goods.cap.app.goodsgoods.R;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{

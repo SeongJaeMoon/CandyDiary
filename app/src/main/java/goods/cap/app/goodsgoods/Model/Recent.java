@@ -1,25 +1,42 @@
 package goods.cap.app.goodsgoods.Model;
 
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Food.Food;
+import goods.cap.app.goodsgoods.Model.Grocery.Grocery;
+import goods.cap.app.goodsgoods.Model.Health.Health;
+import goods.cap.app.goodsgoods.Model.Pet.Pet;
+
 public class Recent {
-    // Image URL
-    private String url;
-    private String summary;
-    // recent -> 0: Recipe, 1: Diet, 2: Food, 3: Grocery
-    private int recent;
 
-    public Recent(String url, String summary,int recent) {
-        this.url = url;
-        this.summary = summary;
-        this.recent = recent;
+    private Diet diet;
+    private Health health;
+    private Pet pet;
+
+    public Recent(){
+
     }
 
-    public String getSummary(){return summary;}
-
-    public String getUrl() {
-        return url;
+    public Diet getDiet() {
+        return diet;
     }
 
-    public int getRecent() {
-        return recent;
+    public void setDiet(Diet diet) {
+        this.diet = diet;
+    }
+
+    public Health getHealth() {
+        return health;
+    }
+
+    public void setHealth(Health health) {
+        this.health = health;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 }

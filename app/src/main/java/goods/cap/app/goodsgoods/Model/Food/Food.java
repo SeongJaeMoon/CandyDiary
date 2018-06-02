@@ -1,4 +1,4 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Food;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

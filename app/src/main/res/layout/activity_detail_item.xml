@@ -38,6 +38,5 @@
     </android.support.design.widget.AppBarLayout>
 
         <include layout="@layout/detail_body" />
-
     </android.support.design.widget.CoordinatorLayout>
 </android.support.constraint.ConstraintLayout >

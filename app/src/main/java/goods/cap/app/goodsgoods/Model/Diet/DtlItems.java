@@ -1,9 +1,11 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Diet;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.List;
+
+import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
 
 @Root(strict = false)
 public class DtlItems {

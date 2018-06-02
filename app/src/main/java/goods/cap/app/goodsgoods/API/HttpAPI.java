@@ -1,11 +1,9 @@
 package goods.cap.app.goodsgoods.API;
 
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.DietDtlResponseModel;
-import goods.cap.app.goodsgoods.Model.DietResponseModel;
-import goods.cap.app.goodsgoods.Model.FoodResponseModel;
-import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
-import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.Diet.DietResponseModel;
+import goods.cap.app.goodsgoods.Model.Food.FoodResponseModel;
+import goods.cap.app.goodsgoods.Model.Recipe.RecipeResponseModel;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -1,4 +1,4 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Grocery;
 
 public class Grocery {
 

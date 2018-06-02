@@ -1,4 +1,4 @@
-package goods.cap.app.goodsgoods.Model;
+package goods.cap.app.goodsgoods.Model.Diet;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -48,12 +48,26 @@ public class Diet {
     @Element(name = "rtnThumbFileNm", data = true)
     private String rtnThumbFileNm; //썸네일 파일명
 
+    private String filePath;
+
     public String getCntntsChargerEsntlNm() {
         return cntntsChargerEsntlNm;
     }
 
     public void setCntntsChargerEsntlNm(String cntntsChargerEsntlNm) {
         this.cntntsChargerEsntlNm = cntntsChargerEsntlNm;
+    }
+
+    //for Recent
+    public Diet(){
+
+    }
+
+    public Diet(String cntntsNo, String filePath, String fdNm, String cntntsSj){
+        this.cntntsNo = cntntsNo;
+        this.filePath = filePath;
+        this.fdNm = fdNm;
+        this.cntntsSj = cntntsSj;
     }
 
     public String getCntntsNo() {
@@ -158,6 +172,14 @@ public class Diet {
 
     public void setRtnThumbFileNm(String rtnThumbFileNm) {
         this.rtnThumbFileNm = rtnThumbFileNm;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
