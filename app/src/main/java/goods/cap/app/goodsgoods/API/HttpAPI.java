@@ -61,4 +61,18 @@ public interface HttpAPI {
     Call<DietDtlResponseModel>getDietDtl(@Query("apiKey") String apiKey,
                                          @Query("cntntsNo") String cntntsNo);
 
+    /**
+     * @param: 키, 조회할 페이지 번호, 한 페이지에 제공할 건수, 제품명(prdlst_nm), 업체명(bssh_nm)
+     *
+     */
+    @GET("getHtfsInfoList")
+    Call<FoodResponseModel>getFood(@Query("ServiceKey")String serviceKey,
+                                   @Query("pageNo")Integer pageNo,
+                                   @Query("numOfRows")Integer numOfRows);
+
+    @GET("getHtfsInfoList")
+    Call<FoodResponseModel>getFoodWithQuery(@Query("ServiceKey")String serviceKey,
+                                   @Query("pageNo")Integer pageNo,
+                                   @Query("numOfRows")Integer numOfRows,
+                                   @Query("prdlst_nm")String prdlst_nm);
 }

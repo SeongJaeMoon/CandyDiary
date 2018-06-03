@@ -29,7 +29,7 @@ public class MainHttp {
     private int endIndex;
     private int recipeId;
     private int pageNo;
-    private int numOfRows;
+    private int flag;
     private String cntntsNo;
 
     public MainHttp(Context context, String dialogTitle, String dialogMessage, String API_KEY) {
@@ -46,9 +46,8 @@ public class MainHttp {
     }
     public void setRecipeId(int recipeId){this.recipeId = recipeId;}
     public void setPageNo(int pageNo){this.pageNo = pageNo;}
-    public void setNumOfRows(int numOfRows){this.numOfRows = numOfRows;}
+    public void setFlag(int flag){this.flag = flag;}
     public void setCntntsNo(String cntntsNo){this.cntntsNo = cntntsNo;}
-
     public void getRecipe(final RecipeHelper recipeCallback) {
         final ApiClient objApi = ApiClient.getInstance();
         try {
@@ -190,7 +189,7 @@ public class MainHttp {
         try {
             Call objCall = null;
             final ProgressDialog dialog;
-            objCall = objApi.getApi(context).getDiet(API_KEY, Config.dietCode1, this.pageNo, 10);
+            objCall = objApi.getApi(context).getDiet(API_KEY, flag, this.pageNo, 10);
 
             if (objCall != null) {
                 dialog = new ProgressDialog(context);
@@ -279,4 +278,5 @@ public class MainHttp {
             e.printStackTrace();
         }
     }
+
 }

@@ -1,6 +1,5 @@
 package goods.cap.app.goodsgoods.Adapter;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-
-import java.util.Dictionary;
 import java.util.List;
 
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
@@ -59,6 +56,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                 Glide.with(context)
                         .load(data.get(position).getFilePath())
                         .into(holder.recentImg);
+
                 holder.recentText.setText(data.get(position).getFdNm());
                 holder.recentImg.setOnClickListener(new View.OnClickListener() {
                     @Override

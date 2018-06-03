@@ -21,8 +21,8 @@ public class RecentDBHelper {
     private static final String DATABASE_NAME = "recent.db";
     private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "recentDB";
-    // recent -> 0: Diet, 1: Food, 2: Pet
-    private static final String COLUMN_FLAG  = "flag";
+    // recent -> 0: Diet, 1: Food
+    private static final String COLUMN_FLAG  = "flag"; //식단, 건강식품 구분
     private static final String COLUMN_URL = "url"; //이미지 경로
     private static final String COLUMN_SMY = "smy"; //메인
     private static final String COLUMN_NO = "ctnno";//고유번호

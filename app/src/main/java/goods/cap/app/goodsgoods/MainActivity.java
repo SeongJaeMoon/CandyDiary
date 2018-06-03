@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
@@ -43,19 +43,17 @@ import java.util.List;
 
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
-import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 
 /* main 화면, created by supermoon. */
 
 /*===========================================================================
 * 모델 클래스 정리, DB 모델링 정리, DetailItemActivity Scroll Over 정리 필요.
-*
+* -> 구분 필요 : 사용자가 태그 선택(Config.Value ~), 사용자가 검색, 사용자가 Diet or Food 선택
 * */
 
 public class MainActivity extends AppCompatActivity {
 
-    private final Handler handler = new Handler();
     private final String logger = MainActivity.class.getSimpleName();
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
@@ -76,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
 
         FloatingActionButton dietFab = new FloatingActionButton(this);
@@ -284,6 +283,15 @@ public class MainActivity extends AppCompatActivity {
             Log.w(logger, "notifyDataSetChanged");
             adapter.notifyDataSetChanged();
         }
+        Intent intent = getIntent();
+        if(intent != null) {
+            int key = intent.getIntExtra("tagSearch", 1);
+            Log.i(logger, "key => " + key);
+            GoodsApplication goodsApplication = (GoodsApplication) getApplicationContext();
+            goodsApplication.setContext(this);
+            goodsApplication.setKey(key);
+            goodsApplication.setDietFood(true);
+        }
     }
     @Override
     protected void onStart() {
@@ -311,9 +319,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.w(logger, "onRestart");
-
     }
-
     private void setRecentAdapter(){
         List<Diet> recentDrawerMenu = getRecentList(MainActivity.this);
         if(recentDrawerMenu == null){

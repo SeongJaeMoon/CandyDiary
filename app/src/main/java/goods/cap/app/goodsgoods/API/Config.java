@@ -10,13 +10,10 @@ public class Config {
     /* 수능점수 Up 특별식단: 254001,
     美와건강 다이어트 식단: 254002,
     행복한 가정을위한 식단: 254003,
-    특별한 날 이벤트: 254004,
-    기분이 좋아지는 식단: 254005 */
-    public static final int dietCode1 = 254001; //limit 103
-    public static final int dietCode2 = 254002; //limit 91
-    public static final int dietCode3 = 254003; //limit 42
-    public static final int dietCode4 = 254004; //limit 23
-    public static final int dietCode5 = 254005; //limit 10
+    특별한 날 이벤트: 254004, -> 태그 바꿔야 함.
+    기분이 좋아지는 식단: 254005 -> 태그 바꿔야 함.*/
+    public static final int[] dietCode = new int[]{254001, 254002, 254002, 254003, 254004, 254005};
+    public static final int[] limitCount = new int[]{103, 91, 42, 23, 10};
 
     public static String getAbUrl(String oldPath, String newPath){
         int len = oldPath.length();

@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,9 +52,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_comment);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-
         if (intent != null) {
-
             cntntNo = intent.getStringExtra("cntntno");
             String fdnm = intent.getStringExtra("fdnm");
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -63,11 +60,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             commetnBtn.setOnClickListener(this);
-            datamiss.setText(getResources().getString(R.string.data_miss));
-
             commentAdapter = new CommentAdapter(CommentActivity.this, 0);
             commentList.setAdapter(commentAdapter);
-
+            datamiss.setText(getResources().getString(R.string.data_miss));
             initFirebaseDatabase();
         }
     }
@@ -91,7 +86,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume(){
         super.onResume();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -118,7 +112,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.onRestart();
         Log.w(logger, "onRestart");
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -135,7 +128,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             comment.setName("문성재");
             comment.setPimage("https://firebasestorage.googleapis.com/v0/b/betriever-63901.appspot.com/o/profile_images%2FZDQoJsSycdWcBRFhFzAe2augptb2?alt=media&token=bed60944-4318-4aed-92c7-9a66fc29823e");
             comment.setRegDate(sdf.format(new Date(System.currentTimeMillis())));
-            dbRef.push().setValue(comment);
+            dbRef.setValue(comment);
+            //dbRef.push().setValue(comment);
         }else{
             Toast.makeText(getBaseContext(), getResources().getString(R.string.edit_comment), Toast.LENGTH_SHORT).show();
         }

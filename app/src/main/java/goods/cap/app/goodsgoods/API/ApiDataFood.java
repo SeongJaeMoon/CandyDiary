@@ -13,23 +13,20 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-public class ApiData {
-    // 식단 정보 요청 URL mainCategoryList(메인 카테고리 endpoint), recomendDietList(추천 식단 endpoint), recomendDietDtl(상세보기 endpoint)
-    private static final String BASE_URL = "http://api.nongsaro.go.kr/service/recomendDiet/";
-    // 반려동물 집밥 요청 URL
-    private static final String BASE_URL3 = "http://api.nongsaro.go.kr/service/feedRawMaterial/feedRawMaterialAllList/";
+public class ApiDataFood {
+    // 건강 기능 식품 DB 요청 URL
+    private static final String BASE_URL = "http://apis.data.go.kr/1470000/HtfsTrgetInfoService/";
 
-    private static ApiData apiData;
+    private static ApiDataFood apiDataFood;
     private HttpAPI httpAPI;
 
-    public static synchronized ApiData getInstance(){
-        if (apiData == null){
-            apiData = new ApiData();
+    public static synchronized ApiDataFood getInstance(){
+        if (apiDataFood == null){
+            apiDataFood = new ApiDataFood();
         }
-        return apiData;
+        return apiDataFood;
     }
-
-    private void ApiData(@NonNull final Context currContext) {
+    private void ApiDataFood(@NonNull final Context currContext) {
         try {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             // 로그 수준 설정
@@ -67,10 +64,10 @@ public class ApiData {
     }
 
     public HttpAPI getApi(Context currContext) {
-        if (apiData == null) {
+        if (apiDataFood == null) {
             getInstance();
         }
-        apiData.ApiData(currContext);
+        apiDataFood.ApiDataFood(currContext);
 
         return httpAPI;
     }

@@ -14,26 +14,30 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
-import goods.cap.app.goodsgoods.Adapter.CommentAdapter;
 import goods.cap.app.goodsgoods.Adapter.DetailAdapter;
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
@@ -49,43 +53,53 @@ import me.gujun.android.taggroup.TagGroup;
 
 /* 특정 식단 선택 Detail 화면, created by supermoon. */
 // cntntsNo -> 크롤링 <-> Firebase DB 저장 (child tree 구성).
+
+//검색, 추천, 통계 <-> 달력(내 식단 관리) << 연결 시키기 >> 포스트(슬라이드 파일 이미지),
 public class DetailItemActivity extends AppCompatActivity {
 
-    @BindView(R.id.diet_cn)TagGroup diet_cn;
+    @BindView(R.id.diet_cn)TagGroup diet_cn; //태그 그룹
     @BindView(R.id.detail_toolbar)Toolbar toolbar;
     @BindView(R.id.coordinator_layout)CoordinatorLayout coordinatorLayout;
     @BindView(R.id.wallpaper)ImageView wallpaper;
     @BindView(R.id.detail_list) RecyclerView recyclerView;
-    @BindView(R.id.detail_calorie)TextView calorieView;
-    @BindView(R.id.likes)TextView likes;
-    @BindView(R.id.comments)TextView comments;
-    @BindView(R.id.like_img)ImageView likeImg;
-    @BindView(R.id.comment_img)ImageView commentImg;
-    @BindView(R.id.share_img)ImageView shareImg;
-    @BindView(R.id.comment_detail)TextView commentDetail;
+    @BindView(R.id.detail_calorie)TextView calorieView;//칼로리 보기
+    @BindView(R.id.like_img)ImageView likeImg;//좋아요 이미지
+    @BindView(R.id.likes)TextView likes;//좋아요 수
+    @BindView(R.id.share_img)ImageView shareImg;//공유 이미지
+    @BindView(R.id.share_nm)TextView shares;//공유 수
+    @BindView(R.id.comment_img)ImageView commentImg; //댓글 이미지
+    @BindView(R.id.comment_detail)TextView commentDetail;//댓글보기
+    @BindView(R.id.comments)TextView comments;//댓글 수
     private static final String logger = DetailItemActivity.class.getSimpleName();
     private RecyclerView.Adapter adapter;
     private CustomDialog customDialog;
     private String[] calorie;
     private FirebaseDatabase db;
-    private DatabaseReference dbref;
+    private FirebaseAuth fAuth;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm", Locale.KOREA);
+    private boolean isLikeProcess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_item);
         ButterKnife.bind(this);
+
         Intent intent = getIntent();
         if(intent != null){
+            //JSON 데이터 파싱
             Gson gson = new Gson();
             final String jsonData = intent.getStringExtra("diet");
             final Diet diet = gson.fromJson(jsonData, Diet.class);
 
+            //레이아웃, DB Setting
             setHeadLayout(diet.getFdNm());
             setRecent(diet);
+            //태그 Setting
             String[] tag_group = diet.getCntntsSj().split(",");
             diet_cn.setTags(tag_group);
-
+            //WallPaper 이미지 처리
             RequestOptions ro = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)));
@@ -96,10 +110,10 @@ public class DetailItemActivity extends AppCompatActivity {
                     .into(wallpaper);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            String contentNo = diet.getCntntsNo();
+            initData(contentNo);
 
-            initData(diet.getCntntsNo());
-
-            commentImg.setOnClickListener(new View.OnClickListener(){
+            commentDetail.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DetailItemActivity.this, CommentActivity.class);
@@ -108,7 +122,6 @@ public class DetailItemActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
             calorieView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,10 +130,12 @@ public class DetailItemActivity extends AppCompatActivity {
                     customDialog.show();
                 }
             });
+            initFirebase(contentNo);
 
         }else{
             Log.w(logger, "Error");
         }
+
     }
 
     private void initData(String cntntsNo){
@@ -141,6 +156,82 @@ public class DetailItemActivity extends AppCompatActivity {
         });
     }
 
+    private void initFirebase(String cntntsNo) {
+        db = FirebaseDatabase.getInstance();
+        //사용자 정보
+        //fAuth = FirebaseAuth.getInstance();
+        //String uid = fAuth.getCurrentUser().getUid();
+        //DatabaseReference userRef = db.getReference().child("users").child(uid);
+
+        //test code
+        final String uid = "lmyx6ViQaKeejs2jUQBLq76ZcKt1";
+        //좋아요
+        final DatabaseReference dbRef = db.getReference().child("likes").child(cntntsNo);
+        final DatabaseReference dbRef2 = db.getReference().child("comments").child(cntntsNo);
+        final DatabaseReference dbRef3 = db.getReference().child("shares").child(cntntsNo);
+
+        dbRef.keepSynced(true);
+        dbRef2.keepSynced(true);
+        dbRef3.keepSynced(true);
+
+        likeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isLikeProcess = true;
+                dbRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(isLikeProcess) {
+                            if (dataSnapshot.hasChild(uid)) {
+                                dbRef.child(uid).removeValue();
+                                likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
+                            } else {
+                                dbRef.child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                likeImg.setImageResource(R.drawable.like_orange);
+                            }
+                            isLikeProcess = false;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    likeImg.setImageResource(R.drawable.like_orange);
+                }else {
+                    likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+                long likesCount = dataSnapshot.getChildrenCount();
+                likes.setText(String.valueOf(likesCount));
+                likes.setTextColor(getResources().getColor(R.color.white));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        dbRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long likesCount = dataSnapshot.getChildrenCount();
+                comments.setText(String.valueOf(likesCount));
+                comments.setTextColor(getResources().getColor(R.color.white));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_default, menu);
@@ -223,7 +314,6 @@ public class DetailItemActivity extends AppCompatActivity {
         super.onRestart();
         Log.w(logger, "onRestart");
     }
-
     @Override
     public void onBackPressed() {
         if(customDialog!=null){
