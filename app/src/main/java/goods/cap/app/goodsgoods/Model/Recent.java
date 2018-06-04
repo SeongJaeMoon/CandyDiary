@@ -1,32 +1,40 @@
 package goods.cap.app.goodsgoods.Model;
 
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
-import goods.cap.app.goodsgoods.Model.Food.Food;
-import goods.cap.app.goodsgoods.Model.Grocery.Grocery;
-import goods.cap.app.goodsgoods.Model.Health.Health;
 
 public class Recent {
 
-    private Diet diet;
-    private Health health;
+    private String ctnno, imgUrl, summary, cntnt;
+    private int flag;
 
     public Recent(){
 
     }
-
-    public Diet getDiet() {
-        return diet;
+    public Recent(String ctnno, String imgUrl, String summary, String cntnt, int flag) {
+        this.ctnno = ctnno;
+        this.imgUrl = imgUrl;
+        this.summary = summary;
+        this.cntnt = cntnt;
+        this.flag = flag;
     }
 
-    public void setDiet(Diet diet) {
-        this.diet = diet;
+    public String getCtnno() {
+        return ctnno;
     }
 
-    public Health getHealth() {
-        return health;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setHealth(Health health) {
-        this.health = health;
+    public String getSummary() {
+        return summary;
+    }
+
+    public String getCntnt() {
+        return cntnt;
+    }
+
+    public int getFlag() {
+        return flag;
     }
 }

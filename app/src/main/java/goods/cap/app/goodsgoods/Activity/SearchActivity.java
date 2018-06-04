@@ -1,7 +1,8 @@
 package goods.cap.app.goodsgoods.Activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,17 +19,18 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
+import goods.cap.app.goodsgoods.Fragment.HomeFragment;
 import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 import me.gujun.android.taggroup.TagGroup;
 
 public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagClickListener {
 
-    private final String logger = SearchActivity.class.getSimpleName();
     @BindView(R.id.tag_group)TagGroup tagGroup;
     @BindView(R.id.rvSearch)RecyclerView rvSearch;
     @BindView(R.id.search_view)MaterialSearchView searchView;
     @BindView(R.id.toolbar)Toolbar toolbar;
+    private final String logger = SearchActivity.class.getSimpleName();
     private DatabaseReference mdbRef;
     private String[] tagList;
 
@@ -44,29 +46,29 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do some magic
+
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
+
                 return false;
             }
         });
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                //Do some magic
+
             }
             @Override
             public void onSearchViewClosed() {
-                //Do some magic
+
             }
         });
 
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
         //0, 1, 2, 3, 4
-        tagList = new String[]{"수험생을 위한 식단", "美를 위한 다이어트 식단", "가정을 위한 식단", "특별한 날 이벤트 식단", "기분이 좋아지는 식단"};
+        tagList = Config.tabList;
         tagGroup.setTags(tagList);
         tagGroup.setOnTagClickListener(this);
         searchView.setEllipsize(true);
@@ -90,13 +92,15 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
     @Override
     public void onTagClick(String tag) {
-        Log.i(logger, "clcik => " + tag);
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         int len = tagList.length;
         for(int i = 0; i < len; ++i){
             if(tag.equals(tagList[i])) intent.putExtra("tagSearch", i);
         }
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.edit().remove("dataList").apply();
+        HomeFragment.pageNo = 1;
         startActivity(intent);
     }
 
@@ -116,6 +120,14 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         }
 
     }
+
+    static class SearchListHolder extends RecyclerView.ViewHolder{
+
+        public SearchListHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

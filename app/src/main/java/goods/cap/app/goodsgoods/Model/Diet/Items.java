@@ -6,8 +6,6 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
-
 @Root(strict = false)
 public class Items {
 

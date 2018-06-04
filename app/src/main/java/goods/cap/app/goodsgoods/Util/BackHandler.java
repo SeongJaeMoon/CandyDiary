@@ -1,10 +1,7 @@
 package goods.cap.app.goodsgoods.Util;
 
-import android.content.res.Resources;
 import android.widget.Toast;
 import android.app.Activity;
-
-import goods.cap.app.goodsgoods.R;
 
 public class BackHandler {
 
@@ -29,7 +26,7 @@ public class BackHandler {
         }
     }
 
-    public void showGuide() {
+    private void showGuide() {
         toast = Toast.makeText(this.activity, this.message, Toast.LENGTH_SHORT);
         toast.show();
     }

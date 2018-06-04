@@ -32,6 +32,7 @@
     <string name="data_limit">마지막 목록입니다.</string>
     <string name="data_error">앗, 데이터를 가져오는데 실패했습니다. 다시 시도해주세요.</string>
     <string name="statistic_menu">통계보기</string>
+    <string name="static_no">앗, 이 식단은 열량 정보가 준비중입니다. 죄송합니다.</string>
     <!--Food-->
     <!--Sign Up-->
     <string name="new_account">새로운 계정 만들기</string>
@@ -43,7 +44,7 @@
     <!--Sign In-->
     <string name="login">로그인</string>
     <!--Search-->
-    <string name="search_hint">밥, 구이, 닭가슴살&#8230;</string>
+    <string name="search_hint">태그, 식단&#8230;</string>
     <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>
     <string name="search_nothing">앗, 검색 기록을 찾을 수 없습니다. 다른 검색어로 검색해주세요.</string>
     <string name="search_no">앗, 아직 검색 기록이 없습니다.</string>

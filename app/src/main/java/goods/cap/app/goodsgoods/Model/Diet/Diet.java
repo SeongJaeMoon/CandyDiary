@@ -6,62 +6,39 @@ import org.simpleframework.xml.Root;
 @Root(name="item", strict = false)
 public class Diet {
 
-    @Element(name = "cntntsChargerEsntlNm", data = true)
+    @Element(name = "cntntsChargerEsntlNm", data = true, required = false)
     private String cntntsChargerEsntlNm; //담당자 명
-
     @Element(name = "cntntsNo", data = true)
     private String cntntsNo; //컨텐츠 번호
-
     @Element(name = "cntntsRdcnt", data = true)
     private String cntntsRdcnt; //조회수
-
     @Element(name = "cntntsSj", data = true)
     private String cntntsSj; //컨텐츠 제목
-
     @Element(name = "dietNm", data = true)
     private String dietNm; //식단 명
-
-    @Element(name = "fdNm", data = true)
+    @Element(name = "fdNm", data = true, required = false)
     private String fdNm; //음식 명
-
     @Element(name = "registDt", data = true)
     private String registDt; //등록 일시
-
     @Element(name = "rtnFileSeCode",  data = true)
     private String rtnFileSeCode; //파일 구분 코드
-
     @Element(name = "rtnFileSn", data = true)
     private String rtnFileSn; //파일 순번
-
     @Element(name = "rtnImageDc", data = true)
     private String rtnImageDc; //이미지 설명
-
     @Element(name = "rtnImgSeCode", data = true)
     private String rtnImgSeCode; //이미지 구분 코드
-
     @Element(name = "rtnOrginlFileNm", data = true)
     private String rtnOrginlFileNm; //원본 파일명
-
     @Element(name = "rtnStreFileNm", data = true)
     private String rtnStreFileNm; //저장 파일명
-
     @Element(name = "rtnThumbFileNm", data = true)
     private String rtnThumbFileNm; //썸네일 파일명
 
     private String filePath;
 
-    public String getCntntsChargerEsntlNm() {
-        return cntntsChargerEsntlNm;
-    }
-
-    public void setCntntsChargerEsntlNm(String cntntsChargerEsntlNm) {
-        this.cntntsChargerEsntlNm = cntntsChargerEsntlNm;
-    }
-
     //for Recent
-    public Diet(){
-
-    }
+    public Diet(){}
 
     public Diet(String cntntsNo, String filePath, String fdNm, String cntntsSj){
         this.cntntsNo = cntntsNo;
@@ -69,6 +46,13 @@ public class Diet {
         this.fdNm = fdNm;
         this.cntntsSj = cntntsSj;
     }
+
+    public String getCntntsChargerEsntlNm() {
+        return cntntsChargerEsntlNm;
+    }
+
+    public void setCntntsChargerEsntlNm(String cntntsChargerEsntlNm) { this.cntntsChargerEsntlNm = cntntsChargerEsntlNm; }
+
 
     public String getCntntsNo() {
         return cntntsNo;

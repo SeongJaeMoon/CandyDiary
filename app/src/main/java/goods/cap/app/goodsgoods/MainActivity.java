@@ -18,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
@@ -43,12 +42,12 @@ import java.util.List;
 
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 
 /* main 화면, created by supermoon. */
 
 /*===========================================================================
-* 모델 클래스 정리, DB 모델링 정리, DetailItemActivity Scroll Over 정리 필요.
 * -> 구분 필요 : 사용자가 태그 선택(Config.Value ~), 사용자가 검색, 사용자가 Diet or Food 선택
 * */
 
@@ -166,6 +165,20 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        dietFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deinitDataList();
+                getSupportFragmentManager().beginTransaction().add(R.id.swipe_container, HomeFragment.newInstance(10),"HomeFragment").commit();
+            }
+        });
+        foodFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deinitDataList();
+                getSupportFragmentManager().beginTransaction().add(R.id.swipe_container, HomeFragment.newInstance(11),"HomeFragment").commit();
+            }
+        });
     }
 
     @Override
@@ -183,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -195,8 +207,8 @@ public class MainActivity extends AppCompatActivity {
         button.setColorPressed(getResources().getColor(R.color.colorAccent));
     }
 
-    private List<Diet> getRecentList(Context context){
-        List<Diet> ret = null;
+    private List<Recent> getRecentList(Context context){
+        List<Recent> ret = null;
         RecentDBHelper recentDBHelper = new RecentDBHelper(context);
         try {
             recentDBHelper.open();
@@ -288,9 +300,7 @@ public class MainActivity extends AppCompatActivity {
             int key = intent.getIntExtra("tagSearch", 1);
             Log.i(logger, "key => " + key);
             GoodsApplication goodsApplication = (GoodsApplication) getApplicationContext();
-            goodsApplication.setContext(this);
             goodsApplication.setKey(key);
-            goodsApplication.setDietFood(true);
         }
     }
     @Override
@@ -302,6 +312,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.w(logger, "onDestroy");
+        deinitDataList();
+        HomeFragment.changeView = 0;
+    }
+    private void deinitDataList(){
+        HomeFragment.pageNo = 1;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.edit().remove("dataList").apply();
     }
@@ -320,8 +335,9 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         Log.w(logger, "onRestart");
     }
+
     private void setRecentAdapter(){
-        List<Diet> recentDrawerMenu = getRecentList(MainActivity.this);
+        List<Recent> recentDrawerMenu = getRecentList(MainActivity.this);
         if(recentDrawerMenu == null){
             RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), null);
             drawerListView.setAdapter(recentAdapter);

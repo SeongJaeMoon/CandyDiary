@@ -16,26 +16,17 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 import goods.cap.app.goodsgoods.API.Config;
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
-
+import goods.cap.app.goodsgoods.Model.Health.Health;
 import goods.cap.app.goodsgoods.R;
 
-/* 메인 화면 GridView 연결 컨트롤 Adapter, created by supermoon. */
-
-public class GirdViewAdapter extends ArrayAdapter{
+public class GridHealthAdapter extends ArrayAdapter{
 
     private Context context; //연결할 화면 context
     private int resourceId; //이미지 연결용 R.id
     private LayoutInflater inflater;
-    private List<Diet>data;
+    private List<Health>data;
 
-    static class ViewHolder {
-        TextView text;
-        ImageView image;
-    }
-    //그리드 뷰 어뎁터 생성자
-    public GirdViewAdapter(Context context, List<Diet>data, int resourceId){
-        //슈퍼클래스 생성자 호출 필요.
+    public GridHealthAdapter(@NonNull Context context, List<Health>data, int resourceId) {
         super(context, resourceId, data);
         this.resourceId = resourceId;
         this.context = context;
@@ -43,6 +34,10 @@ public class GirdViewAdapter extends ArrayAdapter{
         this.inflater = LayoutInflater.from(context);
     }
 
+    static class ViewHolder {
+        TextView title;
+        TextView subTitle;
+    }
     @Override
     public int getCount() { return data.size(); }
 
@@ -64,27 +59,16 @@ public class GirdViewAdapter extends ArrayAdapter{
         if (row == null) {
             row = inflater.inflate(resourceId, parent, false);
             holder = new ViewHolder();
-            holder.image = (ImageView) row.findViewById(R.id.grid_image);
-            holder.text = (TextView) row.findViewById(R.id.imgTitle);
+            holder.title = (TextView) row.findViewById(R.id.pd_nm);
+            holder.subTitle = (TextView) row.findViewById(R.id.dis_pos);
             row.setTag(holder);
         } else {
             //Recycler View
             holder = (ViewHolder) row.getTag();
         }
 
-
-        holder.text.setText(data.get(position).getFdNm());
-        String oldPath = data.get(position).getRtnImageDc();
-        String newPath = data.get(position).getRtnStreFileNm();
-
-        RequestOptions ro = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .format(DecodeFormat.PREFER_ARGB_8888);
-
-        Glide.with(context)
-                .setDefaultRequestOptions(ro)
-                .load(Config.getAbUrl(oldPath, newPath))
-                .into(holder.image);
+        holder.title.setText(data.get(position).getPRDLST_NM());
+        holder.subTitle.setText(data.get(position).getDISPOS());
 
         return row;
     }

@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -65,10 +63,6 @@ public class CustomDialog extends Dialog{
     }
 
     private void initChart(String[] dietInfo){
-        if(dietInfo == null) {
-            Toast.makeText(getContext(), getContext().getResources().getString(R.string.data_error),Toast.LENGTH_LONG).show();
-            return;
-        }
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();

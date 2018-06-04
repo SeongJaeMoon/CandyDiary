@@ -16,6 +16,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +38,8 @@
             android:name="android.webkit.WebView.EnableSafeBrowsing"
             android:value="false" />
 
-        <activity android:name=".Activity.CommentActivity"></activity>
+        <activity android:name=".Activity.CommentActivity" />
+        <activity android:name=".Activity.DetailFoodActivity"></activity>
     </application>
 
 </manifest>

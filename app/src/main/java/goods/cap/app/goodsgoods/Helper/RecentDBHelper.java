@@ -10,8 +10,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Recent;
 
 public class RecentDBHelper {
     //DB 변경 필요 -> Recent => Deatail에서 필요한 값들 저장 필요 (getRtnImageDc, getRtnStreFileNm, getFdNm, getCntntsNo)
@@ -21,12 +21,12 @@ public class RecentDBHelper {
     private static final String DATABASE_NAME = "recent.db";
     private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "recentDB";
-    // recent -> 0: Diet, 1: Food
+    // recent -> 0: Diet, 1: Health
     private static final String COLUMN_FLAG  = "flag"; //식단, 건강식품 구분
-    private static final String COLUMN_URL = "url"; //이미지 경로
-    private static final String COLUMN_SMY = "smy"; //메인
-    private static final String COLUMN_NO = "ctnno";//고유번호
-    private static final String COLUMN_CN = "cntnt";//식단정보
+    private static final String COLUMN_URL = "url"; //이미지 경로, 건강 식품의 경우 null -> 수입업체
+    private static final String COLUMN_SMY = "smy"; //메인 -> 식품명
+    private static final String COLUMN_NO = "ctnno";//고유번호 -> 품목제조관리번호
+    private static final String COLUMN_CN = "cntnt";//식단정보 -> 성상
 
     private static final String _ID = "id";
     private static final String DATABASE_CREATE =
@@ -71,7 +71,8 @@ public class RecentDBHelper {
         mDbHelper.close();
         mDb.close();
     }
-
+    // 0. Diet인 경우, DB에 식단과 건강식품 구분, 메인 설명, 고유번호, 식단정보를 저장한다.
+    //    건강식품인 경우, DB에 Health인 경우, DB에 식단과 건강식품 구분,
     public void addRecent(String url, String summary, String ctnno, String cntnt, int flag){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_URL, url);
@@ -107,10 +108,10 @@ public class RecentDBHelper {
     }
 
     //3. DB에 저장된 데이터를 List로 반환한다.
-    public List<Diet> getDietList(){
-        String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN
+    public List<Recent> getDietList(){
+        String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN + "," + COLUMN_FLAG
                 + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 3";
-        List<Diet> list = new ArrayList<Diet>();
+        List<Recent> list = new ArrayList<Recent>();
         mDbHelper = new DatabaseHelper(context);
         mDb =  mDbHelper.getReadableDatabase();
         Cursor res =  mDb.rawQuery(sql, null);
@@ -120,8 +121,8 @@ public class RecentDBHelper {
             String summary = res.getString(res.getColumnIndex(COLUMN_SMY));
             String ctnno = res.getString(res.getColumnIndex(COLUMN_NO));
             String cntnt = res.getString(res.getColumnIndex(COLUMN_CN));
-            list.add(new Diet(ctnno, imgUrl, summary, cntnt));
-
+            int flag = res.getInt(res.getColumnIndex(COLUMN_FLAG));
+            list.add(new Recent(ctnno, imgUrl, summary, cntnt, flag));
             res.moveToNext();
         }
         if (res.getCount()==0){

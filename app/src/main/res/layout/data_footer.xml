@@ -11,7 +11,7 @@
         android:layout_height="50dip"
         android:id="@+id/moreData"
         android:layout_gravity="center"
-        android:text="@string/detail"
+        android:text="@string/data_limit"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 </LinearLayout>

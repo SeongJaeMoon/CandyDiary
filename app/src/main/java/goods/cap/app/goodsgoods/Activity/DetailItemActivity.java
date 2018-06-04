@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Adapter.DetailAdapter;
+import goods.cap.app.goodsgoods.GoodsApplication;
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
@@ -70,6 +71,7 @@ public class DetailItemActivity extends AppCompatActivity {
     @BindView(R.id.comment_img)ImageView commentImg; //댓글 이미지
     @BindView(R.id.comment_detail)TextView commentDetail;//댓글보기
     @BindView(R.id.comments)TextView comments;//댓글 수
+    @BindView(R.id.detail_img)ImageView imageView;
     private static final String logger = DetailItemActivity.class.getSimpleName();
     private RecyclerView.Adapter adapter;
     private CustomDialog customDialog;
@@ -109,8 +111,10 @@ public class DetailItemActivity extends AppCompatActivity {
                     .load(diet.getFilePath())
                     .into(wallpaper);
 
+            recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             String contentNo = diet.getCntntsNo();
+
             initData(contentNo);
 
             commentDetail.setOnClickListener(new View.OnClickListener(){
@@ -126,10 +130,21 @@ public class DetailItemActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.i(logger, "calroie");
-                    customDialog = new CustomDialog(DetailItemActivity.this, calorie);
-                    customDialog.show();
+                    if(calorie == null) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.static_no),Toast.LENGTH_SHORT).show();
+                    }else {
+                        customDialog = new CustomDialog(DetailItemActivity.this, calorie);
+                        customDialog.show();
+                    }
                 }
             });
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
             initFirebase(contentNo);
 
         }else{
@@ -137,7 +152,6 @@ public class DetailItemActivity extends AppCompatActivity {
         }
 
     }
-
     private void initData(String cntntsNo){
         MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
         mainHttp.setCntntsNo(cntntsNo);
@@ -147,7 +161,14 @@ public class DetailItemActivity extends AppCompatActivity {
                 List<DietDtl> list = response.getBody().getItems().getDietDtlList();
                 adapter = new DetailAdapter(DetailItemActivity.this, list);
                 recyclerView.setAdapter(adapter);
-                calorie = list.get(0).getDietNtrsmallInfo().split(",");
+                GoodsApplication goodsApplication = (GoodsApplication)getApplicationContext();
+                int key = goodsApplication.getKey();
+                if(key < 3){
+                    calorie = list.get(0).getDietNtrsmallInfo().split(",");
+                }else{
+                    calorie = null;
+                }
+
             }
             @Override
             public void failure(String message) {
@@ -155,7 +176,6 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         });
     }
-
     private void initFirebase(String cntntsNo) {
         db = FirebaseDatabase.getInstance();
         //사용자 정보
@@ -211,7 +231,6 @@ public class DetailItemActivity extends AppCompatActivity {
                 }
                 long likesCount = dataSnapshot.getChildrenCount();
                 likes.setText(String.valueOf(likesCount));
-                likes.setTextColor(getResources().getColor(R.color.white));
             }
 
             @Override
@@ -224,7 +243,6 @@ public class DetailItemActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long likesCount = dataSnapshot.getChildrenCount();
                 comments.setText(String.valueOf(likesCount));
-                comments.setTextColor(getResources().getColor(R.color.white));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -237,7 +255,6 @@ public class DetailItemActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_default, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -262,7 +279,6 @@ public class DetailItemActivity extends AppCompatActivity {
             recentDBHelper.close();
         }
     }
-
     private void animationTitle(TextView view){
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(2000);
@@ -271,7 +287,6 @@ public class DetailItemActivity extends AppCompatActivity {
         animation.setRepeatCount(Animation.INFINITE);
         view.startAnimation(animation);
     }
-
     private void setHeadLayout(String title){
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);
@@ -280,12 +295,10 @@ public class DetailItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
     @Override
     protected void onResume(){
         super.onResume();
     }
-
     @Override
     protected void onStart() {
         super.onStart();
