@@ -24,6 +24,12 @@ import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 import me.gujun.android.taggroup.TagGroup;
 
+/* keyword search 화면, created by supermoon. */
+
+/*===========================================================================
+ * -> 키워드 검색, 해시 태그 검색 or 사용자 검색 추천 -> Firebase DB 데이터 비교 및 검색 데이터 저장.
+ * -> 좋아요(인기순), 함께 많이 본 데이터 보여주기(Firebase DB 연동)
+ * */
 public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagClickListener {
 
     @BindView(R.id.tag_group)TagGroup tagGroup;
@@ -112,7 +118,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
             super.onBackPressed();
         }
     }
-
+    // 검색 목록
     static class SearchViewHolder extends RecyclerView.ViewHolder{
 
         public SearchViewHolder(View itemView) {
@@ -121,12 +127,14 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
     }
 
+    // 검색 추천
     static class SearchListHolder extends RecyclerView.ViewHolder{
 
         public SearchListHolder(View itemView) {
             super(itemView);
         }
     }
+
 
     @Override
     protected void onStart() {

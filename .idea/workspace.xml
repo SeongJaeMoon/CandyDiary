@@ -11,45 +11,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fb698c4-35b1-4966-9610-28434d61dc7d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiClient.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiDataFood.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailFoodActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailTherapyActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignInActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignInActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignUpActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignUpActivity.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/UserProfileActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/UserProfileActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/RecentAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/RecentAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GridHealthAdapter.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/GoodsApplication.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/GoodsApplication.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/FoodHelper.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/GroceryHelper.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecentDBHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecentDBHelper.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecipeHelper.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/HealthHelper.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/MainActivity.java" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Diet.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Diet.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Items.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Items.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Food/Food.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Food/FoodQuery.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Food/FoodResponseModel.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Grocery/Grocery.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Grocery/GroceryQuery.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Grocery/GroceryResponseModel.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recent.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recipe/Query.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recipe/Recipe.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recipe/RecipeResponseModel.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recipe/Result.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/BackHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/BackHandler.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/CustomDialog.java" afterPath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/CustomDialog.java" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail_item.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/data_footer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/data_footer.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/detail_body.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/detail_body.xml" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/detail_header.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/detail_header.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DtlItems.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Header.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/HealthResponseModel.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Items.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail_food.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_detail_food.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_com.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_com.xml" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -107,132 +100,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/MainActivity.java">
+      <file leaf-file-name="SearchActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="318" column="32" lean-forward="false" selection-start-line="318" selection-start-column="32" selection-end-line="318" selection-end-column="32" />
+            <state relative-caret-position="222">
+              <caret line="60" column="29" lean-forward="true" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3330#3374#0" expanded="true" />
-                <element signature="e#3401#3445#0" expanded="true" />
-                <element signature="e#6916#7210#0" expanded="true" />
-                <element signature="e#7209#7210#0" expanded="true" />
-                <element signature="e#7248#7542#0" expanded="true" />
-                <element signature="e#7541#7542#0" expanded="true" />
-                <element signature="class#MainAdapter#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#13059#13108#0" expanded="true" />
-                <element signature="e#13145#13183#0" expanded="true" />
-                <element signature="e#13185#13589#0" expanded="true" />
-                <element signature="e#13588#13589#0" expanded="true" />
+                <element signature="e#4412#4413#0" expanded="true" />
+                <element signature="e#4451#4452#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GirdViewAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java">
+      <file leaf-file-name="activity_search.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-545">
-              <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+            <state relative-caret-position="-128">
+              <caret line="30" column="33" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="33" />
               <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HomeFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-259">
-              <caret line="236" column="44" lean-forward="true" selection-start-line="236" selection-start-column="44" selection-end-line="236" selection-end-column="44" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#6885#6930#0" expanded="true" />
-                <element signature="e#7299#7344#0" expanded="true" />
-                <element signature="e#7978#8023#0" expanded="true" />
-                <element signature="e#8360#8405#0" expanded="true" />
-                <element signature="e#9344#9389#0" expanded="true" />
-                <element signature="e#9510#9563#0" expanded="true" />
-                <element signature="e#9565#9612#0" expanded="true" />
-                <element signature="e#10083#10128#0" expanded="true" />
-                <element signature="e#10402#10447#0" expanded="true" />
-                <element signature="method#onStop#0;class#HomeFragment#0" expanded="false" />
-                <element signature="method#onDestroyView#0;class#HomeFragment#0" expanded="false" />
-                <element signature="method#onDestroy#0;class#HomeFragment#0" expanded="false" />
-                <element signature="method#onDetach#0;class#HomeFragment#0" expanded="false" />
-                <element signature="method#isTablet#0;class#HomeFragment#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RecentDBHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecentDBHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="24" column="68" lean-forward="true" selection-start-line="24" selection-start-column="68" selection-end-line="24" selection-end-column="68" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#open#0;class#RecentDBHelper#0" expanded="false" />
-                <element signature="e#4314#4322#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DetailItemActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="288" column="5" lean-forward="true" selection-start-line="288" selection-start-column="5" selection-end-line="288" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#onCreate#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#initData#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#initFirebase#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="class#9267:9870" expanded="false" />
-                <element signature="class#9914:10281" expanded="false" />
-                <element signature="method#onDataChange#0;class#9914:10281" expanded="false" />
-                <element signature="method#onCreateOptionsMenu#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onOptionsItemSelected#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#setRecent#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#animationTitle#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#setHeadLayout#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onStart#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onDestroy#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onStop#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onPause#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onRestart#0;class#DetailItemActivity#0" expanded="false" />
-                <element signature="method#onBackPressed#0;class#DetailItemActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_home.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-              <folding>
-                <element signature="e#356#396#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="grid_single.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
-              <caret line="3" column="39" lean-forward="true" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
-              <folding>
-                <element signature="e#935#953#0" expanded="true" />
+                <element signature="e#1924#1943#0" expanded="true" />
+                <element signature="e#2430#2450#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -244,11 +133,118 @@
       <file leaf-file-name="grid_single2.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="5" column="41" lean-forward="false" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+            <state relative-caret-position="75">
+              <caret line="5" column="46" lean-forward="true" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="grid_single.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="20" column="29" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommentActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="373">
+              <caret line="145" column="40" lean-forward="false" selection-start-line="145" selection-start-column="40" selection-end-line="145" selection-end-column="40" />
               <folding>
-                <element signature="e#998#1016#0" expanded="true" />
+                <element signature="e#2607#2849#0" expanded="true" />
+                <element signature="e#2848#2849#0" expanded="true" />
+                <element signature="e#2881#2925#0" expanded="true" />
+                <element signature="method#onClick#0;class#CommentActivity#0" expanded="false" />
+                <element signature="method#initFirebaseDatabase#0;class#CommentActivity#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-11">
+              <caret line="14" column="34" lean-forward="true" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+              <folding>
+                <element signature="e#1874#1882#0" expanded="true" />
+                <element signature="method#newInstance#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onAttach#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onCreate#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onScrollStateChanged#0;class#4042:5458" expanded="false" />
+                <element signature="method#onActivityCreated#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onRefresh#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#initData#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#initData#1;class#HomeFragment#0" expanded="false" />
+                <element signature="method#addData#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#addData#1;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onItemClick#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onStart#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onResume#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#setChangeView#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onPause#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onStop#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onDestroyView#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onDestroy#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#onDetach#0;class#HomeFragment#0" expanded="false" />
+                <element signature="method#isTablet#0;class#HomeFragment#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="53" column="29" lean-forward="false" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_sign_up.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6">
+              <caret line="82" column="38" lean-forward="false" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserProfileActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/UserProfileActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_user_profile.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
           <provider editor-type-id="android-designer2">
@@ -263,29 +259,18 @@
       <list>
         <option value="resourceFile" />
         <option value="valueResourceFile" />
+        <option value="Class" />
         <option value="Interface" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>summary</find>
-      <find>setRecent</find>
-      <find>onClick</find>
-      <find>Detai</find>
-      <find>diet</find>
-      <find>onrestart</find>
-      <find>navigation</find>
-      <find>addd</find>
-      <find>actionBarDrawerToggle</find>
-      <find>cntntsSj</find>
       <find>Config.</find>
       <find>onResume</find>
       <find>pageNo</find>
       <find>title</find>
-      <find>mainText</find>
       <find>addD</find>
       <find>addData</find>
       <find>onDe</find>
@@ -301,6 +286,17 @@
       <find>fab</find>
       <find>gridview</find>
       <find>RecentAdapter</find>
+      <find>IFTKN_ATNT_MATR_CN</find>
+      <find>viewcrea</find>
+      <find>mainText</find>
+      <find>onDes</find>
+      <find>gridViewAdapter</find>
+      <find>swipe_conta</find>
+      <find>onRefresh</find>
+      <find>mNotify</find>
+      <find>mListener</find>
+      <find>mTarget</find>
+      <find>ANIMATE_TO_TRIGGER_DURATION</find>
     </findStrings>
     <replaceStrings>
       <replace>Integer</replace>
@@ -2191,57 +2187,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/SearchHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DietDtl.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/navi_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Firebase/Comment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/comment_box.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/custom_listview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/CommentAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignUpActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/search_box.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/SearchDBHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/data_footer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/BackHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/CustomDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/detail_header.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/detail_body.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailFoodActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Items.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Diet.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/HealthHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Items.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Header.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/HealthResponseModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiDataFood.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/GoodsApplication.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GridHealthAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Recent.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/RecentAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecentDBHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Items.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GridHealthAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/TherapyResponseModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/Items.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/Therapy.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/DtlItems.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/TherapyDtlResponseModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/TherapyDtl.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Diet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/HealthResponseModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/TherapyHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/TherapyDtlHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_com.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignUpActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignInActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/UserProfileActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml" />
       </list>
     </option>
   </component>
@@ -2319,7 +2315,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="goodsgoods" type="462c0819:PsiDirectoryNode" />
-              <item name="Activity" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
@@ -2329,7 +2325,8 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="goodsgoods" type="462c0819:PsiDirectoryNode" />
-              <item name="Adapter" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Diet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
@@ -2339,7 +2336,19 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="goodsgoods" type="462c0819:PsiDirectoryNode" />
-              <item name="Fragment" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Firebase" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoodsGoods" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="goodsgoods" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="Therapy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
@@ -2357,7 +2366,26 @@
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="goodsgoods" type="462c0819:PsiDirectoryNode" />
+              <item name="Util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoodsGoods" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GoodsGoods" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GoodsGoods" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -2630,12 +2658,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32736573" sideWeight="0.48808664" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6896067" sideWeight="0.59044117" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32736573" sideWeight="0.49117646" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3094629" sideWeight="0.6700361" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38746804" sideWeight="0.6700361" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19855596" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2647059" sideWeight="0.69963896" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20216607" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2634271" sideWeight="0.69963896" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924187" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2658,11 +2686,11 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51468533" sideWeight="0.3299639" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4539642" sideWeight="0.6700361" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5191816" sideWeight="0.6700361" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50127876" sideWeight="0.69963896" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2634271" sideWeight="0.69963896" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2678,7 +2706,7 @@
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33008358" sideWeight="0.49713877" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32736573" sideWeight="0.49117646" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23393501" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15379061" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924187" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2690,232 +2718,51 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="16" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Food/FoodQuery.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/DtlItems.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="45">
+          <caret line="3" column="3" lean-forward="false" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/FoodHelper.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DtlItems.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="105">
+          <caret line="7" column="45" lean-forward="true" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DietDtlResponseModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="46" column="60" lean-forward="false" selection-start-line="46" selection-start-column="60" selection-end-line="46" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="68" column="19" lean-forward="false" selection-start-line="68" selection-start-column="19" selection-end-line="68" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="124">
+          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DietDtl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="77" column="44" lean-forward="false" selection-start-line="77" selection-start-column="44" selection-end-line="77" selection-end-column="44" />
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/PostActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="34" column="27" lean-forward="false" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/CustomDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-          <folding>
-            <element signature="e#1617#1778#0" expanded="false" />
-            <element signature="e#1777#1778#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_comment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="46" lean-forward="true" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/Search.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/SearchCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Firebase/Comment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="148" column="20" lean-forward="false" selection-start-line="148" selection-start-column="20" selection-end-line="148" selection-end-column="20" />
-          <folding>
-            <element signature="e#2550#2594#0" expanded="false" />
-            <element signature="e#3093#3094#0" expanded="false" />
-            <element signature="e#3125#3126#0" expanded="false" />
-            <element signature="e#6458#6503#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/data_footer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="40" lean-forward="false" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/RandomHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="19" column="48" lean-forward="true" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
-          <folding>
-            <element signature="e#701#723#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/detail_header.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="4" column="55" lean-forward="true" selection-start-line="4" selection-start-column="55" selection-end-line="4" selection-end-column="55" />
-          <folding>
-            <element signature="e#569#587#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/DetailAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="40" column="66" lean-forward="true" selection-start-line="40" selection-start-column="66" selection-end-line="40" selection-end-column="66" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/detail_body.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="162" column="48" lean-forward="true" selection-start-line="162" selection-start-column="48" selection-end-line="162" selection-end-column="48" />
-          <folding>
-            <element signature="e#6099#7692#0" expanded="false" />
-            <element signature="e#7216#7239#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailFoodActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail_food.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Items.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DietResponseModel.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <caret line="16" column="11" lean-forward="false" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -2924,236 +2771,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Diet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="662">
+          <caret line="54" column="4" lean-forward="false" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="false" />
             <element signature="method#Diet#1;class#Diet#0" expanded="false" />
-            <element signature="e#1782#1783#0" expanded="false" />
-            <element signature="e#1825#1826#0" expanded="false" />
-            <element signature="e#1985#1986#0" expanded="false" />
-            <element signature="e#2016#2017#0" expanded="false" />
-            <element signature="e#2064#2065#0" expanded="false" />
-            <element signature="e#2104#2105#0" expanded="false" />
-            <element signature="e#2142#2143#0" expanded="false" />
-            <element signature="e#2176#2177#0" expanded="false" />
-            <element signature="e#2230#2231#0" expanded="false" />
-            <element signature="e#2276#2277#0" expanded="false" />
-            <element signature="e#2311#2312#0" expanded="false" />
-            <element signature="e#2342#2343#0" expanded="false" />
-            <element signature="e#2390#2391#0" expanded="false" />
-            <element signature="e#2430#2431#0" expanded="false" />
-            <element signature="e#2463#2464#0" expanded="false" />
-            <element signature="e#2492#2493#0" expanded="false" />
-            <element signature="e#2536#2537#0" expanded="false" />
-            <element signature="e#2572#2573#0" expanded="false" />
-            <element signature="e#2603#2604#0" expanded="false" />
-            <element signature="e#2630#2631#0" expanded="false" />
-            <element signature="e#2670#2671#0" expanded="false" />
-            <element signature="e#2702#2703#0" expanded="false" />
-            <element signature="e#2737#2738#0" expanded="false" />
-            <element signature="e#2768#2769#0" expanded="false" />
-            <element signature="e#2816#2817#0" expanded="false" />
-            <element signature="e#2856#2857#0" expanded="false" />
-            <element signature="e#2896#2897#0" expanded="false" />
-            <element signature="e#2932#2933#0" expanded="false" />
-            <element signature="e#2990#2991#0" expanded="false" />
-            <element signature="e#3040#3041#0" expanded="false" />
-            <element signature="e#3076#3077#0" expanded="false" />
-            <element signature="e#3108#3109#0" expanded="false" />
-            <element signature="e#3158#3159#0" expanded="false" />
-            <element signature="e#3200#3201#0" expanded="false" />
-            <element signature="e#3237#3238#0" expanded="false" />
-            <element signature="e#3270#3271#0" expanded="false" />
-            <element signature="e#3322#3323#0" expanded="false" />
-            <element signature="e#3366#3367#0" expanded="false" />
-            <element signature="e#3405#3406#0" expanded="false" />
-            <element signature="e#3440#3441#0" expanded="false" />
-            <element signature="e#3496#3497#0" expanded="false" />
-            <element signature="e#3544#3545#0" expanded="false" />
-            <element signature="e#3586#3587#0" expanded="false" />
-            <element signature="e#3624#3625#0" expanded="false" />
-            <element signature="e#3780#3781#0" expanded="false" />
-            <element signature="e#3816#3817#0" expanded="false" />
-            <element signature="e#3874#3875#0" expanded="false" />
-            <element signature="e#3924#3925#0" expanded="false" />
-            <element signature="e#3965#3966#0" expanded="false" />
-            <element signature="e#4002#4003#0" expanded="false" />
-            <element signature="e#4062#4063#0" expanded="false" />
-            <element signature="e#4114#4115#0" expanded="false" />
-            <element signature="e#4149#4150#0" expanded="false" />
-            <element signature="e#4180#4181#0" expanded="false" />
-            <element signature="e#4228#4229#0" expanded="false" />
-            <element signature="e#4268#4269#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/HealthHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="59" column="55" lean-forward="false" selection-start-line="59" selection-start-column="55" selection-end-line="59" selection-end-column="55" />
-          <folding>
-            <element signature="e#514#515#0" expanded="false" />
-            <element signature="e#552#553#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/DietHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="61" lean-forward="true" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/RequestParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="10" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="5" lean-forward="false" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Diet/DietDtlResponseModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="33" column="27" lean-forward="true" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/HealthResponseModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="class#Body#0;class#HealthResponseModel#0" expanded="false" />
-            <element signature="e#1459#1460#0" expanded="false" />
-            <element signature="e#1500#1501#0" expanded="false" />
-            <element signature="e#1556#1557#0" expanded="false" />
-            <element signature="e#1608#1609#0" expanded="false" />
-            <element signature="e#1645#1646#0" expanded="false" />
-            <element signature="e#1682#1683#0" expanded="false" />
-            <element signature="e#1730#1731#0" expanded="false" />
-            <element signature="e#1774#1775#0" expanded="false" />
-            <element signature="e#1814#1815#0" expanded="false" />
-            <element signature="e#1854#1855#0" expanded="false" />
-            <element signature="e#1908#1909#0" expanded="false" />
-            <element signature="e#1958#1959#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="40" column="27" lean-forward="false" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-461">
-          <caret line="38" column="60" lean-forward="false" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#MainHttp#0;class#MainHttp#0" expanded="false" />
-            <element signature="method#getDiet#0;class#MainHttp#0" expanded="false" />
-            <element signature="method#getDietDtl#0;class#MainHttp#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Items.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="43" lean-forward="false" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiDataFood.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="17" column="98" lean-forward="false" selection-start-line="17" selection-start-column="98" selection-end-line="17" selection-end-column="98" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1191#1661#0" expanded="false" />
-            <element signature="e#1660#1661#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/Health.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#toString#0;class#Health#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/GoodsApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="102" column="32" lean-forward="true" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3161,98 +2784,234 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="25" lean-forward="false" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/SearchHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="4" lean-forward="false" selection-start-line="5" selection-start-column="4" selection-end-line="6" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/TherapyHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="7" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/TherapyDtlHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="43" lean-forward="false" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/ApiDataFood.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/TherapyDtl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="55" lean-forward="true" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
           <folding>
-            <element signature="e#484#485#0" expanded="true" />
-            <element signature="e#512#513#0" expanded="true" />
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#574#575#0" expanded="true" />
-            <element signature="e#608#609#0" expanded="true" />
-            <element signature="e#638#639#0" expanded="true" />
-            <element signature="e#670#671#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
-            <element signature="e#726#727#0" expanded="true" />
-            <element signature="e#753#754#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1466#1467#0" expanded="false" />
+            <element signature="e#1495#1496#0" expanded="false" />
+            <element signature="e#1539#1540#0" expanded="false" />
+            <element signature="e#1575#1576#0" expanded="false" />
+            <element signature="e#1609#1610#0" expanded="false" />
+            <element signature="e#1639#1640#0" expanded="false" />
+            <element signature="e#1685#1686#0" expanded="false" />
+            <element signature="e#1723#1724#0" expanded="false" />
+            <element signature="e#1757#1758#0" expanded="false" />
+            <element signature="e#1787#1788#0" expanded="false" />
+            <element signature="e#1833#1834#0" expanded="false" />
+            <element signature="e#1871#1872#0" expanded="false" />
+            <element signature="e#1905#1906#0" expanded="false" />
+            <element signature="e#1935#1936#0" expanded="false" />
+            <element signature="e#1981#1982#0" expanded="false" />
+            <element signature="e#2019#2020#0" expanded="false" />
+            <element signature="e#2053#2054#0" expanded="false" />
+            <element signature="e#2083#2084#0" expanded="false" />
+            <element signature="e#2129#2130#0" expanded="false" />
+            <element signature="e#2167#2168#0" expanded="false" />
+            <element signature="e#2201#2202#0" expanded="false" />
+            <element signature="e#2231#2232#0" expanded="false" />
+            <element signature="e#2277#2278#0" expanded="false" />
+            <element signature="e#2315#2316#0" expanded="false" />
+            <element signature="e#2350#2351#0" expanded="false" />
+            <element signature="e#2381#2382#0" expanded="false" />
+            <element signature="e#2429#2430#0" expanded="false" />
+            <element signature="e#2469#2470#0" expanded="false" />
+            <element signature="e#2504#2505#0" expanded="false" />
+            <element signature="e#2535#2536#0" expanded="false" />
+            <element signature="e#2583#2584#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2657#2658#0" expanded="false" />
+            <element signature="e#2687#2688#0" expanded="false" />
+            <element signature="e#2733#2734#0" expanded="false" />
+            <element signature="e#2771#2772#0" expanded="false" />
+            <element signature="e#2810#2811#0" expanded="false" />
+            <element signature="e#2845#2846#0" expanded="false" />
+            <element signature="e#2901#2902#0" expanded="false" />
+            <element signature="e#2949#2950#0" expanded="false" />
+            <element signature="e#2984#2985#0" expanded="false" />
+            <element signature="e#3015#3016#0" expanded="false" />
+            <element signature="e#3063#3064#0" expanded="false" />
+            <element signature="e#3103#3104#0" expanded="false" />
+            <element signature="e#3135#3136#0" expanded="false" />
+            <element signature="e#3163#3164#0" expanded="false" />
+            <element signature="e#3205#3206#0" expanded="false" />
+            <element signature="e#3239#3240#0" expanded="false" />
+            <element signature="e#3270#3271#0" expanded="false" />
+            <element signature="e#3297#3298#0" expanded="false" />
+            <element signature="e#3337#3338#0" expanded="false" />
+            <element signature="e#3369#3370#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/RecentAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Health/HealthResponseModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="53" column="53" lean-forward="false" selection-start-line="53" selection-start-column="53" selection-end-line="53" selection-end-column="53" />
+        <state relative-caret-position="59">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/TherapyDtlResponseModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2166#2746#0" expanded="true" />
-            <element signature="e#2745#2746#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpAPI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="5" column="41" lean-forward="false" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+        <state relative-caret-position="540">
+          <caret line="36" column="52" lean-forward="true" selection-start-line="36" selection-start-column="52" selection-end-line="36" selection-end-column="52" />
           <folding>
-            <element signature="e#998#1016#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single.xml">
+    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-27/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="3" column="39" lean-forward="true" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
-          <folding>
-            <element signature="e#935#953#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="251">
+          <caret line="116" column="19" lean-forward="false" selection-start-line="116" selection-start-column="19" selection-end-line="116" selection-end-column="19" />
+          <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding>
-            <element signature="e#356#396#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GridHealthAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        <state relative-caret-position="165">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Model/Therapy/Therapy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-37">
+          <caret line="9" column="32" lean-forward="false" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1362#1363#0" expanded="true" />
-            <element signature="e#1389#1390#0" expanded="true" />
-            <element signature="e#1446#1447#0" expanded="true" />
-            <element signature="e#1470#1471#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#697#698#0" expanded="false" />
+            <element signature="e#726#727#0" expanded="false" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#806#807#0" expanded="false" />
+            <element signature="e#839#840#0" expanded="false" />
+            <element signature="e#868#869#0" expanded="false" />
+            <element signature="e#912#913#0" expanded="false" />
+            <element signature="e#948#949#0" expanded="false" />
+            <element signature="e#986#987#0" expanded="false" />
+            <element signature="e#1020#1021#0" expanded="false" />
+            <element signature="e#1074#1075#0" expanded="false" />
+            <element signature="e#1120#1121#0" expanded="false" />
+            <element signature="e#1155#1156#0" expanded="false" />
+            <element signature="e#1186#1187#0" expanded="false" />
+            <element signature="e#1234#1235#0" expanded="false" />
+            <element signature="e#1274#1275#0" expanded="false" />
+            <element signature="e#1309#1310#0" expanded="false" />
+            <element signature="e#1340#1341#0" expanded="false" />
+            <element signature="e#1388#1389#0" expanded="false" />
+            <element signature="e#1428#1429#0" expanded="false" />
+            <element signature="e#1460#1461#0" expanded="false" />
+            <element signature="e#1488#1489#0" expanded="false" />
+            <element signature="e#1530#1531#0" expanded="false" />
+            <element signature="e#1564#1565#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailTherapyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/in.srain.cube/grid-view-with-header-footer/1.0.12/4f22fd9339c1f8141339520fb96d91bf3a8cca2/grid-view-with-header-footer-1.0.12-sources.jar!/in/srain/cube/views/GridViewWithHeaderAndFooter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4095">
+          <caret line="297" column="13" lean-forward="true" selection-start-line="297" selection-start-column="13" selection-end-line="297" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2440#2455#0" expanded="false" />
+            <element signature="e#2528#2543#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/GoodsApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="32" column="21" lean-forward="true" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/DetailItemActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="288" column="5" lean-forward="true" selection-start-line="288" selection-start-column="5" selection-end-line="288" selection-end-column="5" />
+        <state relative-caret-position="-16">
+          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#onCreate#0;class#DetailItemActivity#0" expanded="false" />
             <element signature="method#initData#0;class#DetailItemActivity#0" expanded="false" />
             <element signature="method#initFirebase#0;class#DetailItemActivity#0" expanded="false" />
-            <element signature="class#9267:9870" expanded="false" />
-            <element signature="class#9914:10281" expanded="false" />
-            <element signature="method#onDataChange#0;class#9914:10281" expanded="false" />
+            <element signature="class#9268:9871" expanded="false" />
+            <element signature="class#9915:10282" expanded="false" />
+            <element signature="method#onDataChange#0;class#9915:10282" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#DetailItemActivity#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#DetailItemActivity#0" expanded="false" />
             <element signature="method#setRecent#0;class#DetailItemActivity#0" expanded="false" />
@@ -3268,69 +3027,399 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Helper/RecentDBHelper.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Util/MultiSwipeRefreshLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="24" column="68" lean-forward="true" selection-start-line="24" selection-start-column="68" selection-end-line="24" selection-end-column="68" />
+        <state relative-caret-position="407">
+          <caret line="49" column="5" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#open#0;class#RecentDBHelper#0" expanded="false" />
-            <element signature="e#4314#4322#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-core-ui/27.1.1/266c369a3227be5afec33e11c964472269ff2a7c/support-core-ui-27.1.1-sources.jar!/android/support/v4/widget/SwipeRefreshLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="721">
+          <caret line="880" column="0" lean-forward="true" selection-start-line="880" selection-start-column="0" selection-end-line="880" selection-end-column="0" />
+          <folding>
+            <element signature="e#40650#41294#0" expanded="false" />
+            <element signature="e#41293#41294#0" expanded="false" />
+            <element signature="e#42025#42368#0" expanded="false" />
+            <element signature="e#42367#42368#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/HttpCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/27.1.1/94732bda44fba11302c58e459b7c1f47e7521bf9/support-fragment-27.1.1-sources.jar!/android/support/v4/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="635" column="26" lean-forward="true" selection-start-line="635" selection-start-column="26" selection-end-line="635" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/API/MainHttp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="164" column="0" lean-forward="false" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
+          <folding>
+            <element signature="method#MainHttp#0;class#MainHttp#0" expanded="false" />
+            <element signature="method#getDiet#0;class#MainHttp#0" expanded="false" />
+            <element signature="method#getDietDtl#0;class#MainHttp#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="35" column="40" lean-forward="false" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+          <folding>
+            <element signature="e#356#396#0" expanded="true" />
+            <element signature="e#929#948#0" expanded="true" />
+            <element signature="e#1313#1332#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_com.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="66" lean-forward="false" selection-start-line="17" selection-start-column="66" selection-end-line="17" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="44" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_detail_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Adapter/GirdViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-545">
-          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        <state relative-caret-position="-518">
+          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#getView#0;class#GirdViewAdapter#0" expanded="false" />
+            <element signature="e#3455#3456#0" expanded="false" />
+            <element signature="e#3499#3500#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="318" column="32" lean-forward="false" selection-start-line="318" selection-start-column="32" selection-end-line="318" selection-end-column="32" />
+        <state relative-caret-position="319">
+          <caret line="305" column="5" lean-forward="false" selection-start-line="305" selection-start-column="5" selection-end-line="305" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3955#4002#0" expanded="false" />
+            <element signature="e#4083#4096#0" expanded="false" />
+            <element signature="e#4098#4112#0" expanded="false" />
+            <element signature="e#6419#6994#0" expanded="false" />
+            <element signature="e#6993#6994#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#setFab#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#getRecentList#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#8413#8414#0" expanded="false" />
+            <element signature="e#8464#8465#0" expanded="false" />
+            <element signature="e#8873#8874#0" expanded="false" />
+            <element signature="e#8906#8907#0" expanded="false" />
+            <element signature="e#8957#8958#0" expanded="false" />
+            <element signature="e#8999#9000#0" expanded="false" />
+            <element signature="e#9074#9075#0" expanded="false" />
+            <element signature="e#9119#9120#0" expanded="false" />
+            <element signature="method#onBackPressed#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onResume#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onStart#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onDestroy#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#deinitDataList#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onStop#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onPause#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onRestart#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#setRecentAdapter#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#Logout#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12588#12637#0" expanded="false" />
+            <element signature="e#12674#12712#0" expanded="false" />
+            <element signature="e#12714#13118#0" expanded="false" />
+            <element signature="e#13117#13118#0" expanded="false" />
+            <element signature="e#13156#13193#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_in.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/r/debug/goods/cap/app/goodsgoods/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="5282" column="32" lean-forward="false" selection-start-line="5282" selection-start-column="32" selection-end-line="5282" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignInActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="42" lean-forward="false" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding>
+            <element signature="method#onCreate#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#2737#2778#0" expanded="true" />
+            <element signature="e#2949#3305#0" expanded="true" />
+            <element signature="e#3191#3236#0" expanded="true" />
+            <element signature="e#3304#3305#0" expanded="true" />
+            <element signature="e#3416#3909#0" expanded="true" />
+            <element signature="e#3908#3909#0" expanded="true" />
+            <element signature="method#login#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#4205#4252#0" expanded="true" />
+            <element signature="e#4407#4760#0" expanded="true" />
+            <element signature="e#4759#4760#0" expanded="true" />
+            <element signature="method#checkUserExist#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#5632#5680#0" expanded="true" />
+            <element signature="e#5810#5853#0" expanded="true" />
+            <element signature="e#6107#6152#0" expanded="true" />
+            <element signature="e#6342#6387#0" expanded="true" />
+            <element signature="method#onStart#0;class#SignInActivity#0" expanded="false" />
+            <element signature="method#onActivityResult#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#7609#7654#0" expanded="true" />
+            <element signature="method#firebaseAuthWithGoogle#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#8219#9210#0" expanded="true" />
+            <element signature="e#8666#8711#0" expanded="true" />
+            <element signature="e#9209#9210#0" expanded="true" />
+            <element signature="method#setProgressDialog#0;class#SignInActivity#0" expanded="false" />
+            <element signature="e#9323#9376#0" expanded="true" />
+            <element signature="e#9413#9460#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SignUpActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="68" column="30" lean-forward="true" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3330#3374#0" expanded="true" />
-            <element signature="e#3401#3445#0" expanded="true" />
-            <element signature="e#6916#7210#0" expanded="true" />
-            <element signature="e#7209#7210#0" expanded="true" />
-            <element signature="e#7248#7542#0" expanded="true" />
-            <element signature="e#7541#7542#0" expanded="true" />
-            <element signature="class#MainAdapter#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#13059#13108#0" expanded="true" />
-            <element signature="e#13145#13183#0" expanded="true" />
-            <element signature="e#13185#13589#0" expanded="true" />
-            <element signature="e#13588#13589#0" expanded="true" />
+            <element signature="e#2045#2096#0" expanded="true" />
+            <element signature="e#2216#2262#0" expanded="true" />
+            <element signature="e#2423#3960#0" expanded="true" />
+            <element signature="e#2865#2911#0" expanded="true" />
+            <element signature="e#3832#3877#0" expanded="true" />
+            <element signature="e#3959#3960#0" expanded="true" />
+            <element signature="method#setProgressDialog#0;class#SignUpActivity#0" expanded="false" />
+            <element signature="e#4048#4101#0" expanded="true" />
+            <element signature="e#4138#4185#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Fragment/HomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-259">
-          <caret line="236" column="44" lean-forward="true" selection-start-line="236" selection-start-column="44" selection-end-line="236" selection-end-column="44" />
+        <state relative-caret-position="-11">
+          <caret line="14" column="34" lean-forward="true" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6885#6930#0" expanded="true" />
-            <element signature="e#7299#7344#0" expanded="true" />
-            <element signature="e#7978#8023#0" expanded="true" />
-            <element signature="e#8360#8405#0" expanded="true" />
-            <element signature="e#9344#9389#0" expanded="true" />
-            <element signature="e#9510#9563#0" expanded="true" />
-            <element signature="e#9565#9612#0" expanded="true" />
-            <element signature="e#10083#10128#0" expanded="true" />
-            <element signature="e#10402#10447#0" expanded="true" />
+            <element signature="e#1874#1882#0" expanded="true" />
+            <element signature="method#newInstance#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onAttach#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onCreate#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onScrollStateChanged#0;class#4042:5458" expanded="false" />
+            <element signature="method#onActivityCreated#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onRefresh#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#initData#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#initData#1;class#HomeFragment#0" expanded="false" />
+            <element signature="method#addData#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#addData#1;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onItemClick#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onStart#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onResume#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#setChangeView#0;class#HomeFragment#0" expanded="false" />
+            <element signature="method#onPause#0;class#HomeFragment#0" expanded="false" />
             <element signature="method#onStop#0;class#HomeFragment#0" expanded="false" />
             <element signature="method#onDestroyView#0;class#HomeFragment#0" expanded="false" />
             <element signature="method#onDestroy#0;class#HomeFragment#0" expanded="false" />
             <element signature="method#onDetach#0;class#HomeFragment#0" expanded="false" />
             <element signature="method#isTablet#0;class#HomeFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="53" column="29" lean-forward="false" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sign_up.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6">
+          <caret line="82" column="38" lean-forward="false" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/detail_body.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="159" column="47" lean-forward="true" selection-start-line="159" selection-start-column="47" selection-end-line="159" selection-end-column="47" />
+          <folding>
+            <element signature="e#802#833#0" expanded="true" />
+            <element signature="e#865#889#0" expanded="true" />
+            <element signature="e#1465#1483#0" expanded="true" />
+            <element signature="e#6495#6513#0" expanded="true" />
+            <element signature="e#7216#7239#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/detail_header.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/UserProfileActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/CommentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="145" column="40" lean-forward="false" selection-start-line="145" selection-start-column="40" selection-end-line="145" selection-end-column="40" />
+          <folding>
+            <element signature="e#2607#2849#0" expanded="true" />
+            <element signature="e#2848#2849#0" expanded="true" />
+            <element signature="e#2881#2925#0" expanded="true" />
+            <element signature="method#onClick#0;class#CommentActivity#0" expanded="false" />
+            <element signature="method#initFirebaseDatabase#0;class#CommentActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="20" column="29" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-128">
+          <caret line="30" column="33" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="33" />
+          <folding>
+            <element signature="e#1924#1943#0" expanded="true" />
+            <element signature="e#2430#2450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/grid_single2.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="46" lean-forward="true" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goods/cap/app/goodsgoods/Activity/SearchActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="60" column="29" lean-forward="true" selection-start-line="60" selection-start-column="29" selection-end-line="60" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4412#4413#0" expanded="true" />
+            <element signature="e#4451#4452#0" expanded="true" />
           </folding>
         </state>
       </provider>

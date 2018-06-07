@@ -39,7 +39,7 @@
             android:value="false" />
 
         <activity android:name=".Activity.CommentActivity" />
-        <activity android:name=".Activity.DetailFoodActivity"></activity>
+        <activity android:name=".Activity.DetailTherapyActivity"></activity>
     </application>
 
 </manifest>

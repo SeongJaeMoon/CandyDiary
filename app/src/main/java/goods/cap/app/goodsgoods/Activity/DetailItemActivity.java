@@ -152,6 +152,7 @@ public class DetailItemActivity extends AppCompatActivity {
         }
 
     }
+
     private void initData(String cntntsNo){
         MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
         mainHttp.setCntntsNo(cntntsNo);
@@ -250,6 +251,7 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_default, menu);
@@ -279,6 +281,7 @@ public class DetailItemActivity extends AppCompatActivity {
             recentDBHelper.close();
         }
     }
+
     private void animationTitle(TextView view){
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(2000);
@@ -287,6 +290,7 @@ public class DetailItemActivity extends AppCompatActivity {
         animation.setRepeatCount(Animation.INFINITE);
         view.startAnimation(animation);
     }
+
     private void setHeadLayout(String title){
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);

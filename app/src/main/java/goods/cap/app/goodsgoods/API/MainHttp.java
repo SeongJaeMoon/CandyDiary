@@ -3,16 +3,14 @@ package goods.cap.app.goodsgoods.API;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.DietHelper;
-import goods.cap.app.goodsgoods.Helper.HealthHelper;
+import goods.cap.app.goodsgoods.Helper.TherapyDtlHelper;
+import goods.cap.app.goodsgoods.Helper.TherapyHelper;
 import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
 import goods.cap.app.goodsgoods.Model.Diet.DietResponseModel;
-import goods.cap.app.goodsgoods.Model.Health.HealthResponseModel;
+import goods.cap.app.goodsgoods.Model.Therapy.TherapyDtlResponseModel;
+import goods.cap.app.goodsgoods.Model.Therapy.TherapyResponseModel;
 import retrofit2.Call;
 
 /* API 컨트롤, created by supermoon. */
@@ -133,26 +131,22 @@ public class MainHttp {
             e.printStackTrace();
         }
     }
-
-    public void getHealth(final HealthHelper healthCallback){
-        final ApiDataFood objApi = ApiDataFood.getInstance();
+    public void getTherapy(final TherapyHelper therapyCallback){
+        final ApiData objApi = ApiData.getInstance();
         try {
             Call objCall = null;
-            final ProgressDialog dialog;
-            objCall = objApi.getApi(context).getHealth(this.API_KEY, this.pageNo, 10);
-
+            objCall = objApi.getApi(context).getTherapy(this.API_KEY, this.pageNo, 10);
             if (objCall != null) {
-                dialog = new ProgressDialog(context);
+                final ProgressDialog dialog = new ProgressDialog(context);
                 dialog.setTitle(dialogTitle);
                 dialog.setMessage(dialogMessage);
                 dialog.show();
-
-                objCall.enqueue(new HttpCallback<HealthResponseModel>(context) {
+                objCall.enqueue(new HttpCallback<TherapyResponseModel>(context) {
 
                     @Override
                     public void onFailure(Call call, Throwable t) {
                         dialog.dismiss();
-                        healthCallback.failure("Failed");
+                        therapyCallback.failure("Failed");
                         Log.w(logger, t.getCause() + "," + t.getMessage());
                         super.onFailure(call, t);
                     }
@@ -160,15 +154,60 @@ public class MainHttp {
                     @Override
                     protected void onRecipeResponse(Call call, retrofit2.Response response) {
                         dialog.dismiss();
-                        Log.w(logger, "onDietResponse : " + response.toString());
-                        if (!response.isSuccessful()) healthCallback.failure("Failed");
+                        Log.w(logger, "onTherapyResponse : " + response.toString());
+                        if (!response.isSuccessful()) therapyCallback.failure("Failed");
                     }
 
                     @Override
-                    protected void onRecipeObject(Call call, HealthResponseModel response) {
+                    protected void onRecipeObject(Call call, TherapyResponseModel response) {
                         dialog.dismiss();
-                        Log.w(logger, "onDietObject : " + response.toString());
-                        healthCallback.success(response);
+                        Log.w(logger, "onTherapyObject : " + response.toString());
+                        therapyCallback.success(response);
+                    }
+
+                    @Override
+                    protected void common(){
+
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void getTherapyDtl(final TherapyDtlHelper therapyDtlCallback){
+        final ApiData objApi = ApiData.getInstance();
+        try {
+            Call objCall = null;
+            objCall = objApi.getApi(context).getTherapyDtl(this.API_KEY, this.cntntsNo);
+            if (objCall != null) {
+                final ProgressDialog dialog = new ProgressDialog(context);
+                dialog.setTitle(dialogTitle);
+                dialog.setMessage(dialogMessage);
+                dialog.show();
+
+                objCall.enqueue(new HttpCallback<TherapyDtlResponseModel>(context) {
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        dialog.dismiss();
+                        therapyDtlCallback.failure("Failed");
+                        Log.w(logger, t.getCause() + "," + t.getMessage());
+                        super.onFailure(call, t);
+                    }
+
+                    @Override
+                    protected void onRecipeResponse(Call call, retrofit2.Response response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onTherapyResponse : " + response.toString());
+                        if (!response.isSuccessful()) therapyDtlCallback.failure("Failed");
+                    }
+
+                    @Override
+                    protected void onRecipeObject(Call call, TherapyDtlResponseModel response) {
+                        dialog.dismiss();
+                        Log.w(logger, "onTherapyObject : " + response.toString());
+                        therapyDtlCallback.success(response);
                     }
 
                     @Override

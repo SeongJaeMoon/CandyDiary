@@ -7,7 +7,6 @@ import goods.cap.app.goodsgoods.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

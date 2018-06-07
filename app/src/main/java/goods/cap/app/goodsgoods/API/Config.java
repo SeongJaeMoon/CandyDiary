@@ -3,10 +3,7 @@ package goods.cap.app.goodsgoods.API;
 /* API 관련 변수 설정, created by supermoon. */
 
 public class Config {
-    public static final String API_KEY = "d43e3638a6db0b8a56a6fce44d37a02949b592cfbcf66f0eb5ef58aba9fb980f";
     public static final String API_KEY2 = "20180528IDTJDIIPM4WXBJAIJK4QPA";
-    public static final String API_KEY3 = "RhBtw0D38rfS94cQItO%2FF9mSUzUT32Q7ZH2GJFhCm0Sr4EwhKovhnDRMiVNbe9SeMeMQ%2BehHdi92MabxV1ozoQ%3D%3D";
-
     // 식단 구분 코드
     /* 수능점수 Up 특별식단: 254001,
     美와건강 다이어트 식단: 254002,

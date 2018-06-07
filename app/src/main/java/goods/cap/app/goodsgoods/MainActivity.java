@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
@@ -33,6 +35,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -41,7 +44,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import java.util.List;
 
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainNavigationView)NavigationView navigationView;
     @BindView(R.id.mainRecyclerView) RecyclerView recyclerView;
     @BindView(R.id.list_view_drawer)RecyclerView drawerListView;
-    @BindView(R.id.fab_icon) FloatingActionsMenu fab;
+    //@BindView(R.id.fab_icon) FloatingActionsMenu fab;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LinearLayoutManager layoutManager;
     private BackHandler backHandler;
@@ -76,34 +78,34 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
 
-        FloatingActionButton dietFab = new FloatingActionButton(this);
+        /*FloatingActionButton dietFab = new FloatingActionButton(this);
         FloatingActionButton foodFab = new FloatingActionButton(this);
 
         setFab(dietFab, getResources().getString(R.string.diet_sort));
         setFab(foodFab, getResources().getString(R.string.food_sort));
 
         fab.addButton(dietFab);
-        fab.addButton(foodFab);
+        fab.addButton(foodFab);*/
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         drawerListView.setHasFixedSize(true);
         drawerListView.setLayoutManager(linearLayoutManager);
         //SQLite의 저장된 최근 본 항목 초기화.
         setRecentAdapter();
+        deinitDataList();
 
         backHandler = new BackHandler(this, getResources().getString(R.string.confirm_back));
-
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                fab.setAlpha(1 - slideOffset);
+                //fab.setAlpha(1 - slideOffset);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                fab.setVisibility(View.GONE);
+                //fab.setVisibility(View.GONE);
                 Log.i(logger,"opend");
                 setRecentAdapter();
             }
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                if(isPostion == 0) fab.setVisibility(View.VISIBLE);
+                //if(isPostion == 0) fab.setVisibility(View.VISIBLE);
             }
         };
 
@@ -137,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
             // 헌재 페이지에서 스크롤이 시작되면 호출되는 메서드
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(position != 0){
+                /*if(position != 0){
                     fab.setAlpha(1 - positionOffset);
                     fab.setVisibility(View.GONE);
                 }else {
                     fab.setVisibility(View.VISIBLE);
-                }
+                }*/
             }
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             @Override
@@ -163,20 +165,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 return true;
-            }
-        });
-        dietFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deinitDataList();
-                getSupportFragmentManager().beginTransaction().add(R.id.swipe_container, HomeFragment.newInstance(10),"HomeFragment").commit();
-            }
-        });
-        foodFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deinitDataList();
-                getSupportFragmentManager().beginTransaction().add(R.id.swipe_container, HomeFragment.newInstance(11),"HomeFragment").commit();
             }
         });
     }
@@ -277,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
@@ -295,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             Log.w(logger, "notifyDataSetChanged");
             adapter.notifyDataSetChanged();
         }
+
         Intent intent = getIntent();
         if(intent != null) {
             int key = intent.getIntExtra("tagSearch", 1);
@@ -313,9 +301,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.w(logger, "onDestroy");
         deinitDataList();
+        HomeFragment.isSelect = 1;
         HomeFragment.changeView = 0;
     }
     private void deinitDataList(){
+        Log.i(logger, "dataList delete");
         HomeFragment.pageNo = 1;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.edit().remove("dataList").apply();

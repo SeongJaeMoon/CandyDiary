@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -62,6 +63,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             commetnBtn.setOnClickListener(this);
             commentAdapter = new CommentAdapter(CommentActivity.this, 0);
             commentList.setAdapter(commentAdapter);
+            commentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    return false;
+                }
+            });
             datamiss.setText(getResources().getString(R.string.data_miss));
             initFirebaseDatabase();
         }
@@ -138,7 +146,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private void initFirebaseDatabase() {
 
         db = FirebaseDatabase.getInstance();
-        //DatabaseReference userDbRef = db.getReference("users").child("auth.getCureent().udid");
+        //DatabaseReference userDbRef = db.getReference("users").child("auth.getCureent().uid");
         //test code
         dbRef = db.getReference("comments").child(cntntNo).child("lmyx6ViQaKeejs2jUQBLq76ZcKt1");
         dbRef.keepSynced(true);
@@ -181,5 +189,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             }
         };
         dbRef.addChildEventListener(eventListener);
+    }
+
+    private void deletePopup(){
+
     }
 }

@@ -53,7 +53,6 @@ public class Diet {
 
     public void setCntntsChargerEsntlNm(String cntntsChargerEsntlNm) { this.cntntsChargerEsntlNm = cntntsChargerEsntlNm; }
 
-
     public String getCntntsNo() {
         return cntntsNo;
     }

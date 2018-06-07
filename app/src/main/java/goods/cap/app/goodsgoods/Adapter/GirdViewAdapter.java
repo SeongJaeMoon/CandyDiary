@@ -18,6 +18,7 @@ import java.util.List;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
 
+import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.R;
 
 /* 메인 화면 GridView 연결 컨트롤 Adapter, created by supermoon. */
@@ -27,14 +28,14 @@ public class GirdViewAdapter extends ArrayAdapter{
     private Context context; //연결할 화면 context
     private int resourceId; //이미지 연결용 R.id
     private LayoutInflater inflater;
-    private List<Diet>data;
+    private List<Object>data;
 
     static class ViewHolder {
         TextView text;
         ImageView image;
     }
     //그리드 뷰 어뎁터 생성자
-    public GirdViewAdapter(Context context, List<Diet>data, int resourceId){
+    public GirdViewAdapter(Context context, List<Object>data, int resourceId){
         //슈퍼클래스 생성자 호출 필요.
         super(context, resourceId, data);
         this.resourceId = resourceId;
@@ -48,7 +49,7 @@ public class GirdViewAdapter extends ArrayAdapter{
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return data.get(position);
     }
 
     @Override
@@ -71,21 +72,50 @@ public class GirdViewAdapter extends ArrayAdapter{
             //Recycler View
             holder = (ViewHolder) row.getTag();
         }
+        if (data.get(position) instanceof Diet) {
+            Diet diet = (Diet)data.get(position);
+            holder.text.setText(diet.getFdNm());
 
+            String oldPath = diet.getRtnImageDc();
+            String newPath = diet.getRtnStreFileNm();
 
-        holder.text.setText(data.get(position).getFdNm());
-        String oldPath = data.get(position).getRtnImageDc();
-        String newPath = data.get(position).getRtnStreFileNm();
+            RequestOptions ro = new RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .format(DecodeFormat.PREFER_ARGB_8888);
 
-        RequestOptions ro = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .format(DecodeFormat.PREFER_ARGB_8888);
+            Glide.with(context)
+                    .setDefaultRequestOptions(ro)
+                    .load(Config.getAbUrl(oldPath, newPath))
+                    .into(holder.image);
 
-        Glide.with(context)
-                .setDefaultRequestOptions(ro)
-                .load(Config.getAbUrl(oldPath, newPath))
-                .into(holder.image);
+        }else if(data.get(position) instanceof Therapy){
+            Therapy therapy = (Therapy)data.get(position);
+            holder.text.setText(therapy.getCntntsSj());
 
+            RequestOptions ro = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .format(DecodeFormat.PREFER_ARGB_8888);
+
+            Glide.with(context)
+                        .setDefaultRequestOptions(ro)
+                        .load(therapy.getImgUrl())
+                        .into(holder.image);
+        }
         return row;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+    public void refreshTherapy(List<Therapy> events) {
+        this.data.clear();
+        this.data.addAll(events);
+        notifyDataSetChanged();
+    }
+    public void refreshDiet(List<Diet> events) {
+        this.data.clear();
+        this.data.addAll(events);
+        notifyDataSetChanged();
     }
 }

@@ -8,6 +8,7 @@
     <string name="sub_title">오늘의 추천 식재료 입니다.</string>
     <string name="main_title2">오늘의 추천 식단 입니다.</string>
     <string name="main_title3">오늘의 추천 건강식품 입니다.</string>
+    <string name="main_therapy">민간약초 목록입니다.\n(검색 기능도 활용해보세요!)</string>
     <string name="star">즐겨찾기</string>
     <string name="community">커뮤니티</string>
     <string name="statistic">통계보기</string>
@@ -25,7 +26,7 @@
     <string name="recipe_sort">조리법 기준으로 보기</string>
     <string name="pet_sort">반려견 집밥 기준으로 보기</string>
     <string name="grocery_sort">식자재 기준으로 보기</string>
-    <string name="food_sort">건강식품 기준으로 보기</string>
+    <string name="food_sort">민간약초 기준으로 보기</string>
     <string name="diet_sort">식단 기준으로 보기</string>
     <string name="data_refresh_title">잠시만 기다려주세요.</string>
     <string name="data_refresh">데이터를 가져오는 중입니다&#8230;</string>
@@ -33,16 +34,24 @@
     <string name="data_error">앗, 데이터를 가져오는데 실패했습니다. 다시 시도해주세요.</string>
     <string name="statistic_menu">통계보기</string>
     <string name="static_no">앗, 이 식단은 열량 정보가 준비중입니다. 죄송합니다.</string>
+    <string name="already_show1">이미 식단 기준으로 선택되어 있습니다.\n찾으시는게 없다면 검색 기능을 활용해보세요.</string>
+    <string name="already_show2">이미 민간약초 기준으로 선택되어 있습니다.\n찾으시는게 없다면 검색 기능을 활용해보세요.</string>
     <!--Food-->
-    <!--Sign Up-->
+    <!--Sign Up-->   <!--Sign In-->
     <string name="new_account">새로운 계정 만들기</string>
     <string name="name_account">이름</string>
     <string name="pw_account">비밀번호</string>
     <string name="email_account">이메일</string>
     <string name="regist_account">등록하기</string>
     <string name="pw_account2">비밀번호 확인</string>
-    <!--Sign In-->
+    <string name="sign_error">회원 정보를 가져오는 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
+    <string name="no_match">일치하는 회원 정보가 없습니다. 아이디, 비밀번호를 확인해주세요.</string>
+    <string name="no_match_over">5번 연속 회원 정보를 잘못 입력하였습니다. 회원 정보를 찾아주세요.</string>
+    <string name="no_sign_data">올바른 회원 정보를 입력해주세요.</string>
     <string name="login">로그인</string>
+    <string name="no_input_satisfy">모든 정보를 입력해주세요.</string>
+    <string name="no_match_pw">패스워드가 일치하지 않습니다. 확인해주세요.</string>
+    <string name="exist_email">이미 등록 된 이메일입니다.</string>
     <!--Search-->
     <string name="search_hint">태그, 식단&#8230;</string>
     <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>

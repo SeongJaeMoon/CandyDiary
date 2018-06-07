@@ -20,22 +20,36 @@
         android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:fontFamily="@font/ng"/>
+    <Button
+        android:id="@+id/sort_diet"
+        android:layout_marginTop="10dp"
+        android:text="@string/diet_sort"
+        android:textColor="@color/white"
+        android:layout_below="@id/mainTitle"
+        android:background="@color/colorAccent"
+        android:layout_marginStart="30dp"
+        android:layout_width="150dp"
+        android:layout_height="30dp"/>
+    <Button
+        android:id="@+id/sort_therapy"
+        android:layout_marginTop="10dp"
+        android:text="@string/food_sort"
+        android:textColor="@color/white"
+        android:layout_below="@id/mainTitle"
+        android:background="@color/colorAccent"
+        android:layout_marginStart="190dp"
+        android:layout_width="150dp"
+        android:layout_height="30dp"/>
 
-    <in.srain.cube.views.GridViewWithHeaderAndFooter
+    <ListView
         android:layout_marginTop="15dp"
         android:layout_alignParentTop="false"
-        android:layout_below="@id/mainTitle"
+        android:layout_below="@id/sort_therapy"
         android:id="@+id/gridMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:numColumns="auto_fit"
-        android:columnWidth="400dp"
         android:layout_gravity="center">
-    </in.srain.cube.views.GridViewWithHeaderAndFooter>
-
+    </ListView>
 </RelativeLayout>
 </goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout>
