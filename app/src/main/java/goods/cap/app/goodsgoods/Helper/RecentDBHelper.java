@@ -10,7 +10,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Recent;
 
 public class RecentDBHelper {
@@ -22,11 +21,11 @@ public class RecentDBHelper {
     private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "recentDB";
     // recent -> 0: Diet, 1: Health
-    private static final String COLUMN_FLAG  = "flag"; //식단, 건강식품 구분
-    private static final String COLUMN_URL = "url"; //이미지 경로, 건강 식품의 경우 null -> 수입업체
-    private static final String COLUMN_SMY = "smy"; //메인 -> 식품명
-    private static final String COLUMN_NO = "ctnno";//고유번호 -> 품목제조관리번호
-    private static final String COLUMN_CN = "cntnt";//식단정보 -> 성상
+    private static final String COLUMN_FLAG  = "flag"; //식단, 민간약초 구분
+    private static final String COLUMN_URL = "url"; //식단 이미지 경로, 약초 이미지 경로
+    private static final String COLUMN_SMY = "smy"; //식단 메인이름 <-> 약초 메인이름
+    private static final String COLUMN_NO = "ctnno";//식단 고유번호 <-> 약초 고유번호
+    private static final String COLUMN_CN = "cntnt";//식단 정보 <-> 약초 효능
 
     private static final String _ID = "id";
     private static final String DATABASE_CREATE =
@@ -71,8 +70,8 @@ public class RecentDBHelper {
         mDbHelper.close();
         mDb.close();
     }
-    // 0. Diet인 경우, DB에 식단과 건강식품 구분, 메인 설명, 고유번호, 식단정보를 저장한다.
-    //    건강식품인 경우, DB에 Health인 경우, DB에 식단과 건강식품 구분,
+    // 0. Diet인 경우, DB에 식단과 민간약초 구분(0), 메인 설명, 고유번호, 이미지 경로, 식단정보를 저장한다.
+    //    Therapy인 경우, 식단과 민간약초 구분(1), 메인 설명, 고유 번호, 이미지 경로, 약초효능을 저장한다.
     public void addRecent(String url, String summary, String ctnno, String cntnt, int flag){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_URL, url);
@@ -108,7 +107,7 @@ public class RecentDBHelper {
     }
 
     //3. DB에 저장된 데이터를 List로 반환한다.
-    public List<Recent> getDietList(){
+    public List<Recent> getList(){
         String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN + "," + COLUMN_FLAG
                 + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 3";
         List<Recent> list = new ArrayList<Recent>();

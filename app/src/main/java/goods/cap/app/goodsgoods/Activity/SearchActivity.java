@@ -10,10 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.BindView;
@@ -34,10 +35,13 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
     @BindView(R.id.tag_group)TagGroup tagGroup;
     @BindView(R.id.rvSearch)RecyclerView rvSearch;
+    @BindView(R.id.rvRecommend)RecyclerView rvRecommend;
     @BindView(R.id.search_view)MaterialSearchView searchView;
     @BindView(R.id.toolbar)Toolbar toolbar;
     private final String logger = SearchActivity.class.getSimpleName();
-    private DatabaseReference mdbRef;
+    private DatabaseReference dbRef;
+    private FirebaseAuth auth;
+    private FirebaseDatabase db;
     private String[] tagList;
 
     @Override
@@ -49,6 +53,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -71,7 +76,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
             }
         });
-
+        rvRecommend.setLayoutManager(new LinearLayoutManager(this));
         rvSearch.setLayoutManager(new LinearLayoutManager(this));
         //0, 1, 2, 3, 4
         tagList = Config.tabList;
@@ -90,7 +95,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            this.finish();
+            SearchActivity.this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -126,7 +131,6 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         }
 
     }
-
     // 검색 추천
     static class SearchListHolder extends RecyclerView.ViewHolder{
 
@@ -135,35 +139,28 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         }
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
-        Log.w(logger, "onStart");
     }
     @Override
     protected void onResume(){
         super.onResume();
-        Log.w(logger, "onResume");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.w(logger, "onDestroy");
     }
     @Override
     protected void onStop(){
         super.onStop();
-        Log.w(logger, "onStop");
     }
     @Override
     protected void onPause(){
         super.onPause();
-        Log.w(logger, "onPause");
     }
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.w(logger, "onRestart");
     }
 }

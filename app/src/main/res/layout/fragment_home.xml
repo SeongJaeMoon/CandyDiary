@@ -24,6 +24,7 @@
         android:id="@+id/sort_diet"
         android:layout_marginTop="10dp"
         android:text="@string/diet_sort"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:layout_below="@id/mainTitle"
         android:background="@color/colorAccent"

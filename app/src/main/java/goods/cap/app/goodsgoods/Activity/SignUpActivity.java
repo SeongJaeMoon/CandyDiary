@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -51,11 +52,13 @@ public class SignUpActivity extends AppCompatActivity {
         final String pw = pwEdit.getText().toString().trim();
         final String pw2 = pwEdit2.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pw) || TextUtils.isEmpty(pw2)) {
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pw) || TextUtils.isEmpty(pw2)) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_input_satisfy), Toast.LENGTH_SHORT).show();
-        } else if (!pw.equals(pw2)) {
+        }else if (!pw.equals(pw2)) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match_pw), Toast.LENGTH_SHORT).show();
-        } else {
+        }else if(pw.length() < 6){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pw_short), Toast.LENGTH_SHORT).show();
+        }else {
             setProgressDialog();
             auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -69,9 +72,9 @@ public class SignUpActivity extends AppCompatActivity {
                         }else{
                             userDbRef.child("name").setValue(name);
                             userDbRef.child("email").setValue(email);
-                            userDbRef.child("uid").setValue(uid);
+                            userDbRef.child("profile_image").setValue("");
                             if (progressDialog.isShowing())progressDialog.cancel();
-                            Intent intent = new Intent(SignUpActivity.this, UserProfileActivity.class);
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();

@@ -38,8 +38,9 @@ public class Diet {
     private String filePath;
 
     //for Recent
-    public Diet(){}
+    public Diet(){
 
+    }
     public Diet(String cntntsNo, String filePath, String fdNm, String cntntsSj){
         this.cntntsNo = cntntsNo;
         this.filePath = filePath;

@@ -108,11 +108,13 @@ public class GirdViewAdapter extends ArrayAdapter{
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
+
     public void refreshTherapy(List<Therapy> events) {
         this.data.clear();
         this.data.addAll(events);
         notifyDataSetChanged();
     }
+
     public void refreshDiet(List<Diet> events) {
         this.data.clear();
         this.data.addAll(events);

@@ -1,15 +1,21 @@
 package goods.cap.app.goodsgoods;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +25,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import goods.cap.app.goodsgoods.API.Config;
+import de.hdodenhof.circleimageview.CircleImageView;
+import goods.cap.app.goodsgoods.Activity.PermissionActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
@@ -35,11 +42,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
+import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.request.RequestOptions;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -55,37 +69,35 @@ import goods.cap.app.goodsgoods.Util.BackHandler;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String logger = MainActivity.class.getSimpleName();
-    private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
-    private MainAdapter adapter;
     @BindView(R.id.mainDrawerLayout)DrawerLayout drawerLayout;
     @BindView(R.id.mainNavigationView)NavigationView navigationView;
     @BindView(R.id.mainRecyclerView) RecyclerView recyclerView;
     @BindView(R.id.list_view_drawer)RecyclerView drawerListView;
-    //@BindView(R.id.fab_icon) FloatingActionsMenu fab;
+    @BindView(R.id.fab_icon) FloatingActionButton fab;
+    private CircleImageView profileImage;
+    private TextView profileName, profileEmail;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private final String logger = MainActivity.class.getSimpleName();
+    private PagerSlidingTabStrip tabs;
+    private ViewPager pager;
+    private MainAdapter adapter;
     private LinearLayoutManager layoutManager;
     private BackHandler backHandler;
-    private int isPostion;
+    private int isPostion = 0;
+    private DatabaseReference dbRef;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private static final String PACKAGE_URL_SCHEME = "package:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-
-        /*FloatingActionButton dietFab = new FloatingActionButton(this);
-        FloatingActionButton foodFab = new FloatingActionButton(this);
-
-        setFab(dietFab, getResources().getString(R.string.diet_sort));
-        setFab(foodFab, getResources().getString(R.string.food_sort));
-
-        fab.addButton(dietFab);
-        fab.addButton(foodFab);*/
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         drawerListView.setHasFixedSize(true);
@@ -94,18 +106,20 @@ public class MainActivity extends AppCompatActivity {
         setRecentAdapter();
         deinitDataList();
 
+        fab.setVisibility(View.GONE);
+
         backHandler = new BackHandler(this, getResources().getString(R.string.confirm_back));
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                //fab.setAlpha(1 - slideOffset);
+                fab.setAlpha(1 - slideOffset);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //fab.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
                 Log.i(logger,"opend");
                 setRecentAdapter();
             }
@@ -113,13 +127,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                //if(isPostion == 0) fab.setVisibility(View.VISIBLE);
+                if(isPostion == 2) fab.setVisibility(View.VISIBLE);
             }
         };
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        View naviHeader = navigationView.getHeaderView(0);
+
+        profileImage = (CircleImageView) naviHeader.findViewById(R.id.profieImage);
+        profileEmail = (TextView)naviHeader.findViewById(R.id.profieEmail);
+        profileName = (TextView)naviHeader.findViewById(R.id.profileName);
+
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -135,16 +156,16 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 Log.i(logger, "position:" + position);
                 isPostion = position;
+                if(position != 2){
+                    fab.setVisibility(View.GONE);
+                }else {
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
             // 헌재 페이지에서 스크롤이 시작되면 호출되는 메서드
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                /*if(position != 0){
-                    fab.setAlpha(1 - positionOffset);
-                    fab.setVisibility(View.GONE);
-                }else {
-                    fab.setVisibility(View.VISIBLE);
-                }*/
+
             }
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             @Override
@@ -152,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -167,6 +189,71 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        auth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
+        dbRef = FirebaseDatabase.getInstance().getReference().child("users");
+        dbRef.keepSynced(true);
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                FirebaseUser user = auth.getCurrentUser();
+                if(user != null){
+                    String name = dataSnapshot.child(user.getUid()).child("name").getValue(String.class);
+                    String email = dataSnapshot.child(user.getUid()).child("email").getValue(String.class);
+                    String pimage = dataSnapshot.child(user.getUid()).child("profile_image").getValue(String.class);
+
+                    profileName.setText(name);
+                    profileEmail.setText(email);
+
+                    RequestOptions ro = new RequestOptions()
+                            .placeholder(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user))
+                            .error(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user));
+
+                    Glide.with(getApplicationContext())
+                            .setDefaultRequestOptions(ro)
+                            .load(pimage)
+                            .into(profileImage);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        setPermissionDialog();
+    }
+
+    //권한 요청
+    public void setPermissionDialog(){
+        try {
+            SharedPreferences mPref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
+            Boolean bfirst = mPref.getBoolean("isFirst", false);
+            if (!bfirst) {
+                SharedPreferences.Editor editor = mPref.edit();
+                editor.putBoolean("isFirst", true).apply();
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+                    startActivity(new Intent(MainActivity.this, PermissionActivity.class));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -187,20 +274,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setFab(FloatingActionButton button, String title){
-        button.setTitle(title);
-        button.setSize((FloatingActionButton.SIZE_MINI));
-        button.setIcon(R.drawable.ic_image_search);
-        button.setColorNormal(getResources().getColor(R.color.colorPrimary));
-        button.setColorPressed(getResources().getColor(R.color.colorAccent));
-    }
-
     private List<Recent> getRecentList(Context context){
         List<Recent> ret = null;
         RecentDBHelper recentDBHelper = new RecentDBHelper(context);
         try {
             recentDBHelper.open();
-            ret = recentDBHelper.getDietList();
+            ret = recentDBHelper.getList();
         }catch (Exception e){
             Log.w(logger, e.getMessage());
         }finally {
@@ -237,7 +316,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.i(logger, "Fragment position:" + position);
             Fragment f = null;
             switch (position) {
                 case 0:
@@ -277,9 +355,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.w(logger, "onResume");
         if(adapter != null){
-            Log.w(logger, "notifyDataSetChanged");
             adapter.notifyDataSetChanged();
         }
 
@@ -287,25 +363,22 @@ public class MainActivity extends AppCompatActivity {
         if(intent != null) {
             int key = intent.getIntExtra("tagSearch", 1);
             Log.i(logger, "key => " + key);
-            GoodsApplication goodsApplication = (GoodsApplication) getApplicationContext();
-            goodsApplication.setKey(key);
+            GoodsApplication.getInstance().setKey(key);
         }
     }
     @Override
     protected void onStart() {
         super.onStart();
-        Log.w(logger, "onStart");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.w(logger, "onDestroy");
         deinitDataList();
         HomeFragment.isSelect = 1;
         HomeFragment.changeView = 0;
     }
+
     private void deinitDataList(){
-        Log.i(logger, "dataList delete");
         HomeFragment.pageNo = 1;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         sp.edit().remove("dataList").apply();
@@ -313,17 +386,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-        Log.w(logger, "onStop");
+        if(authStateListener != null){
+            auth.removeAuthStateListener(authStateListener);
+        }
     }
     @Override
     protected void onPause(){
         super.onPause();
-        Log.w(logger, "onPause");
     }
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.w(logger, "onRestart");
     }
 
     private void setRecentAdapter(){
@@ -332,11 +405,18 @@ public class MainActivity extends AppCompatActivity {
             RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), null);
             drawerListView.setAdapter(recentAdapter);
         }else {
-            Log.i(logger, "setRecentAdapter 호출");
             RecentAdapter recentAdapter = new RecentAdapter(getSupportActionBar().getThemedContext(), recentDrawerMenu);
             drawerListView.setAdapter(recentAdapter);
             recentAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void startAppSettings() {
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
+        startActivity(intent);
     }
 
     private void Logout(){
@@ -345,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //mAuth.signOut();
+                auth.signOut();
                 Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

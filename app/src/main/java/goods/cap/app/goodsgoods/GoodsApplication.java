@@ -1,14 +1,17 @@
 package goods.cap.app.goodsgoods;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class GoodsApplication extends Application {
 
-    private int key = 1; //Diet or Health선택값 0, 1, 2, 3, 4, 5(Health) if 6 < key => search
+    private int key = 1; //Diet or Health 선택값 0, 1, 2, 3, 4, 5(Health) if 6 < key => search
     private String searchKey; //검색
+    private static GoodsApplication goodsApplication;
 
     @Override
     public void onCreate(){
@@ -16,6 +19,16 @@ public class GoodsApplication extends Application {
         if (!FirebaseApp.getApps(this).isEmpty()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
+        goodsApplication = this;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base){
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+    public static GoodsApplication getInstance(){
+        return goodsApplication;
     }
 
     public int getKey() {

@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import goods.cap.app.goodsgoods.R;
 
 public class CustomDialog extends Dialog{
+
     private static final String logger = CustomDialog.class.getSimpleName();
     private PieChart mChart;
     private String[] calorieInfo;
@@ -53,7 +54,7 @@ public class CustomDialog extends Dialog{
     }
 
     public CustomDialog(Context context) {
-        // Dialog 배경을 투명 처리 해준다.
+        // Dialog 배경을 투명 처리
         super(context , android.R.style.Theme_Translucent_NoTitleBar);
     }
 

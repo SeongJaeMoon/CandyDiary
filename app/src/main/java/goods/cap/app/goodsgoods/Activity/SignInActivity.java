@@ -44,6 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.btnLogIn)Button signBtn;
     @BindView(R.id.btnLogInNewAccount)TextView newAccount;
     @BindView(R.id.btnGoogleSignIn)SignInButton googleBtn;
+    @BindView(R.id.btnForgotAccount)TextView forgotAccount;
     private static final String logger = SignInActivity.class.getSimpleName();
     private static int GOOGLE_SIGN_IN = 5;
     private static int checkLimit;
@@ -92,6 +93,12 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btnForgotAccount)
+    public void forgotAccount(){
+        Intent intent = new Intent(SignInActivity.this, ForgotActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btnLogIn)
     public void login(){
         String email = emailEdit.getText().toString().trim();
@@ -129,6 +136,8 @@ public class SignInActivity extends AppCompatActivity {
                         ++checkLimit;
                         if(checkLimit >= 5){
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match_over), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SignInActivity.this, ForgotActivity.class);
+                            startActivity(intent);
                         }else {
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match), Toast.LENGTH_SHORT).show();
                         }
@@ -174,7 +183,7 @@ public class SignInActivity extends AppCompatActivity {
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                Toast.makeText(SignInActivity.this,"구글 로그인 성공",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SignInActivity.this,getResources().getString(R.string.google_signin),Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
                 Log.w(logger,"Google failed:"+ result +"," + result.getStatus() + "," + result.getSignInAccount());
@@ -184,15 +193,12 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
-        Log.w(logger, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.w(logger, "signInWithCredential:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            Log.w(logger, "signInWithCredential", task.getException());
                             Toast.makeText(SignInActivity.this, getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
                         } else {
                             DatabaseReference userDbRef = dbRef.child(auth.getCurrentUser().getUid());

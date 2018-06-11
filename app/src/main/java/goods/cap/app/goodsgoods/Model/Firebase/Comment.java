@@ -12,7 +12,7 @@ public class Comment {
 
     public Comment(){}
 
-    public Comment(String uid, String pimage,String name, String comment, String regDate){
+    public Comment(String uid, String pimage, String name, String comment, String regDate){
         this.uid = uid;
         this.pimage = pimage;
         this.name = name;

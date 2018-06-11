@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import goods.cap.app.goodsgoods.R;
 
+/* keyword search 화면, created by supermoon. */
+
 public class UserProfileActivity extends AppCompatActivity {
 
     @Override

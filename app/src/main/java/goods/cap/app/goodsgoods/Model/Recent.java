@@ -1,10 +1,9 @@
 package goods.cap.app.goodsgoods.Model;
 
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
-
 public class Recent {
-
+    //고유 번호, 이미지 경로, 메인 설명, 상세 정보(태그 목록, 약초 효능)
     private String ctnno, imgUrl, summary, cntnt;
+    //식단, 약초 구분
     private int flag;
 
     public Recent(){

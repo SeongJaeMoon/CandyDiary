@@ -1,57 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingEnd="5dp"
     android:paddingStart="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <!--음식 이미지-->
-                <ImageView
-                    android:layout_marginTop="20dp"
-                    android:contentDescription="@string/app_name"
-                    android:id="@+id/step_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
+    <!--음식 이미지-->
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/app_name"
+        android:id="@+id/step_image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
 
-                <!--식단 이름-->
-                <TextView
-                    android:id="@+id/step_num"
-                    android:textAlignment="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    style="@style/detail_properties_textview"/>
+    <!--식단 이름-->
+    <TextView
+        android:id="@+id/step_num"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        style="@style/detail_properties_textview"/>
 
-                <!--식단 구성-->
-                <TextView
-                    android:id="@+id/step_text"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/detail_properties_textview"/>
+    <!--식단 구성-->
+    <TextView
+        android:id="@+id/step_text"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/detail_properties_textview"/>
 
-                <!--식단 요리 방법-->
-                <TextView
-                    android:id="@+id/step_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    style="@style/detail_properties_textview"/>
-
-                <ImageView
-                    android:id="@+id/arrow_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="160dp"
-                    android:contentDescription="@string/detail"
-                    app:srcCompat="@drawable/ic_arrow_forward_black_24dp"/>
-                </LinearLayout>
-</ScrollView>
+    <!--식단 요리 방법-->
+    <TextView
+        android:id="@+id/step_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        style="@style/detail_properties_textview"/>
+</LinearLayout>
 
 

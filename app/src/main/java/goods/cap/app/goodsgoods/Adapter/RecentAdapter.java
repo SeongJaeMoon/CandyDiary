@@ -16,8 +16,10 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
+import goods.cap.app.goodsgoods.Activity.DetailTherapyActivity;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Recent;
+import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.R;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder>{
@@ -51,7 +53,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-            //data.get(position).getFlag(0 or 1 구분 필요);
+                //data.get(position).getFlag(0 or 1 구분 필요);
                 if (data != null) {
                     Glide.with(context)
                             .load(data.get(position).getImgUrl())
@@ -60,12 +62,25 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                     holder.recentImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context, DetailItemActivity.class);
+                            Recent temp = data.get(holder.getAdapterPosition());
+                            int flag = temp.getFlag();
                             Gson gson = new Gson();
-                            String recent = gson.toJson(data.get(holder.getAdapterPosition()));
-                            intent.putExtra("diet", recent);
-                            Log.w("recentData", recent);
-                            context.startActivity(intent);
+                            String recent = "";
+                            //Diet
+                            if(flag == 0){
+                                Diet diet = new Diet(temp.getCtnno(), temp.getImgUrl(), temp.getSummary(), temp.getCntnt());
+                                Intent intent = new Intent(context, DetailItemActivity.class);
+                                recent = gson.toJson(diet);
+                                intent.putExtra("diet", recent);
+                                context.startActivity(intent);
+                            //Therapy
+                            }else{
+                                Therapy therapy = new Therapy();
+                                Intent intent = new Intent(context, DetailTherapyActivity.class);
+                                recent = gson.toJson(therapy);
+                                intent.putExtra("therapy", recent);
+                                context.startActivity(intent);
+                            }
                         }
                     });
                 } else {

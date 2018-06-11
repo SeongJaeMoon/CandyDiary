@@ -67,20 +67,12 @@
         android:text="@string/search_rec"
         android:textSize="18sp" />
 
-    <in.srain.cube.views.GridViewWithHeaderAndFooter
-        android:layout_marginTop="15dp"
-        android:layout_alignParentTop="false"
-        android:layout_below="@id/search_rec"
-        android:id="@+id/gridSearch"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:numColumns="auto_fit"
-        android:columnWidth="200dp"
-        android:layout_gravity="center">
-    </in.srain.cube.views.GridViewWithHeaderAndFooter>
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/search_rec"
+            android:id="@+id/rvRecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 </FrameLayout>

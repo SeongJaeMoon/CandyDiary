@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import goods.cap.app.goodsgoods.R;
 
-public class StarActivity extends AppCompatActivity {
+public class PostDtlActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

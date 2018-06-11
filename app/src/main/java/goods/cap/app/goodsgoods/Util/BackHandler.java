@@ -17,7 +17,8 @@ public class BackHandler {
 
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 3000) {
-            backKeyPressedTime = System.currentTimeMillis(); showGuide();
+            backKeyPressedTime = System.currentTimeMillis();
+            showGuide();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 3000) {

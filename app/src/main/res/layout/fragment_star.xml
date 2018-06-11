@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/star"
-        android:fontFamily="@font/ng"/>
-</FrameLayout>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text=""
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/ng"/>
+
+        <ListView
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="false"
+            android:layout_below="@id/sort_therapy"
+            android:id="@+id/gridMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center">
+        </ListView>
+    </RelativeLayout>
+</goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout>

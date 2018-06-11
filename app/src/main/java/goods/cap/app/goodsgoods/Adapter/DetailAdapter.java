@@ -30,7 +30,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         private TextView stepNum;
         private TextView stepText;
         private TextView stepTip;
-        private ImageView stepArrow;
 
         public ViewHolder(View v) {
             super(v);
@@ -38,7 +37,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             stepNum = (TextView)v.findViewById(R.id.step_num);
             stepText = (TextView)v.findViewById(R.id.step_text);
             stepTip = (TextView)v.findViewById(R.id.step_tip);
-            stepArrow = (ImageView)v.findViewById(R.id.arrow_img);
         }
     }
 
@@ -58,6 +56,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(@NonNull DetailAdapter.ViewHolder holder, int position) {
 
         RequestOptions ro = new RequestOptions()
+                .placeholder(R.drawable.none)
+                .error(R.drawable.none)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter();
 
@@ -65,9 +65,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 .setDefaultRequestOptions(ro)
                 .load(data.get(position).getRtnImageDc())
                 .into(holder.stepImg);
-        if(position == data.size() - 1){
-            holder.stepArrow.setVisibility(View.GONE);
-        }
+
         holder.stepText.setText(data.get(position).getMatrlInfo());
         holder.stepNum.setText(data.get(position).getCntntsSj());
         holder.stepTip.setText(data.get(position).getCkngMthInfo());
