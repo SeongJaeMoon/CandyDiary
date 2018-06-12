@@ -10,7 +10,6 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <TextView
         android:id="@+id/mainTitle"
         android:layout_width="match_parent"
@@ -41,7 +40,6 @@
         android:layout_marginStart="190dp"
         android:layout_width="150dp"
         android:layout_height="30dp"/>
-
     <ListView
         android:layout_marginTop="15dp"
         android:layout_alignParentTop="false"

@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -110,14 +112,18 @@ public class SignInActivity extends AppCompatActivity {
             auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        checkUserExist();
+                    try {
+                        if (task.isSuccessful()) {
+                            checkUserExist();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_sign_data), Toast.LENGTH_SHORT).show();
                     }
                     if(progressDialog.isShowing())progressDialog.cancel();
                 }
             });
         }
-
     }
 
     private void checkUserExist(){

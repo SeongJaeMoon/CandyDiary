@@ -29,7 +29,6 @@
         <activity android:name=".Activity.SignInActivity" />
         <activity
             android:name=".Activity.PermissionActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat.Dialog" />
         <activity android:name=".Activity.PostDtlActivity" />
         <activity android:name=".Activity.ForgotActivity" />

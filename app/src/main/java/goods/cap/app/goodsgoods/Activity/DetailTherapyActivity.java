@@ -2,10 +2,6 @@ package goods.cap.app.goodsgoods.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,16 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -31,10 +24,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareContent;
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.ShareMediaContent;
-import com.facebook.share.model.SharePhoto;
 import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,12 +43,9 @@ import com.kakao.kakaolink.v2.model.SocialObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
-
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
@@ -88,7 +75,6 @@ public class DetailTherapyActivity extends AppCompatActivity {
     @BindView(R.id.comment_detail)TextView commentDetail;//댓글보기
     @BindView(R.id.comments)TextView comments;//댓글 수
     @BindView(R.id.detail_img)ImageView imageView; //즐겨찾기
-    //private Bitmap shareImage;
     private String shareText;
     private String imgUrl;
     private String shareTitle;
@@ -129,7 +115,6 @@ public class DetailTherapyActivity extends AppCompatActivity {
             setRecent(therapy);
 
             //for share
-            //shareImage = getBitmap(therapy.getImgUrl());
             imgUrl = therapy.getImgUrl();
             shareDialog = new ShareDialog(this);
             callbackManager = CallbackManager.Factory.create();
@@ -169,7 +154,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
                 }
             });
             initFirebase(contentNo);

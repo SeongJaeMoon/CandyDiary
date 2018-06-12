@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -46,13 +45,10 @@ import com.kakao.kakaolink.v2.model.SocialObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
-
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
@@ -65,11 +61,9 @@ import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
 import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
 import goods.cap.app.goodsgoods.R;
-
 import goods.cap.app.goodsgoods.Util.CustomDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.gujun.android.taggroup.TagGroup;
-
 
 /* 특정 식단 선택 Detail 화면, created by supermoon. */
 // cntntsNo -> 크롤링 <-> Firebase DB 저장 (child tree 구성).
@@ -189,7 +183,7 @@ public class DetailItemActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
                 }
             });
             initFirebase(contentNo);
@@ -325,6 +319,7 @@ public class DetailItemActivity extends AppCompatActivity {
                     likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
                 }
                 long likesCount = dataSnapshot.getChildrenCount();
+                like = likesCount;
                 likes.setText(String.valueOf(likesCount));
             }
 
@@ -336,8 +331,9 @@ public class DetailItemActivity extends AppCompatActivity {
         dbRef2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long likesCount = dataSnapshot.getChildrenCount();
-                comments.setText(String.valueOf(likesCount));
+                long commetCount = dataSnapshot.getChildrenCount();
+                comment = commetCount;
+                comments.setText(String.valueOf(commetCount));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -348,6 +344,7 @@ public class DetailItemActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long sharesCount = dataSnapshot.getChildrenCount();
+                share = sharesCount;
                 shares.setText(String.valueOf(sharesCount));
             }
             @Override

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,8 +15,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,25 +70,38 @@ public class SignUpActivity extends AppCompatActivity {
             auth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    try {
-                        String uid = auth.getCurrentUser().getUid();
-                        DatabaseReference userDbRef = dbRef.child(uid);
-                        if (userDbRef.child("email").equals(email)) {
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.exist_email),Toast.LENGTH_LONG).show();
-                            if (progressDialog.isShowing())progressDialog.cancel();
-                        }else{
+                    if(!task.isSuccessful()){
+                        try{
+                            Log.w("error" , task.getException());
+                            throw task.getException();
+                        }catch (FirebaseAuthUserCollisionException exist){
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.exist_email), Toast.LENGTH_SHORT).show();
+                        }catch (FirebaseAuthWeakPasswordException password){
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pw_short), Toast.LENGTH_SHORT).show();
+                        }catch (FirebaseAuthInvalidCredentialsException error){
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match_email), Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
+                        }finally {
+                            if (progressDialog.isShowing()) progressDialog.cancel();
+                        }
+                    }else {
+                        try {
+                            String uid = auth.getCurrentUser().getUid();
+                            DatabaseReference userDbRef = dbRef.child(uid);
                             userDbRef.child("name").setValue(name);
                             userDbRef.child("email").setValue(email);
                             userDbRef.child("profile_image").setValue("");
-                            if (progressDialog.isShowing())progressDialog.cancel();
+                            if (progressDialog.isShowing()) progressDialog.cancel();
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-                            finish();
+                            SignUpActivity.this.finish();
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                            if (progressDialog.isShowing()) progressDialog.cancel();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
                         }
-                    }catch (NullPointerException e){
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
