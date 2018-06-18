@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
             }
         });
         setPermissionDialog();
@@ -431,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.cancel();
             }
         });
         AlertDialog alertDialog = builder.create();

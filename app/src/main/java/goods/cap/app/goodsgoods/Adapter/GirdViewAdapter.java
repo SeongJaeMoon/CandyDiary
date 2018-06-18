@@ -18,6 +18,7 @@ import java.util.List;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
 
+import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.R;
 
@@ -74,7 +75,7 @@ public class GirdViewAdapter extends ArrayAdapter{
         }
         if (data.get(position) instanceof Diet) {
             Diet diet = (Diet)data.get(position);
-            holder.text.setText(diet.getFdNm());
+            holder.text.setText(diet.getCntntsSj());
 
             String oldPath = diet.getRtnImageDc();
             String newPath = diet.getRtnStreFileNm();
@@ -100,6 +101,18 @@ public class GirdViewAdapter extends ArrayAdapter{
                         .setDefaultRequestOptions(ro)
                         .load(therapy.getImgUrl())
                         .into(holder.image);
+        }else if(data.get(position) instanceof Recent){
+            Recent recent = (Recent)data.get(position);
+            holder.text.setText(recent.getCntnt());
+
+            RequestOptions ro = new RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .format(DecodeFormat.PREFER_ARGB_8888);
+
+            Glide.with(context)
+                    .setDefaultRequestOptions(ro)
+                    .load(recent.getImgUrl())
+                    .into(holder.image);
         }
         return row;
     }

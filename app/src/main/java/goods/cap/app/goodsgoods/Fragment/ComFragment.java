@@ -37,7 +37,6 @@ public class ComFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        Log.w(logger, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_com, container, false);
         return view;
     }

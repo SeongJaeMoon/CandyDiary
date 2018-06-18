@@ -67,6 +67,14 @@ public class Therapy {
         this.bneNm = bneNm;
     }
 
+    public Therapy(){}
+
+    public Therapy(String cntntsNo, String imgUrl, String bneNm, String cntntsSj){
+        this.cntntsNo = cntntsNo;
+        this.imgUrl = imgUrl;
+        this.bneNm = bneNm;
+        this.cntntsSj = cntntsSj;
+    }
     @Override
     public String toString() {
         return "Therapy{" +

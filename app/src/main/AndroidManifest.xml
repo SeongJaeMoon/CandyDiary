@@ -37,6 +37,9 @@
         <activity android:name=".Activity.PostActivity" />
         <activity android:name=".Activity.StatActivity" />
         <activity android:name=".Activity.UserProfileActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Activity.SearchActivity" />
         <activity android:name=".Activity.SignUpActivity" />
 

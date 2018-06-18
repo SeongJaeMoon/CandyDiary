@@ -57,6 +57,7 @@ import goods.cap.app.goodsgoods.Adapter.DetailAdapter;
 import goods.cap.app.goodsgoods.GoodsApplication;
 import goods.cap.app.goodsgoods.Helper.DietDtlHelper;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
+import goods.cap.app.goodsgoods.Helper.StarDBHelper;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
 import goods.cap.app.goodsgoods.Model.Diet.DietDtlResponseModel;
@@ -183,7 +184,7 @@ public class DetailItemActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
+                    setStar(diet);
                 }
             });
             initFirebase(contentNo);
@@ -372,6 +373,7 @@ public class DetailItemActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void setRecent(Diet diet) {
         RecentDBHelper recentDBHelper = new RecentDBHelper(this);
         try {
@@ -385,6 +387,23 @@ public class DetailItemActivity extends AppCompatActivity {
             Log.w(logger, e.getMessage());
         } finally {
             recentDBHelper.close();
+        }
+    }
+    private void setStar(Diet diet){
+        StarDBHelper starDBHelper = new StarDBHelper(this);
+        try{
+            starDBHelper.open();
+            if(starDBHelper.isStarExists(diet.getCntntsNo())){
+                starDBHelper.addStar(diet.getFilePath(), diet.getFdNm(), diet.getCntntsNo(), diet.getCntntsSj(),0);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Log.w(logger, e.getMessage());
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+        }finally {
+            starDBHelper.close();
         }
     }
 

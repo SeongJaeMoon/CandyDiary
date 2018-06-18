@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public static int pageNo = 1; //API 페이징 처리 변수
     public static int changeView; //View 변경 처리 변수
     public static int key = 1;
-    private String mainTitle;
+    private static String mainTitle;
 
     public static HomeFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -71,19 +71,16 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.w(logger, "onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(logger, "onCreate");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.w(logger, "onCreateView");
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         gridView = (ListView) view.findViewById(R.id.gridMain);
@@ -101,14 +98,10 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
                         if(changeView != 11) {
                             if(limitCount > allList.size()) {
                                 addData(isSelect);
-                            }else {
-                                Log.w(logger, "dietList size : " + allList.size());
                             }
                         }else{
                             if(limitCount > allList.size()) {
                                 addData();
-                            }else {
-                                Log.w(logger, "dietList size : " + allList.size());
                             }
                         }
                     }catch (Exception e){
@@ -164,7 +157,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.w(logger, "onViewCreated");
     }
 
     @Override
@@ -284,7 +276,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         if(allList.get(position) instanceof Diet){
             Intent intent = new Intent(getActivity(), DetailItemActivity.class);
             Gson gson = new Gson();
@@ -313,7 +304,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onResume(){
         super.onResume();
-        Log.w(logger, "onResume");
     }
 
     private void setChangeView(){
@@ -358,7 +348,6 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onPause() {
         super.onPause();
-        Log.w(logger, "onPause");
         if (allList != null && allList.size() > 0) {
             Gson gson = new Gson();
             String list = gson.toJson(allList);
@@ -371,26 +360,22 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onStop() {
         super.onStop();
-        Log.w(logger, "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.w(logger, "onDestroyView");
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.w(logger, "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.w(logger, "onDetach");
     }
 
     private static boolean isTablet(Context context) {

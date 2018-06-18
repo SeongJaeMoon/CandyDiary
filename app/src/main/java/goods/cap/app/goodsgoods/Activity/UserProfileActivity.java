@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -64,6 +67,7 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         mainImage.setOnClickListener(new View.OnClickListener() {
@@ -76,12 +80,13 @@ public class UserProfileActivity extends AppCompatActivity {
         });
 
         uid = auth.getCurrentUser().getUid();
-
+        stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
         //DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts");
         DatabaseReference commentRef = FirebaseDatabase.getInstance().getReference().child("comments");
-        dbRef.keepSynced(true);
         commentRef.keepSynced(true);
+
+        dbRef.keepSynced(true);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -152,7 +157,6 @@ public class UserProfileActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-
                 resultUri = result.getUri();
                 RequestOptions ro = new RequestOptions()
                         .placeholder(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user))
@@ -163,33 +167,46 @@ public class UserProfileActivity extends AppCompatActivity {
                         .load(resultUri)
                         .into(mainImage);
 
-                setProgressDialog();
-                StorageReference storageReference = stRef.child("profile_images").child(uid);
+                progressDialog.setTitle(getResources().getString(R.string.upload_image_title));
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                final StorageReference storageReference = stRef.child("profile_images").child(uid);
                 storageReference.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         try {
-                            Uri downUri = taskSnapshot.getUploadSessionUri();
-                            dbRef.child("profile_image").setValue(downUri.toString());
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.update_success), Toast.LENGTH_SHORT).show();
                             if (progressDialog.isShowing()) progressDialog.cancel();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.update_success), Toast.LENGTH_SHORT).show();
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    dbRef.child(uid).child("profile_image").setValue(uri.toString());
+                                }
+                            });
                         }catch (Exception e){
+                            if (progressDialog.isShowing()) progressDialog.cancel();
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.update_fail), Toast.LENGTH_SHORT).show();
                         }
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.cancel();
+                        Toast.makeText(UserProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage((int) progress + getResources().getString(R.string.progress_image));
+                    }
                 });
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            }else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
                 Log.w(logger, error.toString());
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.img_upload_error), Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    public void setProgressDialog(){
-        progressDialog.setTitle(getResources().getString(R.string.data_refresh_title));
-        progressDialog.setMessage(getResources().getString(R.string.data_refresh));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
     }
 }

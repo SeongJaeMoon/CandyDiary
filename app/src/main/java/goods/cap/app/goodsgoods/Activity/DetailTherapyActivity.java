@@ -51,6 +51,7 @@ import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
+import goods.cap.app.goodsgoods.Helper.StarDBHelper;
 import goods.cap.app.goodsgoods.Helper.TherapyDtlHelper;
 import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.Model.Therapy.TherapyDtl;
@@ -154,7 +155,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
+                    setStar(therapy);
                 }
             });
             initFirebase(contentNo);
@@ -177,7 +178,23 @@ public class DetailTherapyActivity extends AppCompatActivity {
             recentDBHelper.close();
         }
     }
-
+    private void setStar(Therapy therapy){
+        StarDBHelper starDBHelper = new StarDBHelper(this);
+        try{
+            starDBHelper.open();
+            if(starDBHelper.isStarExists(therapy.getCntntsNo())){
+                starDBHelper.addStar(therapy.getImgUrl(), therapy.getBneNm(), therapy.getCntntsNo(), therapy.getCntntsSj(),1);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Log.w(logger, e.getMessage());
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+        }finally {
+            starDBHelper.close();
+        }
+    }
     private void initFirebase(String cntntsNo) {
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         //사용자 정보

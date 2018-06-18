@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
+            android:layout_marginTop="5dp"
             android:id="@+id/mainTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,11 +19,10 @@
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             android:fontFamily="@font/ng"/>
-
         <ListView
             android:layout_marginTop="15dp"
             android:layout_alignParentTop="false"
-            android:layout_below="@id/sort_therapy"
+            android:layout_below="@id/mainTitle"
             android:id="@+id/gridMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

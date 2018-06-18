@@ -79,17 +79,16 @@ public class RecentDBHelper {
         cv.put(COLUMN_NO, ctnno);
         cv.put(COLUMN_CN, cntnt);
         cv.put(COLUMN_FLAG, flag);
-
         mDb.insert(TABLE_NAME,null, cv);
     }
     // 1. DB에 이미 들어있다면, 데이터를 저장하지 않는다.(데이터 확인)
-    public boolean isRecentExists(String url){
+    public boolean isRecentExists(String no){
         String sql = "SELECT " + COLUMN_NO + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 3";
         Cursor cursor = mDb.rawQuery(sql, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String temp = cursor.getString(cursor.getColumnIndex(COLUMN_NO));
-            if(temp.equals(url)){
+            if(temp.equals(no)){
                 cursor.close();
                 return false;
             }
