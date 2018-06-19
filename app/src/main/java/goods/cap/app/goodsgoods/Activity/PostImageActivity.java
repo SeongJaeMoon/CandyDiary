@@ -5,10 +5,11 @@ import android.os.Bundle;
 
 import goods.cap.app.goodsgoods.R;
 
-public class PostDtlActivity extends AppCompatActivity {
+public class PostImageActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_dtl);
+        setContentView(R.layout.activity_post_image);
     }
 }

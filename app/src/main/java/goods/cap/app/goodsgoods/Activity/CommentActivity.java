@@ -154,7 +154,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initFirebaseDatabase() {
-        //final String uid = auth.getCurrentUser().getUid();
         db = FirebaseDatabase.getInstance();
         dbRef = db.getReference("comments").child(cntntNo);
         dbRef.keepSynced(true);

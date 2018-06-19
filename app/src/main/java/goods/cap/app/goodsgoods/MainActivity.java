@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import goods.cap.app.goodsgoods.Activity.PermissionActivity;
+import goods.cap.app.goodsgoods.Activity.PostActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
@@ -40,6 +43,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.astuetz.PagerSlidingTabStrip;
 import com.bumptech.glide.request.RequestOptions;
@@ -55,6 +60,9 @@ import java.util.List;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
 import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /* main 화면, created by supermoon. */
 
@@ -229,14 +237,59 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.CAMERA)
+                                && ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                                && ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setMessage(getResources().getString(R.string.need_permission));
+                            builder.setPositiveButton(getResources().getString(R.string.go_setting), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startAppSettings();
+                                }
+                            });
+                            builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.create().show();
+                        }else {
+                            PermissionGen.with(MainActivity.this)
+                                    .addRequestCode(100)
+                                    .permissions(
+                                            android.Manifest.permission.CAMERA,
+                                            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    .request();
+                        }
+                    }else{
+                        startActivity(new Intent(MainActivity.this, PostActivity.class));
+                    }
+                }
             }
         });
         setPermissionDialog();
     }
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
 
+    @PermissionSuccess(requestCode = 100)
+    public void okPermission(){
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.ok_permission), Toast.LENGTH_SHORT).show();
+    }
+    @PermissionFail(requestCode = 100)
+    public void failPermission() {
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_permission), Toast.LENGTH_SHORT).show();
+    }
     //권한 요청
-    public void setPermissionDialog(){
+    private void setPermissionDialog(){
         try {
             SharedPreferences mPref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
             Boolean bfirst = mPref.getBoolean("isFirst", false);
@@ -393,7 +446,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
     }
-
     private void setRecentAdapter(){
         List<Recent> recentDrawerMenu = getRecentList(MainActivity.this);
         if(recentDrawerMenu == null){
@@ -405,7 +457,6 @@ public class MainActivity extends AppCompatActivity {
             recentAdapter.notifyDataSetChanged();
         }
     }
-
     private void startAppSettings() {
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -413,7 +464,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
         startActivity(intent);
     }
-
     private void Logout(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage(getResources().getString(R.string.confirm_logout));
@@ -427,7 +477,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

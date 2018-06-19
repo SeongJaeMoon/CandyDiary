@@ -170,7 +170,6 @@ public class DetailItemActivity extends AppCompatActivity {
             calorieView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i(logger, "calroie");
                     if(calorie == null) {
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.static_no),Toast.LENGTH_SHORT).show();
                     }else {
@@ -400,8 +399,8 @@ public class DetailItemActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
-            Log.w(logger, e.getMessage());
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+            Log.w(logger, e.getMessage());
         }finally {
             starDBHelper.close();
         }

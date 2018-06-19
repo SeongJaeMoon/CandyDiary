@@ -189,8 +189,8 @@ public class DetailTherapyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
-            Log.w(logger, e.getMessage());
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+            Log.w(logger, e.getMessage());
         }finally {
             starDBHelper.close();
         }

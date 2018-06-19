@@ -7,6 +7,9 @@ import android.support.multidex.MultiDex;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
+import goods.cap.app.goodsgoods.Util.PostImageLoader;
+import ss.com.bannerslider.Slider;
+
 public class GoodsApplication extends Application {
 
     private int key = 1; //Diet or Health 선택값 0, 1, 2, 3, 4, 5(Health) if 6 < key => search

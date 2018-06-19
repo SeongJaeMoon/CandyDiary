@@ -117,6 +117,7 @@
     <string name="no_agree">다음에</string>
     <string name="no_permission">권한에 동의하지 않으셨습니다. 권한이 필요한 기능을 사용하실 때는 권한에 동의해주세요!</string>
     <string name="ok_permission">권한에 동의 하셨습니다.</string>
+    <string name="go_setting">설정으로 가기</string>
     <string name="reference_privacy"></string>
     <string name="reference_notice"></string>
     <!--User Profile-->
@@ -135,4 +136,26 @@
     <string name="noti_star_delete">즐겨찾기 목록에서 삭제하시겠습니까?</string>
     <string name="delete_star_ok">삭제하기</string>
     <string name="star_delete_error">즐겨찾기 목록에서 삭제 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
+    <!--Com-->
+    <string name="most_popular">HOT한 사용자 목록입니다.</string>
+    <!--post-->
+    <string name="post_toolbar">포스팅하기</string>
+    <string name="post_img_title">나만의 식단 사진을 등록해보세요.</string>
+    <string name="post_add">사진 등록</string>
+    <string name="post_title_hint">제목을 작성해주세요.</string>
+    <string name="post_desc_hint">설명을 작성해주세요.</string>
+    <string name="post_hashtag">태그 추가</string>
+    <string name="post_regist">등록하기</string>
+    <string name="add_tags">태그를 작성해보세요.</string>
+    <string name="choose_cam_title">업로드할 이미지 선택</string>
+    <string name="choose_cam1">갤러리에서 선택</string>
+    <string name="choose_cam2">사진 촬영</string>
+    <string name="choose_pic">사진은 5개까지 선택 가능합니다.</string>
+    <string name="choose_error">사진 선택 도충 오류가 발생하였습니다. 다시 시도해주세요.</string>
+    <string name="choose_remove">선택된 사진을 등록 취소하였습니다.</string>
+    <string name="need_title">제목은 필수 입력란입니다.</string>
+    <string name="need_photo">사진을 한 장 이상 업로드 해주세요.</string>
+    <string name="upload_post_title">포스팅을 등록중입니다.</string>
+    <string name="upload_post_fail">포스팅 등록에 실패하였습니다. 다시 시도해주세요.</string>
+    <string name="upload_post_success">정상적으로 포스팅 되었습니다.</string>
 </resources>
