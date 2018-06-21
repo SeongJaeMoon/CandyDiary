@@ -4,10 +4,15 @@ import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,8 +65,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     @BindView(R.id.etTitle)EditText etTitle;
     @BindView(R.id.etDesc)EditText etDesc;
     @BindView(R.id.tag_group)TagGroup tagGroup;
-    //@BindView(R.id.btn_add)TextView picAdd;
-    //@BindView(R.id.btnPost)Button posting;
 
     private static final String logger = PostActivity.class.getSimpleName();
     private DatabaseReference dbRef;
@@ -67,9 +72,11 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     private ProgressDialog progressDialog;
     private static final int PICK_CAMERA = 1, PICK_IMAGE = 2;
     private Uri resultUri;
+    private String imagePath;
     private ArrayList<Uri> imgList = new ArrayList<Uri>();
     private String uid;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.KOREA);
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA);
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +95,7 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("posts");
 
-        tagGroup.setTags(getResources().getString(R.string.post_hashtag),
-                getResources().getString(R.string.post_hashtag),
-                getResources().getString(R.string.post_hashtag),
-                getResources().getString(R.string.post_hashtag),
-                getResources().getString(R.string.post_hashtag));
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         tagGroup.setOnTagClickListener(this);
     }
 
@@ -134,12 +136,20 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     }
     //사진 촬영
     private void picTake(){
-
         Intent pickcamIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        String uri = "goods_" + sdf.format(new Date(System.currentTimeMillis())) + ".jpg";
-        resultUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), uri));
-        pickcamIntent.putExtra(MediaStore.EXTRA_OUTPUT, resultUri);
-        startActivityForResult(pickcamIntent, PICK_CAMERA);
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+            Log.w(logger, ex.getMessage());
+            ex.printStackTrace();
+        }
+        if(photoFile!=null) {
+            resultUri = FileProvider.getUriForFile(getApplicationContext(), "goods.cap.app.goodsgoods", photoFile);
+            pickcamIntent.putExtra(MediaStore.EXTRA_OUTPUT, resultUri);
+            startActivityForResult(pickcamIntent, PICK_CAMERA);
+        }
     }
 
     @Override
@@ -180,20 +190,69 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.choose_error), Toast.LENGTH_SHORT).show();
                 return;
             }
-            //String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/goods/" + sdf.format(new Date(System.currentTimeMillis())) + ".jpg";
             int size = imgList.size();
-            imgList.set(size - 1, resultUri);
             switch (size){
-                case 1:addImg2.setImageURI(resultUri);
+                case 0: rotationPic(resultUri.toString(), addImg1);
                     break;
-                case 2:addImg3.setImageURI(resultUri);
+                case 1: rotationPic(resultUri.toString(), addImg2);
                     break;
-                case 3:addImg4.setImageURI(resultUri);
+                case 2: rotationPic(resultUri.toString(), addImg3);
                     break;
-                case 4:addImg5.setImageURI(resultUri);
+                case 3: rotationPic(resultUri.toString(), addImg4);
+                    break;
+                case 4: rotationPic(resultUri.toString(), addImg5);
                     break;
             }
+            imgList.add(resultUri);
         }
+    }
+
+    private void rotationPic(String imageFilePath, ImageView imageView){
+        Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(imageFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int exifOrientation;
+        int exifDegree;
+        if (exif != null) {
+            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            exifDegree = exifOrientationToDegrees(exifOrientation);
+        } else {
+            exifDegree = 0;
+        }
+        imageView.setImageBitmap(rotate(bitmap, exifDegree));
+    }
+
+    private File createImageFile() throws IOException {
+        String imageFileName = "goods_" + sdf.format(new Date(System.currentTimeMillis())) + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        imagePath = image.getAbsolutePath();
+        return image;
+    }
+
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+
+    private Bitmap rotate(Bitmap bitmap, float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     @OnClick(R.id.btnPost)
@@ -208,15 +267,15 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             //DB 저장
             pushRef.child("title").setValue(title);
             pushRef.child("desc").setValue(desc);
-            pushRef.child("date").setValue(sdf.format(new Date(System.currentTimeMillis())));
+            pushRef.child("date").setValue(sdf2.format(new Date(System.currentTimeMillis())));
             pushRef.child("uid").setValue(uid);
-            Map<String, Object> tagUpdates = new HashMap<>();
+            Map<String, Object> tagUpdates = new HashMap<String, Object>();
             //HashTag 저장
             int tagLen = tags.length;
             if(tagLen != 0){
-                for(int i = 0; i < tagLen; ++i){
-                    if(!tags[i].equals("") && !tags[i].equals(getResources().getString(R.string.post_hashtag))){
-                        tagUpdates.put(String.valueOf(i), tags[i]);
+                for(String s : tags){
+                    if(!s.equals("") && !s.equals(getResources().getString(R.string.post_hashtag))){
+                        tagUpdates.put(UUID.randomUUID().toString(), s);
                     }
                 }
                 pushRef.child("tags").updateChildren(tagUpdates);
@@ -229,7 +288,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                         progressDialog.setTitle(getResources().getString(R.string.upload_post_title));
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
-
                         final StorageReference dataRef = stRef.child("goods_posts").child(imgList.get(i).getLastPathSegment());
                         dataRef.putFile(imgList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -239,8 +297,8 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                                     dataRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            picUpdates.put(pushRef.getKey(), uri.toString());
-                                            pushRef.updateChildren(picUpdates);
+                                            picUpdates.put(UUID.randomUUID().toString(), uri.toString());
+                                            pushRef.child("images").updateChildren(picUpdates);
                                         }
                                     });
                                 } catch (Exception e) {
@@ -264,8 +322,10 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                             }
                         });
                     }
+                    if(progressDialog.isShowing()) progressDialog.cancel();
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.upload_post_success), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PostActivity.this, MainActivity.class);
+                    intent.putExtra("new_post", "new_post");
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -319,6 +379,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
 
     @Override
     public void onTagClick(String tag) {
-
+        tagGroup.submitTag();
     }
 }

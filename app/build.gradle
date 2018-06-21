@@ -71,6 +71,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.ss.bannerslider:bannerslider:2.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.facebook.android:facebook-share:[4,5)'
     implementation group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
     implementation 'com.lovedise:permissiongen:0.0.6'

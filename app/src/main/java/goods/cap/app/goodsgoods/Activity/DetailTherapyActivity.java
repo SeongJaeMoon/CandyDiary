@@ -82,7 +82,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
     private static final String logger = DetailTherapyActivity.class.getSimpleName();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.KOREA);
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm: aa", Locale.KOREA);
     private boolean isLikeProcess = false;
     private long like, comment, share;
 
@@ -341,7 +341,12 @@ public class DetailTherapyActivity extends AppCompatActivity {
                 TherapyDtl therapyDtl = response.getBody().getItem();
                 hbdcNm.setText(therapyDtl.getHbdcNm());
                 prvateTherpy.setText(therapyDtl.getPrvateTherpy());
-                shareText = therapyDtl.getPrvateTherpy();
+                shareText = "";
+                try {
+                    shareText = removeTag(therapyDtl.getPrvateTherpy());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 String temp = "";
                 try {
                     temp = removeTag(therapyDtl.getStle());

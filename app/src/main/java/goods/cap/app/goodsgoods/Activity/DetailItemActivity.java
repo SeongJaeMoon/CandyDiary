@@ -90,7 +90,7 @@ public class DetailItemActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private CustomDialog customDialog;
     private String[] calorie;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm", Locale.KOREA);
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
     private boolean isLikeProcess = false;
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
@@ -103,7 +103,6 @@ public class DetailItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_item);
         ButterKnife.bind(this);
-
         Intent intent = getIntent();
         if(intent != null){
             //JSON 데이터 파싱
@@ -130,8 +129,6 @@ public class DetailItemActivity extends AppCompatActivity {
             imgUrl = diet.getFilePath();
             shareTitle = diet.getFdNm();
             shareText = diet.getCntntsSj();
-
-
             shareDialog = new ShareDialog(this);
             callbackManager = CallbackManager.Factory.create();
             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {

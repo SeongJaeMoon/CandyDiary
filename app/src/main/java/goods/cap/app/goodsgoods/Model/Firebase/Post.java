@@ -4,18 +4,18 @@ import java.util.Map;
 
 public class Post {
     private String desc, title, uid, date;
-    private Map<String, Object> tagMap;
-    private Map<String, Object> imageMap;
+    private Map<String, Object> tags;
+    private Map<String, Object> images;
 
     public Post(){}
 
-    public Post(String desc, String title, String uid, String date, Map<String, Object> tagMap, Map<String, Object> imageMap) {
+    public Post(String desc, String title, String uid, String date, Map<String, Object> tags, Map<String, Object> images) {
         this.desc = desc;
         this.title = title;
         this.uid = uid;
         this.date = date;
-        this.tagMap = tagMap;
-        this.imageMap = imageMap;
+        this.tags = tags;
+        this.images = images;
     }
 
     public String getDesc() {
@@ -50,19 +50,19 @@ public class Post {
         this.date = date;
     }
 
-    public Map<String, Object> getTagMap() {
-        return tagMap;
+    public Map<String, Object> getTags() {
+        return tags;
     }
 
-    public void setTagMap(Map<String, Object> tagMap) {
-        this.tagMap = tagMap;
+    public void setTags(Map<String, Object> tags) {
+        this.tags = tags;
     }
 
-    public Map<String, Object> getImageMap() {
-        return imageMap;
+    public Map<String, Object> getImages() {
+        return images;
     }
 
-    public void setImageMap(Map<String, Object> imageMap) {
-        this.imageMap = imageMap;
+    public void setImages(Map<String, Object> images) {
+        this.images = images;
     }
 }

@@ -34,7 +34,9 @@
         <activity android:name=".Activity.ForgotActivity" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.NoticeActivity" />
-        <activity android:name=".Activity.PostActivity" />
+        <activity
+            android:name=".Activity.PostActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".Activity.StatActivity" />
         <activity android:name=".Activity.UserProfileActivity" />
         <activity
@@ -90,7 +92,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.PrivacyActivity" />
-        <activity android:name=".Activity.PostImageActivity"></activity>
+        <activity android:name=".Activity.PostImageActivity" />
+        <activity android:name=".Activity.AnotherUserActivity"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="goods.cap.app.goodsgoods"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

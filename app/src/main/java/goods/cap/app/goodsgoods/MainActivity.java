@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
     @PermissionSuccess(requestCode = 100)
     public void okPermission(){
         Toast.makeText(getApplicationContext(), getResources().getString(R.string.ok_permission), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, PostActivity.class));
     }
     @PermissionFail(requestCode = 100)
     public void failPermission() {
@@ -406,7 +407,6 @@ public class MainActivity extends AppCompatActivity {
         if(adapter != null){
             adapter.notifyDataSetChanged();
         }
-
         Intent intent = getIntent();
         if(intent != null) {
             int key = intent.getIntExtra("tagSearch", 1);
@@ -417,6 +417,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        String intent = getIntent().getStringExtra("new_data");
+        if(intent != null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.swipe_container, ComFragment.newInstance(2),"ComFragment").commit();
+        }
     }
     @Override
     protected void onDestroy() {

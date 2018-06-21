@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <ImageView
         android:id="@+id/wallpaper"
         android:layout_width="0dp"
@@ -16,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-
     <me.gujun.android.taggroup.TagGroup
         android:id="@+id/diet_cn"
         style="@style/TagGroup.Beauty_Red.Inverse"
@@ -28,5 +26,4 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="5dp" />
-
 </android.support.constraint.ConstraintLayout>

@@ -1,10 +1,12 @@
 package goods.cap.app.goodsgoods.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +40,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 
 /* keyword search 화면, created by supermoon. */
@@ -67,7 +72,6 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         mainImage.setOnClickListener(new View.OnClickListener() {
@@ -78,11 +82,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivityForResult(pickImageIntent, PICK_IMAGE);
             }
         });
-
         uid = auth.getCurrentUser().getUid();
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
-        //DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts");
         DatabaseReference commentRef = FirebaseDatabase.getInstance().getReference().child("comments");
         commentRef.keepSynced(true);
 
@@ -111,6 +114,94 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        postRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        commentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    @OnClick(R.id.textView)
+    void nameChange(){
+        AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
+        ad.setTitle(getResources().getString(R.string.noti_name));
+        final EditText et = new EditText(UserProfileActivity.this);
+        ad.setView(et);
+        ad.setPositiveButton(getResources().getString(R.string.success), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value = et.getText().toString();
+                dialog.dismiss();
+            }
+        });
+        ad.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        ad.show();
+    }
+    @OnClick(R.id.textView2)
+    void emailChange(){
+        AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
+        ad.setTitle(getResources().getString(R.string.noti_email));
+        final EditText et = new EditText(UserProfileActivity.this);
+        ad.setView(et);
+        ad.setPositiveButton(getResources().getString(R.string.success), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value = et.getText().toString();
+                dialog.dismiss();
+            }
+        });
+        ad.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        ad.show();
+
+    }
+    @OnClick(R.id.pwChange)
+    void pwChange(){
+        AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
+        ad.setTitle(getResources().getString(R.string.noti_pw));
+        final EditText et = new EditText(UserProfileActivity.this);
+        ad.setView(et);
+        ad.setPositiveButton(getResources().getString(R.string.success), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value = et.getText().toString();
+                dialog.dismiss();
+            }
+        });
+        ad.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        ad.show();
     }
 
     @Override

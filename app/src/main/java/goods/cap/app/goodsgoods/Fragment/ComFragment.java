@@ -1,11 +1,13 @@
 package goods.cap.app.goodsgoods.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
+import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
+import goods.cap.app.goodsgoods.Activity.PostDtlActivity;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
 import goods.cap.app.goodsgoods.R;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
@@ -40,7 +43,7 @@ import goods.cap.app.goodsgoods.Util.PostMainSlider;
 import me.gujun.android.taggroup.TagGroup;
 import ss.com.bannerslider.Slider;
 
-public class ComFragment extends Fragment{
+public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener{
 
     private static final String logger = ComFragment.class.getSimpleName();
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -57,6 +60,8 @@ public class ComFragment extends Fragment{
     private LinearLayoutManager layoutManager;
     private static final String LIST_STATE_KEY = "RC_STATE";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.KOREA);
+    private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecyclerAdapter;
+    private String name;
 
     public static ComFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -75,20 +80,13 @@ public class ComFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auth = FirebaseAuth.getInstance();
-        userRef = FirebaseDatabase.getInstance().getReference().child("users");
-        likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
-        postRef = FirebaseDatabase.getInstance().getReference().child("posts");
-        userRef.keepSynced(true);
-        likeRef.keepSynced(true);
-        postRef.keepSynced(true);
-        Slider.init(new PostImageLoader(getActivity()));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_com, container, false);
         swipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
         comTitle = (TextView)view.findViewById(R.id.mainTitle);
         comRView = (RecyclerView)view.findViewById(R.id.comRView);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -123,38 +121,85 @@ public class ComFragment extends Fragment{
     @Override
     public void onStart(){
         super.onStart();
+        initFirebase();
+        firebaseRecyclerAdapter.startListening();
     }
     private void initFirebase() {
+        auth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference().child("users");
+        likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
+        postRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        userRef.keepSynced(true);
+        likeRef.keepSynced(true);
+        postRef.keepSynced(true);
+        Slider.init(new PostImageLoader(getActivity()));
+
         FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(postRef.orderByKey(), Post.class)
                 .build();
-        FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
             @NonNull
             @Override
             public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_cardview, parent, false);
                 return new PostViewHolder(view);
             }
-
             @Override
-            protected void onBindViewHolder(@NonNull final PostViewHolder holder, int position, @NonNull Post model) {
+            protected void onBindViewHolder(@NonNull final PostViewHolder holder, int position, @NonNull final Post model) {
                 final String postUid = model.getUid();
                 final String postKey = getRef(position).getKey();
-                DatabaseReference dbUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(postKey);
+                Log.w(logger, postKey);
+                DatabaseReference dbUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(postUid);
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("posts").child(postKey);
                 dbUserRef.keepSynced(true);
+                dbRef.keepSynced(true);
                 dbUserRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String userName = dataSnapshot.child("name").getValue(String.class);
-                        String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
-                        holder.setUserImage(getActivity(), userProfileImage);
-                        holder.setUserName(userName);
+                        try {
+                            String userName = dataSnapshot.child("name").getValue(String.class);
+                            String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
+                            if(userName != null){
+                                name = userName;
+                            }
+                            holder.setUserImage(getActivity(), userProfileImage);
+                            holder.setUserName(userName);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
+                });
+                dbRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            Map<String, Object> imgMap = model.getImages();
+                            Map<String, Object> tagMap = model.getTags();
+                            if(imgMap != null){
+                                List<String> tempList = new ArrayList<String>(imgMap.size());
+                                for(Object o : imgMap.values()){
+                                    tempList.add(o.toString());
+                                }
+                                PostMainSlider postMainSlider = new PostMainSlider(tempList);
+                                holder.setPostImages(postMainSlider);
+                            }
+                            if(tagMap != null){
+                                List<String>tempList = new ArrayList<String>(tagMap.size());
+                                for(Object o : tagMap.values()){
+                                    tempList.add(o.toString());
+                                }
+                                holder.setTags(tempList);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
                 holder.setTitle(model.getTitle());
@@ -164,14 +209,13 @@ public class ComFragment extends Fragment{
                 holder.likeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         likeProcess = true;
                         likeRef.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (likeProcess) {
                                     if (dataSnapshot.child(postKey).hasChild(auth.getCurrentUser().getUid())) {
-                                        holder.likeBtn.setImageResource(R.drawable.ic_favorite_white_24dp);
+                                        holder.likeBtn.setImageResource(R.drawable.like_grey);
                                         likeRef.child(postKey).child(auth.getCurrentUser().getUid()).removeValue();
                                     } else {
                                         holder.likeBtn.setImageResource(R.drawable.like_orange);
@@ -181,42 +225,55 @@ public class ComFragment extends Fragment{
                                 }
                             }
                             @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
                     }
                 });
+                holder.moreItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), PostDtlActivity.class);
+                        intent.putExtra("userName", name);
+                        intent.putExtra("postKey", postKey);
+                        startActivity(intent);
+                    }
+                });
+                holder.userNameFeeds.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                if(model.getTagMap() != null){
-                    List<Object>temp = new ArrayList<>(model.getTagMap().values());
-                    List<String>tagList = new ArrayList<>(temp.size());
-                    for (Object object : temp) {
-                        tagList.add(Objects.toString(object, null));
                     }
-                    holder.setTags(tagList);
-                }
-                if(model.getImageMap() != null){
-                    List<Object>temp = new ArrayList<>(model.getImageMap().values());
-                    List<String>imageList = new ArrayList<>(temp.size());
-                    for (Object object : temp) {
-                        imageList.add(Objects.toString(object, null));
+                });
+                holder.userImgFeeds.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
                     }
-                    PostMainSlider postMainSlider = new PostMainSlider(getActivity(), imageList);
-                    holder.setPostImages(postMainSlider);
-                }
+                });
             }
         };
+        comRView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        initFirebase();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private static class PostViewHolder extends RecyclerView.ViewHolder{
 
         private View view;
-        private CircleImageView userImgFeeds;
-        private TextView userNameFeeds;
+        public CircleImageView userImgFeeds;
+        public TextView userNameFeeds;
         private TextView userDateFeeds;
         public ImageView likeBtn;
         private TextView likeCount;
+        private TextView moreItem;
         private DatabaseReference likeRef;
         private FirebaseAuth auth;
 
@@ -224,6 +281,8 @@ public class ComFragment extends Fragment{
             super(itemView);
             view = itemView;
             likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
+            likeRef.keepSynced(true);
+            moreItem = (TextView)view.findViewById(R.id.moreItem);
             auth = FirebaseAuth.getInstance();
             userImgFeeds = (CircleImageView)view.findViewById(R.id.userImgFeeds);
             userNameFeeds = (TextView)view.findViewById(R.id.userNameFeeds);
@@ -235,16 +294,28 @@ public class ComFragment extends Fragment{
             TextView tvTitle = (TextView) view.findViewById(R.id.title);
             tvTitle.setText(title);
         }
-        public void setPostImages(PostMainSlider slider){
-            Slider bannerSlider = (Slider)view.findViewById(R.id.banner_slider);
-            bannerSlider.setAdapter(slider);
+        public void setPostImages(final PostMainSlider postAdapter){
+            final Slider slider = view.findViewById(R.id.banner_slider);
+            slider.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    slider.setAdapter(postAdapter);
+                    slider.setSelectedSlide(0);
+                    slider.setInterval(5000);
+                }
+            }, 1500);
         }
+
         public void setTags(List<String> tags){
             TagGroup tagGroup = (TagGroup)view.findViewById(R.id.tag_group);
             tagGroup.setTags(tags);
         }
         public void setUserImage(Context context, String url){
+            RequestOptions ro = new RequestOptions()
+                    .placeholder(ContextCompat.getDrawable(context, R.mipmap.empty_user))
+                    .error(ContextCompat.getDrawable(context, R.mipmap.empty_user));
             Glide.with(context)
+                    .setDefaultRequestOptions(ro)
                     .load(url)
                     .into(userImgFeeds);
         }
@@ -263,7 +334,14 @@ public class ComFragment extends Fragment{
                         likeCount.setTextColor(Color.rgb(252, 176, 48));
                     } else {
                         likeCount.setTextColor(Color.rgb(127, 127, 127));
-                        likeBtn.setImageResource(R.drawable.ic_favorite_white_24dp);
+                        likeBtn.setImageResource(R.drawable.like_grey);
+                    }
+                    long likes = dataSnapshot.child(postKey).getChildrenCount();
+                    if(likes == 0){
+                        likeCount.setVisibility(View.GONE);
+                    }else{
+                        likeCount.setVisibility(View.VISIBLE);
+                        likeCount.setText(String.valueOf(likes));
                     }
                 }
                 @Override
@@ -278,7 +356,6 @@ public class ComFragment extends Fragment{
     public void onResume(){
         super.onResume();
         if (parcelable != null) layoutManager.onRestoreInstanceState(parcelable);
-
     }
 
     @Override
@@ -289,6 +366,7 @@ public class ComFragment extends Fragment{
     @Override
     public void onStop(){
         super.onStop();
+        firebaseRecyclerAdapter.stopListening();
     }
 
     @Override
