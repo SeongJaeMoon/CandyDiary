@@ -25,7 +25,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +34,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,9 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +51,6 @@ import goods.cap.app.goodsgoods.R;
 import me.gujun.android.taggroup.TagGroup;
 
 public class PostActivity extends AppCompatActivity implements TagGroup.OnTagClickListener{
-
     @BindView(R.id.my_toolbar)Toolbar toolbar;
     @BindView(R.id.add_img1)ImageView addImg1;
     @BindView(R.id.add_img2)ImageView addImg2;
@@ -65,7 +60,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     @BindView(R.id.etTitle)EditText etTitle;
     @BindView(R.id.etDesc)EditText etDesc;
     @BindView(R.id.tag_group)TagGroup tagGroup;
-
     private static final String logger = PostActivity.class.getSimpleName();
     private DatabaseReference dbRef;
     private StorageReference stRef;
@@ -77,7 +71,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     private String uid;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA);
     private SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +91,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         tagGroup.setOnTagClickListener(this);
     }
-
     @OnClick(R.id.btn_add)
     void click(){
         if(imgList.size() == 5){
@@ -151,7 +143,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             startActivityForResult(pickcamIntent, PICK_CAMERA);
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -206,7 +197,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             imgList.add(resultUri);
         }
     }
-
     private void rotationPic(String imageFilePath, ImageView imageView){
         Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
         ExifInterface exif = null;
@@ -225,7 +215,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         }
         imageView.setImageBitmap(rotate(bitmap, exifDegree));
     }
-
     private File createImageFile() throws IOException {
         String imageFileName = "goods_" + sdf.format(new Date(System.currentTimeMillis())) + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -237,7 +226,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         imagePath = image.getAbsolutePath();
         return image;
     }
-
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
             return 90;
@@ -248,15 +236,13 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         }
         return 0;
     }
-
     private Bitmap rotate(Bitmap bitmap, float degree) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
-
-    @OnClick(R.id.btnPost)
-    void postingClick(){
+    //@OnClick(R.id.btnPost)
+    private void postingClick(){
         String title = etTitle.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();
         String[] tags = tagGroup.getTags();
@@ -337,18 +323,19 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             }
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_default, menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
+        }
+        if (item.getItemId() == R.id.action_add){
+            postingClick();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -376,7 +363,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     }
     @Override
     public void onBackPressed() { super.onBackPressed(); this.finish();}
-
     @Override
     public void onTagClick(String tag) {
         tagGroup.submitTag();

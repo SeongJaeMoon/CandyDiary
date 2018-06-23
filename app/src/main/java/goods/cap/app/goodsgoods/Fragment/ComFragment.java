@@ -61,7 +61,6 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
     private static final String LIST_STATE_KEY = "RC_STATE";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss", Locale.KOREA);
     private FirebaseRecyclerAdapter<Post, PostViewHolder> firebaseRecyclerAdapter;
-    private String name;
 
     public static ComFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -148,7 +147,6 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
             protected void onBindViewHolder(@NonNull final PostViewHolder holder, int position, @NonNull final Post model) {
                 final String postUid = model.getUid();
                 final String postKey = getRef(position).getKey();
-                Log.w(logger, postKey);
                 DatabaseReference dbUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(postUid);
                 DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("posts").child(postKey);
                 dbUserRef.keepSynced(true);
@@ -159,9 +157,6 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                         try {
                             String userName = dataSnapshot.child("name").getValue(String.class);
                             String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
-                            if(userName != null){
-                                name = userName;
-                            }
                             holder.setUserImage(getActivity(), userProfileImage);
                             holder.setUserName(userName);
                         }catch (Exception e){
@@ -205,7 +200,6 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 holder.setTitle(model.getTitle());
                 holder.setPostDate(model.getDate());
                 holder.setLike(postKey);
-
                 holder.likeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -234,8 +228,12 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 holder.moreItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), PostDtlActivity.class);
-                        intent.putExtra("userName", name);
+                        final Intent intent = new Intent(getActivity(), PostDtlActivity.class);
+                        if(holder.userNameFeeds.getText() != null){
+                            intent.putExtra("userName", holder.userNameFeeds.getText().toString());
+                        }else{
+                            intent.putExtra("userName", "");
+                        }
                         intent.putExtra("postKey", postKey);
                         startActivity(intent);
                     }

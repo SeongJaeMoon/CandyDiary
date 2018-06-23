@@ -38,6 +38,7 @@ public class StarFragment extends Fragment implements MultiSwipeRefreshLayout.On
     private GirdViewAdapter gridViewAdapter;
     private TextView mainText;
     private ListView gridView;
+    private StarDBHelper starDBHelper;
 
     public static StarFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -56,7 +57,6 @@ public class StarFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -109,14 +109,12 @@ public class StarFragment extends Fragment implements MultiSwipeRefreshLayout.On
 
     private List<Recent> getStarList(){
         List<Recent> ret = null;
-        StarDBHelper starDBHelper = new StarDBHelper(getActivity());
+        starDBHelper = new StarDBHelper(getActivity());
         try{
             starDBHelper.open();
             ret = starDBHelper.getStarList();
         }catch (Exception e){
             Log.w(logger, e.getMessage());
-        }finally {
-            starDBHelper.close();
         }
         return ret;
     }

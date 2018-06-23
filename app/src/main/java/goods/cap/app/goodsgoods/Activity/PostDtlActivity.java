@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
@@ -70,9 +70,10 @@ public class PostDtlActivity extends AppCompatActivity {
     @BindView(R.id.comment_img)ImageView commentImg;//댓글 이미지
     @BindView(R.id.comment_detail)TextView commentDetail;//댓글보기
     @BindView(R.id.comments)TextView comments;//댓글 수
-    @BindView(R.id.detail_img)ImageView imageView;//즐겨찾기
     @BindView(R.id.dateText)TextView dateText; // 등록일
+    @BindView(R.id.star_img)ImageView starImg; //즐겨찾기 추가
     private boolean isLikeProcess = false;
+    private boolean isLikeStarProcess = false;
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
     private String shareText = "";
@@ -80,6 +81,7 @@ public class PostDtlActivity extends AppCompatActivity {
     private String shareTitle = "";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
     private long like, comment, share;
+    private boolean isMyPost = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +91,9 @@ public class PostDtlActivity extends AppCompatActivity {
         if(intent != null){
             final String postKey = intent.getStringExtra("postKey");
             final String userName = intent.getStringExtra("userName");
+            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts").child(postKey);
             postRef.keepSynced(true);
-
             postRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -124,7 +126,7 @@ public class PostDtlActivity extends AppCompatActivity {
                                   tag_cn.setTags(tagList);
                               }
                               String date = post.getDate();
-                              dateText.setText(date);
+                              dateText.setText(String.format("%s에 작성",date));
                               String title = post.getTitle();
                               contents_title.setText(title);
                               shareTitle = title;
@@ -134,6 +136,11 @@ public class PostDtlActivity extends AppCompatActivity {
                                 shareText = desc;
                             }
                               setHeadLayout(String.format("%s님이 작성한 글", userName));
+                            }
+                            String childUid = dataSnapshot.child("uid").getValue(String.class);
+                            if(childUid.equals(uid)){
+                                starImg.setVisibility(View.GONE);
+                                isMyPost = true;
                             }
                         }
                     }catch (Exception e){
@@ -172,7 +179,6 @@ public class PostDtlActivity extends AppCompatActivity {
 
         }
     }
-
     private void initFirebase(String postKey){
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         //사용자 정보
@@ -182,6 +188,7 @@ public class PostDtlActivity extends AppCompatActivity {
         final DatabaseReference dbRef = db.getReference().child("likes").child(postKey);
         final DatabaseReference dbRef2 = db.getReference().child("comments").child(postKey);
         final DatabaseReference dbRef3 = db.getReference().child("shares").child(postKey);
+        final DatabaseReference dbRef4 = db.getReference().child("stars").child(postKey);
         dbRef.keepSynced(true);
         dbRef2.keepSynced(true);
         dbRef3.keepSynced(true);
@@ -204,7 +211,6 @@ public class PostDtlActivity extends AppCompatActivity {
                             isLikeProcess = false;
                         }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
@@ -212,7 +218,6 @@ public class PostDtlActivity extends AppCompatActivity {
                 });
             }
         });
-
         shareImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,7 +270,31 @@ public class PostDtlActivity extends AppCompatActivity {
                 alertDialog.create().show();
             }
         });
-
+        starImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isLikeStarProcess = true;
+                dbRef4.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(isLikeStarProcess) {
+                            if(dataSnapshot.hasChild(uid)) {
+                                dbRef4.child(uid).removeValue();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_post_click2), Toast.LENGTH_LONG).show();
+                                starImg.setImageResource(R.drawable.ic_star_border_white_24dp);
+                            } else {
+                                dbRef4.child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_post_click1), Toast.LENGTH_LONG).show();
+                                starImg.setImageResource(R.drawable.ic_star_white_18dp);
+                            }
+                            isLikeStarProcess = false;
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
+            }
+        });
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -308,8 +337,22 @@ public class PostDtlActivity extends AppCompatActivity {
 
             }
         });
+        dbRef4.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!isMyPost) {
+                    if (dataSnapshot.hasChild(uid)) {
+                        starImg.setImageResource(R.drawable.ic_star_white_18dp);
+                    } else {
+                        starImg.setImageResource(R.drawable.ic_star_border_white_24dp);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
-
     private void setHeadLayout(String title){
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);
@@ -318,7 +361,6 @@ public class PostDtlActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_default, menu);
@@ -332,7 +374,6 @@ public class PostDtlActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     protected void onResume(){
         super.onResume();

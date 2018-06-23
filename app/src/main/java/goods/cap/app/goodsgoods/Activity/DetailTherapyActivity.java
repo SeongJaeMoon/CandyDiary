@@ -85,6 +85,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm: aa", Locale.KOREA);
     private boolean isLikeProcess = false;
     private long like, comment, share;
+    private StarDBHelper starDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +160,16 @@ public class DetailTherapyActivity extends AppCompatActivity {
                 }
             });
             initFirebase(contentNo);
+            starDBHelper = new StarDBHelper(this);
+            try{
+                starDBHelper.open();
+                if(!starDBHelper.isStarExists(therapy.getCntntsNo())){
+                    imageView.setImageResource(R.drawable.ic_star_white_18dp);
+                }
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
+                Log.w(logger, e.getMessage());
+            }
         }else{
             Log.w(logger, "Error");
         }
@@ -179,20 +190,19 @@ public class DetailTherapyActivity extends AppCompatActivity {
         }
     }
     private void setStar(Therapy therapy){
-        StarDBHelper starDBHelper = new StarDBHelper(this);
         try{
-            starDBHelper.open();
             if(starDBHelper.isStarExists(therapy.getCntntsNo())){
                 starDBHelper.addStar(therapy.getImgUrl(), therapy.getBneNm(), therapy.getCntntsNo(), therapy.getCntntsSj(),1);
+                imageView.setImageResource(R.drawable.ic_star_white_18dp);
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
+                starDBHelper.removeList(therapy.getCntntsNo());
+                imageView.setImageResource(R.drawable.ic_star_border_white_24dp);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_delete), Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
             Log.w(logger, e.getMessage());
-        }finally {
-            starDBHelper.close();
         }
     }
     private void initFirebase(String cntntsNo) {
@@ -424,6 +434,9 @@ public class DetailTherapyActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+//        if(starDBHelper != null){
+//            starDBHelper.close();
+//        }
     }
 
     @Override

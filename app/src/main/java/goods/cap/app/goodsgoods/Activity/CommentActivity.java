@@ -182,7 +182,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         };
         dbRef.addChildEventListener(eventListener);
     }
-
     private void deletePopup(){
 
     }

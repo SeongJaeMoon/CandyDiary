@@ -98,6 +98,7 @@ public class DetailItemActivity extends AppCompatActivity {
     private String imgUrl;
     private String shareTitle;
     private long like, comment, share;
+    private StarDBHelper starDBHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,12 +137,8 @@ public class DetailItemActivity extends AppCompatActivity {
                 public void onSuccess(Sharer.Result result) {
                     Log.i(logger, "facebook => "+result.toString());
                 }
-
                 @Override
-                public void onCancel() {
-
-                }
-
+                public void onCancel() { }
                 @Override
                 public void onError(FacebookException error) {
                     Log.i(logger, "facebook => "+error.toString());
@@ -175,7 +172,6 @@ public class DetailItemActivity extends AppCompatActivity {
                     }
                 }
             });
-
             //좋아요 버튼
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -184,6 +180,16 @@ public class DetailItemActivity extends AppCompatActivity {
                 }
             });
             initFirebase(contentNo);
+            starDBHelper = new StarDBHelper(this);
+            try{
+                starDBHelper.open();
+                if(!starDBHelper.isStarExists(diet.getCntntsNo())){
+                    imageView.setImageResource(R.drawable.ic_star_white_18dp);
+                }
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
+                Log.w(logger, e.getMessage());
+            }
         }else{
             Log.w(logger, "Error");
         }
@@ -369,7 +375,6 @@ public class DetailItemActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void setRecent(Diet diet) {
         RecentDBHelper recentDBHelper = new RecentDBHelper(this);
         try {
@@ -386,23 +391,21 @@ public class DetailItemActivity extends AppCompatActivity {
         }
     }
     private void setStar(Diet diet){
-        StarDBHelper starDBHelper = new StarDBHelper(this);
         try{
-            starDBHelper.open();
             if(starDBHelper.isStarExists(diet.getCntntsNo())){
                 starDBHelper.addStar(diet.getFilePath(), diet.getFdNm(), diet.getCntntsNo(), diet.getCntntsSj(),0);
+                imageView.setImageResource(R.drawable.ic_star_white_18dp);
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_item), Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_exist), Toast.LENGTH_SHORT).show();
+                starDBHelper.removeList(diet.getCntntsNo());
+                imageView.setImageResource(R.drawable.ic_star_border_white_24dp);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_delete), Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
             Log.w(logger, e.getMessage());
-        }finally {
-            starDBHelper.close();
         }
     }
-
     private void setHeadLayout(String title){
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);

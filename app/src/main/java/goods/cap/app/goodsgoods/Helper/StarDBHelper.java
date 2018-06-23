@@ -41,6 +41,14 @@ public class StarDBHelper {
     }
 
     static class DatabaseHelper extends SQLiteOpenHelper {
+        private static DatabaseHelper sInstance;
+
+        public static synchronized DatabaseHelper getInstance(Context context) {
+            if (sInstance == null) {
+                sInstance = new DatabaseHelper(context.getApplicationContext());
+            }
+            return sInstance;
+        }
 
         DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,18 +66,16 @@ public class StarDBHelper {
             db.execSQL(DATABASE_CREATE);
         }
     }
-
     public StarDBHelper open() throws SQLException{
-        mDbHelper = new StarDBHelper.DatabaseHelper(context);
+        //new StarDBHelper.DatabaseHelper(context);
+        mDbHelper = DatabaseHelper.getInstance(context);
         mDb = mDbHelper.getWritableDatabase();
         return this;
     }
-
     public void close() {
         mDbHelper.close();
         mDb.close();
     }
-
     public void addStar(String url, String summary, String ctnno, String cntnt, int flag){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_URL, url);
@@ -88,7 +94,6 @@ public class StarDBHelper {
         while(!cursor.isAfterLast()){
             String temp = cursor.getString(cursor.getColumnIndex(COLUMN_NO));
             if(temp.equals(no)){
-                cursor.close();
                 ret = false;
             }
             cursor.moveToNext();
@@ -96,29 +101,27 @@ public class StarDBHelper {
         cursor.close();
         return ret;
     }
-
     public List<Recent> getStarList(){
         String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN + "," + COLUMN_FLAG
                 + " FROM " + TABLE_NAME + " ORDER BY " + _ID;
         List<Recent> list = new ArrayList<Recent>();
-        mDbHelper = new StarDBHelper.DatabaseHelper(context);
+        mDbHelper = DatabaseHelper.getInstance(context);
         mDb =  mDbHelper.getReadableDatabase();
-        Cursor res =  mDb.rawQuery(sql, null);
-        res.moveToFirst();
-        while (!res.isAfterLast()) {
-            String imgUrl = res.getString(res.getColumnIndex(COLUMN_URL));
-            String summary = res.getString(res.getColumnIndex(COLUMN_SMY));
-            String ctnno = res.getString(res.getColumnIndex(COLUMN_NO));
-            String cntnt = res.getString(res.getColumnIndex(COLUMN_CN));
-            int flag = res.getInt(res.getColumnIndex(COLUMN_FLAG));
+        Cursor cursor =  mDb.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String imgUrl = cursor.getString(cursor.getColumnIndex(COLUMN_URL));
+            String summary = cursor.getString(cursor.getColumnIndex(COLUMN_SMY));
+            String ctnno = cursor.getString(cursor.getColumnIndex(COLUMN_NO));
+            String cntnt = cursor.getString(cursor.getColumnIndex(COLUMN_CN));
+            int flag = cursor.getInt(cursor.getColumnIndex(COLUMN_FLAG));
             list.add(new Recent(ctnno, imgUrl, summary, cntnt, flag));
-            res.moveToNext();
+            cursor.moveToNext();
         }
-        if (res.getCount()==0){
-            res.close();
+        if (cursor.getCount()==0){
             return null;
         }
-        res.close();
+        cursor.close();
         return list;
     }
     public void removeList(String id){

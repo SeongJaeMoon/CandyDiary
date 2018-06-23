@@ -58,6 +58,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
+import goods.cap.app.goodsgoods.Helper.StarDBHelper;
 import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Util.BackHandler;
 import kr.co.namee.permissiongen.PermissionFail;
@@ -84,14 +85,13 @@ public class MainActivity extends AppCompatActivity {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
     private MainAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private BackHandler backHandler;
     private int isPostion = 0;
     private DatabaseReference dbRef;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private static final String PACKAGE_URL_SCHEME = "package:";
-
+    private StarDBHelper starDBHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,10 +144,6 @@ public class MainActivity extends AppCompatActivity {
         profileEmail = (TextView)naviHeader.findViewById(R.id.profieEmail);
         profileName = (TextView)naviHeader.findViewById(R.id.profileName);
 
-        layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MainAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);

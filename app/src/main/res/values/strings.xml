@@ -127,19 +127,25 @@
     <string name="upload_image_title">사진을 등록중입니다.</string>
     <string name="update_success">프로필이 성공적으로 변경되었습니다.</string>
     <string name="update_fail">프로필 변경에 실패하였습니다. 다시 시도해주세요.</string>
+    <string name="too_short">입력 값이 너무 짧습니다. 다시 시도해주세요.</string>
+    <string name="no_validation">입력 값의 형식이 잘못되었습니다. 다시 시도해주세요.</string>
     <string name="pw_change">비밀번호 변경</string>
     <string name="noti_name">변경할 이름을 입력해주세요.</string>
-    <string name="noti_pw">변경할 패스워드를 입력해주세요.</string>
+    <string name="noti_pw">변경할 비밀번호를 입력해주세요.</string>
     <string name="noti_email">변경할 이메일을 입력해주세요.</string>
+    <string name="my_post">나의 포스팅\n</string>
+    <string name="star_post">즐겨찾기 포스팅\n</string>
+    <string name="diet_and_post">식단을 관리하고 식단을 공유해보세요!</string>
+    <string name="post_list">나의 포스팅 목록</string>
     <!--Star-->
-    <string name="no_star_data">아직 저장된 데이터가 없습니다.\n 관심 있는 데이터를 저장해보세요.</string>
+    <string name="no_star_data">아직 저장된 데이터가 없습니다.\n 관심 있는 식단을 저장해보세요.</string>
     <string name="star_error">즐겨찾기 목록에 저장 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
     <string name="star_exist">이미 즐겨찾기 목록에 등록되어 있습니다.</string>
     <string name="star_data">즐겨찾기 목록입니다.</string>
     <string name="star_delete">즐겨찾기 목록에서 삭제되었습니다.</string>
     <string name="noti_star_delete">즐겨찾기 목록에서 삭제하시겠습니까?</string>
     <string name="delete_star_ok">삭제하기</string>
-    <string name="star_delete_error">즐겨찾기 목록에서 삭제 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
+    <string name="star_default_error">즐겨찾기 목록을 제어 중에 오류가 발생하였습니다.</string>
     <!--Com-->
     <string name="most_popular">HOT한 사용자 목록입니다.</string>
     <!--post-->
@@ -163,4 +169,6 @@
     <string name="upload_post_fail">포스팅 등록에 실패하였습니다. 다시 시도해주세요.</string>
     <string name="upload_post_success">정상적으로 포스팅 되었습니다.</string>
     <string name="more">더보기</string>
+    <string name="star_post_click1">해당 포스트를 즐겨찾기 목록에 추가하였습니다.</string>
+    <string name="star_post_click2">해당 포스트를 즐겨찾기 목록에서 삭제하였습니다.</string>
 </resources>
