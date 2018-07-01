@@ -35,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
@@ -104,7 +105,7 @@ public class SignInActivity extends AppCompatActivity {
         String email = emailEdit.getText().toString().trim();
         String pw = pwEdit.getText().toString().trim();
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pw)){
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_sign_data), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_sign_data), Toast.LENGTH_LONG).show();
         }else{
             setProgressDialog();
             auth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -112,11 +113,21 @@ public class SignInActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     try {
                         if (task.isSuccessful()) {
+                            if(progressDialog.isShowing())progressDialog.cancel();
                             checkUserExist();
+                        }else{
+                            ++checkLimit;
+                            if(checkLimit >= 5){
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match_over), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(SignInActivity.this, ForgotActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match), Toast.LENGTH_LONG).show();
+                            }
                         }
                     }catch (Exception e){
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_sign_data), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_sign_data), Toast.LENGTH_LONG).show();
                     }
                     if(progressDialog.isShowing())progressDialog.cancel();
                 }
@@ -127,35 +138,26 @@ public class SignInActivity extends AppCompatActivity {
     private void checkUserExist(){
         try {
             final String uid = auth.getCurrentUser().getUid();
+            Log.i(logger, "uid => " + uid);
             dbRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.hasChild(uid)){
                         if(progressDialog.isShowing())progressDialog.cancel();
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         SignInActivity.this.finish();
-                    }else{
-                        ++checkLimit;
-                        if(checkLimit >= 5){
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match_over), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignInActivity.this, ForgotActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_match), Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_LONG).show();
                 }
             });
         }catch (NullPointerException e){
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -171,7 +173,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     //< Google Sign Button Click >
-
     @OnClick(R.id.btnGoogleSignIn)
     public void googleLogin(){
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(client);
@@ -189,7 +190,7 @@ public class SignInActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
                 //Toast.makeText(SignInActivity.this,getResources().getString(R.string.google_signin),Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_error), Toast.LENGTH_LONG).show();
                 Log.w(logger,"Google failed:"+ result +"," + result.getStatus() + "," + result.getSignInAccount());
             }
         }
@@ -203,7 +204,7 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(SignInActivity.this, getResources().getString(R.string.sign_error), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, getResources().getString(R.string.sign_error), Toast.LENGTH_LONG).show();
                         } else {
                             DatabaseReference userDbRef = dbRef.child(auth.getCurrentUser().getUid());
                             userDbRef.child("email").setValue(acct.getEmail());

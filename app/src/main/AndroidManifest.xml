@@ -35,8 +35,8 @@
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.NoticeActivity" />
         <activity
-            android:name=".Activity.PostActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:name=".Activity.PostActivity"/>
+        <!--android:windowSoftInputMode="stateVisible|adjustResize"-->
         <activity android:name=".Activity.StatActivity" />
         <activity android:name=".Activity.UserProfileActivity" />
         <activity

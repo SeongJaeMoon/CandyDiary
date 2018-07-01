@@ -16,7 +16,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     </android.support.v7.widget.Toolbar>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,15 +37,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:id="@+id/add_img1"
                 android:layout_width="60dp"
                 android:layout_height="70dp"
+                android:layout_weight="0.2"
                 android:adjustViewBounds="true"
                 android:background="@color/colorGrey"
+                android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:layout_weight="0.2"
-                app:srcCompat="@drawable/ic_action_add"/>
+                app:srcCompat="@drawable/ic_action_add" />
             <ImageView
                 android:id="@+id/add_img2"
                 android:layout_width="60dp"
@@ -109,23 +111,24 @@
             android:textColorHint="@color/cardview_shadow_start_color"
             android:textSize="15sp"
             android:maxLength="20"/>
+
         <EditText
             android:id="@+id/etDesc"
-            android:layout_width="match_parent"
+            android:layout_width="364dp"
             android:layout_height="180dp"
             android:layout_below="@+id/etTitle"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/tv_style"
             android:hint="@string/post_desc_hint"
-            android:maxLines="5"
+            android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
             android:maxLength="1000"
+            android:maxLines="5"
             android:padding="15dp"
             android:scrollbars="vertical"
-            android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
             android:textColorHint="@color/cardview_shadow_start_color"
-            android:imeOptions="actionSend|flagNoEnterAction"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
+        <!--android:imeOptions="actionSend|flagNoEnterAction"-->
         <TextView
             android:textAlignment="center"
             android:layout_below="@+id/etDesc"
@@ -141,17 +144,7 @@
             android:layout_below="@+id/tv_prompt"
             atg_inputHint="@string/post_hashtag"
             app:atg_isAppendMode="true"
-            style="@style/TagGroup.Large"/>
-        <!--<Button-->
-            <!--android:id="@+id/btnPost"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:background="@drawable/login_btn_style"-->
-            <!--android:text="@string/post_regist"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@android:color/white" />-->
+            style="@style/TagGroup"/>
     </RelativeLayout>
+</ScrollView>
 </LinearLayout>

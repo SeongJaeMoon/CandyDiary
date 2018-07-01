@@ -22,45 +22,39 @@ import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.R;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder>{
+    private Context context;
+    private List<Recent> data;
 
-        private Context context;
-        private List<Recent> data;
-
-        public RecentAdapter(Context context, List<Recent> data){
-            super();
-            this.context = context;
-            this.data = data;
+    public RecentAdapter(Context context, List<Recent> data){
+        super();
+        this.context = context;
+        this.data = data;
+    }
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        private ImageView recentImg;
+        private TextView recentText;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            recentImg = (ImageView) itemView.findViewById(R.id.recentImg);
+            recentText = (TextView) itemView.findViewById(R.id.recentText);
         }
+    }
 
-        static class ViewHolder extends RecyclerView.ViewHolder{
-
-            private ImageView recentImg;
-            private TextView recentText;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                recentImg = (ImageView) itemView.findViewById(R.id.recentImg);
-                recentText = (TextView) itemView.findViewById(R.id.recentText);
-            }
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_recent, parent,false);
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-                //data.get(position).getFlag(0 or 1 구분 필요);
-                if (data != null) {
-                    Glide.with(context)
-                            .load(data.get(position).getImgUrl())
-                            .into(holder.recentImg);
-                    holder.recentText.setText(data.get(position).getSummary());
-                    holder.recentImg.setOnClickListener(new View.OnClickListener() {
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_recent, parent,false);
+        return new ViewHolder(v);
+    }
+    @Override
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        //data.get(position).getFlag(0 or 1 구분 필요)
+        if (data != null) {
+            Glide.with(context)
+                    .load(data.get(position).getImgUrl())
+                    .into(holder.recentImg);
+            holder.recentText.setText(data.get(position).getSummary());
+            holder.recentImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Recent temp = data.get(holder.getAdapterPosition());
@@ -84,14 +78,12 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
                             }
                         }
                     });
-                } else {
+                }else {
                     Glide.with(context)
                             .load(R.drawable.none)
                             .into(holder.recentImg);
                 }
-
         }
-
         @Override
         public int getItemCount() {
             if (data == null) return 1;

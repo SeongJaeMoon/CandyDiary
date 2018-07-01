@@ -51,6 +51,7 @@
     <string name="name_account">이름</string>
     <string name="pw_account">비밀번호</string>
     <string name="email_account">이메일</string>
+    <string name="email_confirm">이메일(정확하게 입력해주세요.)</string>
     <string name="regist_account">등록하기</string>
     <string name="pw_account2">비밀번호 확인</string>
     <string name="sign_error">회원 정보를 가져오는 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
@@ -61,7 +62,7 @@
     <string name="no_input_satisfy">모든 정보를 입력해주세요.</string>
     <string name="no_match_pw">패스워드가 일치하지 않습니다. 확인해주세요.</string>
     <string name="no_match_email">이메일 형식에 맞지 않습니다. 확인해주세요.</string>
-    <string name="exist_email">이미 등록 된 이메일입니다.</string>
+    <string name="exist_email">이미 등록된 이메일입니다. 다시 시도해주세요.</string>
     <string name="pw_short">패스워드가 너무 짧습니다. 6글자 이상을 입력해주세요.</string>
     <string name="resetPwEmail">해당 이메일로 비밀번호 재설정 메일을 전송하였습니다.</string>
     <string name="resetPwEmailFail">확인 메일을 보내는데 실패하였습니다. 다시 시도해주세요.</string>
@@ -136,7 +137,7 @@
     <string name="my_post">나의 포스팅\n</string>
     <string name="star_post">즐겨찾기 포스팅\n</string>
     <string name="diet_and_post">식단을 관리하고 식단을 공유해보세요!</string>
-    <string name="post_list">나의 포스팅 목록</string>
+    <string name="post_list">나의 식단 글쓰기 목록</string>
     <!--Star-->
     <string name="no_star_data">아직 저장된 데이터가 없습니다.\n 관심 있는 식단을 저장해보세요.</string>
     <string name="star_error">즐겨찾기 목록에 저장 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
@@ -144,7 +145,7 @@
     <string name="star_data">즐겨찾기 목록입니다.</string>
     <string name="star_delete">즐겨찾기 목록에서 삭제되었습니다.</string>
     <string name="noti_star_delete">즐겨찾기 목록에서 삭제하시겠습니까?</string>
-    <string name="delete_star_ok">삭제하기</string>
+    <string name="delete">삭제</string>
     <string name="star_default_error">즐겨찾기 목록을 제어 중에 오류가 발생하였습니다.</string>
     <!--Com-->
     <string name="most_popular">HOT한 사용자 목록입니다.</string>
@@ -171,4 +172,8 @@
     <string name="more">더보기</string>
     <string name="star_post_click1">해당 포스트를 즐겨찾기 목록에 추가하였습니다.</string>
     <string name="star_post_click2">해당 포스트를 즐겨찾기 목록에서 삭제하였습니다.</string>
+    <string name="confrim_delete">해당 포스팅을 삭제하시겠습니까?</string>
+    <string name="fail_delete_post">해당 포스팅를 삭제하는 도중 오류가 발생하였습니다. 잠시후 다시 시도해주세요.</string>
+    <string name="success_delete">해당 포스팅이 삭제되었습니다.</string>
+    <string name="declaration_post">신고하기</string>
 </resources>

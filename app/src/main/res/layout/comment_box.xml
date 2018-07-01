@@ -49,6 +49,5 @@
             android:layout_margin="5dp"
             android:textAppearance="?android:textAppearanceSmall"
             tools:text="TextView" />
-
     </LinearLayout>
 </RelativeLayout>

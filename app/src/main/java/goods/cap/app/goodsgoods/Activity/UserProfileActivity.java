@@ -1,30 +1,38 @@
 package goods.cap.app.goodsgoods.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +52,11 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -52,7 +64,17 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import goods.cap.app.goodsgoods.Adapter.StarPostAdapter;
+import goods.cap.app.goodsgoods.Model.Firebase.Post;
+import goods.cap.app.goodsgoods.Model.Firebase.Stars;
 import goods.cap.app.goodsgoods.R;
+import goods.cap.app.goodsgoods.Util.PostImageLoader;
+import goods.cap.app.goodsgoods.Util.PostMainSlider;
+import me.gujun.android.taggroup.TagGroup;
+import ss.com.bannerslider.Slider;
+import ss.com.bannerslider.event.OnSlideClickListener;
 
 /* keyword search 화면, created by supermoon. */
 
@@ -67,8 +89,6 @@ public class UserProfileActivity extends AppCompatActivity {
     @BindView(R.id.textView5)TextView statisticText;
     @BindView(R.id.my_toolbar)Toolbar toolbar;
     @BindView(R.id.postTitle)TextView postTitle;
-    @BindView(R.id.bottom_sheet)LinearLayout bottomSheet;
-    @BindView(R.id.bottomRV)RecyclerView bottomRV;
     @BindView(R.id.post_list)RecyclerView postList;
     private static final String logger = UserProfileActivity.class.getSimpleName();
     private FirebaseAuth auth;
@@ -78,7 +98,14 @@ public class UserProfileActivity extends AppCompatActivity {
     private Uri resultUri;
     private String uid;
     private ProgressDialog progressDialog;
-
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm aa", Locale.KOREA);
+    private FirebaseRecyclerAdapter<Post, UserProfileActivity.PostViewHolder>firebaseRecyclerAdapter;
+    private boolean likeProcess = false;
+    private BottomSheetDialog bottomSheetDialog;
+    private List<Stars>starsList;
+    private DatabaseReference postRef;
+    private DatabaseReference starRef;
+    private DatabaseReference likeRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +126,10 @@ public class UserProfileActivity extends AppCompatActivity {
         uid = auth.getCurrentUser().getUid();
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
-        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts");
-        DatabaseReference starRef = FirebaseDatabase.getInstance().getReference().child("stars");
+        postRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        starRef = FirebaseDatabase.getInstance().getReference().child("stars");
+        likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
+        likeRef.keepSynced(true);
         postRef.keepSynced(true);
         starRef.keepSynced(true);
         dbRef.keepSynced(true);
@@ -140,26 +169,65 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-        starRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
         Query starsQuery = starRef.orderByKey();
         starsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long starsCount = 0;
+                List<String>keyList = new ArrayList<String>();
                 try {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         if (data.exists()) {
                             Map<String, Object> keyMap = (HashMap<String, Object>)data.getValue();
                             for (String s : keyMap.keySet()) {
                                 if (s.equals(uid)) {
+                                    String key = data.getKey();
+                                    if(key != null){
+                                        keyList.add(key);
+                                    }
                                     starsCount += 1;
                                 }
                             }
+                        }
+                    }
+                    starsList = new ArrayList<>(keyList.size());
+                    for(String key : keyList){
+                        if(key != null){
+                            final Stars stars = new Stars();
+                            stars.setFkey(key);
+                            postRef.child(key).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()){
+                                        String uid = dataSnapshot.child("uid").getValue(String.class);
+                                        dbRef.child(uid).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                String userName = dataSnapshot.child("name").getValue(String.class);
+                                                String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
+                                                stars.setUser(userName);
+                                                stars.setImg(userProfileImage);
+                                            }
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) { }
+                                        });
+                                        String title = dataSnapshot.child("title").getValue(String.class);
+                                        Map<String, Object> tagMap = (HashMap<String, Object>)dataSnapshot.child("tags").getValue();
+                                        List<String>tagList;
+                                        if(tagMap != null){
+                                            tagList = new ArrayList<String>(tagMap.size());
+                                            for(Object o : tagMap.values()){
+                                                tagList.add(o.toString());
+                                            }
+                                            stars.setTags(tagList);
+                                        }
+                                        stars.setTitle(title);
+                                        starsList.add(stars);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) { }
+                            });
                         }
                     }
                 }catch (Exception e){
@@ -170,6 +238,22 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        postList.setLayoutManager(layoutManager);
+        if(starsList.size() == 0){
+            starsText.setTextColor(getResources().getColor(R.color.white));
+        }
+        starsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(starsList.size() != 0){
+                    bottomDialog();
+                }
+            }
+        });
+        Slider.init(new PostImageLoader(this));
     }
     @OnClick(R.id.textView)
     void nameChange(){
@@ -199,44 +283,46 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         ad.show();
     }
-    @OnClick(R.id.textView2)
-    void emailChange(){
-        AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
-        ad.setTitle(getResources().getString(R.string.noti_email));
-        final EditText et = new EditText(UserProfileActivity.this);
-        et.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        ad.setView(et);
-        ad.setPositiveButton(getResources().getString(R.string.success), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String value = et.getText().toString();
-                if(TextUtils.isEmpty(value) || !isValidEmail(value)){
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_validation),Toast.LENGTH_SHORT).show();
-                }else{
-                    DatabaseReference userDbRef = dbRef.child(uid);
-                    userDbRef.child("email").setValue(value);
-                }
-                dialog.dismiss();
-            }
-        });
-        ad.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        ad.show();
-    }
-    private boolean isValidEmail(String email) {
-        boolean err = false;
-        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(email);
-        if(m.matches()) {
-            err = true;
-        }
-        return err;
-    }
+
+//    @OnClick(R.id.textView2)
+//    void emailChange(){
+//       AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
+//       ad.setTitle(getResources().getString(R.string.noti_email));
+//       final EditText et = new EditText(UserProfileActivity.this);
+//       et.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+//       ad.setView(et);
+//       ad.setPositiveButton(getResources().getString(R.string.success), new DialogInterface.OnClickListener() {
+//           @Override
+//           public void onClick(DialogInterface dialog, int which) {
+//               String value = et.getText().toString();
+//               if(TextUtils.isEmpty(value) || !isValidEmail(value)){
+//                   Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_validation),Toast.LENGTH_SHORT).show();
+//               }else{
+//                   DatabaseReference userDbRef = dbRef.child(uid);
+//                   userDbRef.child("email").setValue(value);
+//               }
+//               dialog.dismiss();
+//           }
+//       });
+//       ad.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+//           @Override
+//           public void onClick(DialogInterface dialog, int which) {
+//               dialog.dismiss();
+//           }
+//       });
+//       ad.show();
+//   }
+//    private boolean isValidEmail(String email) {
+//        boolean err = false;
+//        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(email);
+//        if(m.matches()) {
+//            err = true;
+//        }
+//        return err;
+//    }
+
     @OnClick(R.id.pwChange)
     void pwChange(){
         AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
@@ -277,6 +363,13 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        initFirebase();
+        firebaseRecyclerAdapter.startListening();
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        firebaseRecyclerAdapter.stopListening();
     }
     @Override
     protected void onRestart(){
@@ -366,4 +459,256 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void initFirebase() {
+        Query postsQuery = postRef.orderByChild("uid").equalTo(uid);
+
+        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>()
+                .setQuery(postsQuery, Post.class)
+                .build();
+
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, UserProfileActivity.PostViewHolder>(options) {
+            @NonNull
+            @Override
+            public UserProfileActivity.PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_cardview, parent, false);
+                return new UserProfileActivity.PostViewHolder(view);
+            }
+            @Override
+            protected void onBindViewHolder(@NonNull final UserProfileActivity.PostViewHolder holder, final int position, @NonNull final Post model) {
+                final String postUid = model.getUid();
+                final String postKey = getRef(position).getKey();
+                holder.setContext(getApplicationContext());
+                DatabaseReference dbUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(postUid);
+                DatabaseReference dbRef = postRef.child(postKey);
+                dbUserRef.keepSynced(true);
+                dbRef.keepSynced(true);
+                dbUserRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            String userName = dataSnapshot.child("name").getValue(String.class);
+                            String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
+                            holder.setUserImage(UserProfileActivity.this, userProfileImage);
+                            holder.setUserName(userName);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
+                });
+                dbRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            Map<String, Object> imgMap = model.getImages();
+                            Map<String, Object> tagMap = model.getTags();
+                            String name = "";
+                            if(imgMap != null){
+                                List<String> tempList = new ArrayList<String>(imgMap.size());
+                                for(Object o : imgMap.values()){
+                                    tempList.add(o.toString());
+                                }
+                                PostMainSlider postMainSlider = new PostMainSlider(tempList);
+                                if (holder.userNameFeeds.getText() != null) {
+                                    name = holder.userNameFeeds.getText().toString();
+                                }
+                                holder.setPostImages(postMainSlider, name, postKey);
+                            }else{
+                                holder.setPostImages(null, name, postKey);
+                            }
+                            if(tagMap != null){
+                                List<String>tempList = new ArrayList<String>(tagMap.size());
+                                for(Object o : tagMap.values()){
+                                    tempList.add(o.toString());
+                                }
+                                holder.setTags(tempList);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
+                holder.setTitle(model.getTitle());
+                holder.setPostDate(model.getDate());
+                holder.setLike(postKey);
+                holder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        likeProcess = true;
+                        likeRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (likeProcess) {
+                                    if (dataSnapshot.child(postKey).hasChild(auth.getCurrentUser().getUid())) {
+                                        holder.likeBtn.setImageResource(R.drawable.like_grey);
+                                        likeRef.child(postKey).child(auth.getCurrentUser().getUid()).removeValue();
+                                    } else {
+                                        holder.likeBtn.setImageResource(R.drawable.like_orange);
+                                        likeRef.child(postKey).child(auth.getCurrentUser().getUid()).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                    }
+                                    likeProcess = false;
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+                holder.userNameFeeds.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                holder.userImgFeeds.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        };
+        postList.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    private void bottomDialog(){
+        bottomSheetDialog = new BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new StarPostAdapter(starsList, getApplicationContext(), new StarPostAdapter.ItemListener() {
+            @Override
+            public void onItemClick(Stars stars) {
+                if (bottomSheetDialog != null) {
+                    bottomSheetDialog.dismiss();
+                }
+                final Intent intent = new Intent(UserProfileActivity.this, PostDtlActivity.class);
+                if(stars.getUser() != null){
+                    intent.putExtra("userName", stars.getUser());
+                }else{
+                    intent.putExtra("userName", "");
+                }
+                intent.putExtra("postKey", stars.getFkey());
+                startActivity(intent);
+            }
+        }));
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+        bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                bottomSheetDialog = null;
+            }
+        });
+    }
+
+    private static class PostViewHolder extends RecyclerView.ViewHolder{
+        private View view;
+        public CircleImageView userImgFeeds;
+        public TextView userNameFeeds;
+        private TextView userDateFeeds;
+        public ImageView likeBtn;
+        private TextView likeCount;
+        private DatabaseReference likeRef;
+        private FirebaseAuth auth;
+        private Context context;
+
+        private PostViewHolder(View itemView) {
+            super(itemView);
+            view = itemView;
+            likeRef = FirebaseDatabase.getInstance().getReference().child("likes");
+            likeRef.keepSynced(true);
+            auth = FirebaseAuth.getInstance();
+            userImgFeeds = (CircleImageView)view.findViewById(R.id.userImgFeeds);
+            userNameFeeds = (TextView)view.findViewById(R.id.userNameFeeds);
+            userDateFeeds = (TextView)view.findViewById(R.id.userDateFeeds);
+            likeBtn = (ImageView)view.findViewById(R.id.likeBtn);
+            likeCount = (TextView)view.findViewById(R.id.likeCount);
+        }
+        public void setContext(Context context){
+            this.context = context;
+        }
+        public void setTitle(String title) {
+            TextView tvTitle = (TextView) view.findViewById(R.id.title);
+            tvTitle.setText(title);
+        }
+        public void setPostImages(final PostMainSlider postAdapter, final String name, final String postKey) {
+            final Slider slider = view.findViewById(R.id.banner_slider);
+            if (postAdapter == null) {
+                slider.setVisibility(View.GONE);
+            } else {
+                slider.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        slider.setAdapter(postAdapter);
+                        slider.setSelectedSlide(0);
+                        slider.setInterval(5000);
+                        slider.setOnSlideClickListener(new OnSlideClickListener() {
+                            @Override
+                            public void onSlideClick(int position) {
+                                Intent intent = new Intent(context.getApplicationContext(), PostDtlActivity.class);
+                                if (name != null) {
+                                    intent.putExtra("userName", name);
+                                }
+                                intent.putExtra("postKey", postKey);
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                }, 1500);
+            }
+        }
+        public void setTags(List<String> tags){
+            TagGroup tagGroup = (TagGroup)view.findViewById(R.id.tag_group);
+            tagGroup.setTags(tags);
+        }
+        public void setUserImage(Context context, String url){
+            RequestOptions ro = new RequestOptions()
+                    .placeholder(ContextCompat.getDrawable(context, R.mipmap.empty_user))
+                    .error(ContextCompat.getDrawable(context, R.mipmap.empty_user));
+            Glide.with(context)
+                    .setDefaultRequestOptions(ro)
+                    .load(url)
+                    .into(userImgFeeds);
+        }
+        public void setUserName(String userName){
+            userNameFeeds.setText(userName);
+        }
+        public void setPostDate(String date){
+            userDateFeeds.setText(date);
+        }
+        public void setLike(final String postKey){
+            likeRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(postKey).hasChild(auth.getCurrentUser().getUid())) {
+                        likeBtn.setImageResource(R.drawable.like_orange);
+                        likeCount.setTextColor(Color.rgb(252, 176, 48));
+                    } else {
+                        likeCount.setTextColor(Color.rgb(127, 127, 127));
+                        likeBtn.setImageResource(R.drawable.like_grey);
+                    }
+                    long likes = dataSnapshot.child(postKey).getChildrenCount();
+                    if(likes == 0){
+                        likeCount.setVisibility(View.GONE);
+                    }else{
+                        likeCount.setVisibility(View.VISIBLE);
+                        likeCount.setText(String.valueOf(likes));
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w(logger, databaseError.getMessage());
+                }
+            });
+        }
+    }
+
 }

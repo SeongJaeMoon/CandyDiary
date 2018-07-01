@@ -42,7 +42,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.btn_send)Button commetnBtn;
     @BindView(R.id.data_miss)TextView datamiss;
     @BindView(R.id.my_toolbar)Toolbar toolbar;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm", Locale.KOREA);
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm aa", Locale.KOREA);
     private static final String logger = CommentActivity.class.getSimpleName();
     private CommentAdapter commentAdapter;
     private FirebaseDatabase db;

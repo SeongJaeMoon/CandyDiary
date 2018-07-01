@@ -313,10 +313,7 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.action_search){
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         }
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item) || actionBarDrawerToggle.onOptionsItemSelected(item);
     }
 
     private List<Recent> getRecentList(Context context){
@@ -340,7 +337,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) { super.onRestoreInstanceState(savedInstanceState); }
 
-    //implements PagerSlidingTabStrip.IconTabProvider
     public class MainAdapter extends FragmentStatePagerAdapter {
 
         private final CharSequence tabs[] = {"식단보기", "즐겨찾기", "커뮤니티", "공지사항"};
@@ -413,10 +409,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String intent = getIntent().getStringExtra("new_data");
-        if(intent != null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.swipe_container, ComFragment.newInstance(2),"ComFragment").commit();
-        }
     }
     @Override
     protected void onDestroy() {

@@ -45,6 +45,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         vh.commenter.setText(comment.getName());
         vh.comment.setText(comment.getComment());
         vh.commentDate.setText(comment.getRegDate());
+
         RequestOptions ro = new RequestOptions()
                 .placeholder(ContextCompat.getDrawable(context, R.mipmap.empty_user))
                 .error(ContextCompat.getDrawable(context, R.mipmap.empty_user));

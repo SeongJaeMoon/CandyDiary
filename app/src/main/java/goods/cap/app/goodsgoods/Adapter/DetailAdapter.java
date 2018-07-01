@@ -56,8 +56,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(@NonNull DetailAdapter.ViewHolder holder, int position) {
 
         RequestOptions ro = new RequestOptions()
-                .placeholder(R.drawable.none)
-                .error(R.drawable.none)
+                .placeholder(R.drawable.none2)
+                .error(R.drawable.none2)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter();
 

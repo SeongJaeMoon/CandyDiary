@@ -3,6 +3,7 @@ package goods.cap.app.goodsgoods.Model.Firebase;
 import java.util.Map;
 
 public class Post {
+    private String fkey;
     private String desc, title, uid, date;
     private Map<String, Object> tags;
     private Map<String, Object> images;
@@ -16,6 +17,14 @@ public class Post {
         this.date = date;
         this.tags = tags;
         this.images = images;
+    }
+
+    public String getFkey() {
+        return fkey;
+    }
+
+    public void setFkey(String fkey) {
+        this.fkey = fkey;
     }
 
     public String getDesc() {

@@ -50,6 +50,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
 import goods.cap.app.goodsgoods.R;
 import goods.cap.app.goodsgoods.Util.PostMainSlider;
@@ -82,6 +83,7 @@ public class PostDtlActivity extends AppCompatActivity {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
     private long like, comment, share;
     private boolean isMyPost = false;
+    private String deleteKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class PostDtlActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null){
             final String postKey = intent.getStringExtra("postKey");
+            deleteKey = postKey;
             final String userName = intent.getStringExtra("userName");
             final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference postRef = FirebaseDatabase.getInstance().getReference().child("posts").child(postKey);
@@ -363,7 +366,11 @@ public class PostDtlActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_default, menu);
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        if(!isMyPost) {
+            MenuItem registrar = menu.findItem(R.id.action_delete);
+            registrar.setVisible(false);
+        }
         return true;
     }
     @Override
@@ -372,7 +379,48 @@ public class PostDtlActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
+        if (item.getItemId() == R.id.action_delete){
+            deleteClick();
+        }
         return super.onOptionsItemSelected(item);
+    }
+    private void deleteClick(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(PostDtlActivity.this);
+        builder.setMessage(getResources().getString(R.string.confrim_delete));
+        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    final DatabaseReference dbRef = db.getReference().child("likes").child(deleteKey);
+                    final DatabaseReference dbRef2 = db.getReference().child("comments").child(deleteKey);
+                    final DatabaseReference dbRef3 = db.getReference().child("shares").child(deleteKey);
+                    final DatabaseReference dbRef4 = db.getReference().child("stars").child(deleteKey);
+                    final DatabaseReference dbRef5 = db.getReference().child("posts").child(deleteKey);
+                    dbRef.removeValue();
+                    dbRef2.removeValue();
+                    dbRef3.removeValue();
+                    dbRef4.removeValue();
+                    dbRef5.removeValue();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.success_delete),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PostDtlActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.fail_delete_post), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     @Override
     protected void onResume(){

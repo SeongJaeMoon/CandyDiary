@@ -183,20 +183,26 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             }
             int size = imgList.size();
             switch (size){
-                case 0: rotationPic(resultUri.toString(), addImg1);
+                case 0: //rotationPic(resultUri.toString(), addImg1);
+                    addImg1.setImageURI(resultUri);
                     break;
-                case 1: rotationPic(resultUri.toString(), addImg2);
+                case 1: //rotationPic(resultUri.toString(), addImg2);
+                    addImg2.setImageURI(resultUri);
                     break;
-                case 2: rotationPic(resultUri.toString(), addImg3);
+                case 2: //rotationPic(resultUri.toString(), addImg3);
+                    addImg3.setImageURI(resultUri);
                     break;
-                case 3: rotationPic(resultUri.toString(), addImg4);
+                case 3: //rotationPic(resultUri.toString(), addImg4);
+                    addImg4.setImageURI(resultUri);
                     break;
-                case 4: rotationPic(resultUri.toString(), addImg5);
+                case 4: //rotationPic(resultUri.toString(), addImg5);
+                    addImg5.setImageURI(resultUri);
                     break;
             }
             imgList.add(resultUri);
         }
     }
+
     private void rotationPic(String imageFilePath, ImageView imageView){
         Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
         ExifInterface exif = null;
@@ -215,6 +221,7 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         }
         imageView.setImageBitmap(rotate(bitmap, exifDegree));
     }
+
     private File createImageFile() throws IOException {
         String imageFileName = "goods_" + sdf.format(new Date(System.currentTimeMillis())) + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -241,13 +248,14 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         matrix.postRotate(degree);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
-    //@OnClick(R.id.btnPost)
     private void postingClick(){
         String title = etTitle.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();
         String[] tags = tagGroup.getTags();
         if(TextUtils.isEmpty(title)){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.need_title), Toast.LENGTH_SHORT).show();
+        }else if(imgList == null || imgList.size() == 0){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.need_photo), Toast.LENGTH_SHORT).show();
         }else{
             final DatabaseReference pushRef = dbRef.push();
             //DB 저장
@@ -308,19 +316,16 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                             }
                         });
                     }
-                    if(progressDialog.isShowing()) progressDialog.cancel();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.upload_post_success), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PostActivity.this, MainActivity.class);
-                    intent.putExtra("new_post", "new_post");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.upload_post_fail), Toast.LENGTH_SHORT).show();
                     Log.w("stError => ", e.getMessage());
                     e.printStackTrace();
                 }
             }
+            if(progressDialog.isShowing()) progressDialog.cancel();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.upload_post_success), Toast.LENGTH_SHORT).show();
+            this.finish();
         }
     }
     @Override
