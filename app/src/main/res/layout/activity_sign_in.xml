@@ -76,10 +76,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="100dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/new_account"
+            android:textAllCaps="false"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/btnForgotAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="220dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/forgot_account"
             android:textAllCaps="false"
             android:textColor="@color/common_google_signin_btn_text_light_default"
             android:textSize="12sp" />

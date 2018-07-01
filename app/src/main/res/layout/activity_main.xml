@@ -10,18 +10,19 @@
 
     <include layout="@layout/content_main"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_addButtonColorNormal="@color/colorAccent"
-        fab:fab_addButtonColorPressed="@color/colorPrimary"
-        fab:fab_addButtonPlusIconColor="@color/colorPrimaryDark"
-        fab:fab_size="mini"
-        app:fab_labelStyle="@style/menu_labels_style"
-        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp">
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        fab:fab_colorNormal="@color/colorAccent"
+        android:src="@drawable/ic_add_white_24dp"
+        fab:fab_size="normal"
+        fab:fab_title="@string/add_com"
+        fab:fab_colorPressed="@color/white_pressed"/>
 </RelativeLayout>

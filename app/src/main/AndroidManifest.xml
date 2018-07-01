@@ -1,44 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="goods.cap.app.goodsgoods">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".GoodsApplication"
         android:allowBackup="true"
         android:icon="@drawable/temp_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/temp_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".Activity.SignInActivity" />
-        <activity android:name=".Activity.SplashActivity" />
-        <activity android:name=".Activity.PermissionActivity" />
-        <activity android:name=".Activity.StarActivity" />
+        <activity
+            android:name=".Activity.PermissionActivity"
+            android:theme="@style/Base.Theme.AppCompat.Dialog" />
+        <activity android:name=".Activity.PostDtlActivity" />
         <activity android:name=".Activity.ForgotActivity" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.NoticeActivity" />
-        <activity android:name=".Activity.PostActivity" />
+        <activity
+            android:name=".Activity.PostActivity"/>
+        <!--android:windowSoftInputMode="stateVisible|adjustResize"-->
         <activity android:name=".Activity.StatActivity" />
         <activity android:name=".Activity.UserProfileActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Activity.SearchActivity" />
         <activity android:name=".Activity.SignUpActivity" />
-        <activity android:name=".Activity.DetailItemActivity"></activity>
+        <activity android:name=".Activity.DetailItemActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"
             android:value="false" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider173752019937660"
+            android:exported="true" />
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".Activity.CommentActivity" />
+        <activity android:name=".Activity.DetailTherapyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.PrivacyActivity" />
+        <activity android:name=".Activity.PostImageActivity" />
+        <activity android:name=".Activity.AnotherUserActivity"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="goods.cap.app.goodsgoods"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

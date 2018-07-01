@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Activity.SearchActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorAccent"/>
+        <!--검색 목록-->
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+        <!--검색 목록-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSearch"
+        android:layout_below="@id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
-
+        android:layout_height="wrap_content"/>
     <View
         android:layout_below="@id/rvSearch"
         android:id="@+id/seperator1"
@@ -24,14 +41,33 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:background="#DDD"/>
-
     <TextView
+        android:id="@+id/tag_hint"
         android:layout_below="@+id/seperator1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/tag_group"
         android:textSize="18sp" />
-
-
-</RelativeLayout>
+    <me.gujun.android.taggroup.TagGroup
+        android:layout_below="@+id/tag_hint"
+        android:id="@+id/tag_group"
+        style="@style/TagGroup.Large"
+        android:layout_marginTop="10dp" />
+    <TextView
+        android:id="@+id/search_rec"
+        android:layout_below="@+id/tag_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/search_rec"
+        android:textSize="18sp" />
+        <!--추천-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/search_rec"
+            android:id="@+id/rvRecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</FrameLayout>

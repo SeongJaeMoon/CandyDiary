@@ -1,10 +1,7 @@
 package goods.cap.app.goodsgoods.Util;
 
-import android.content.res.Resources;
 import android.widget.Toast;
 import android.app.Activity;
-
-import goods.cap.app.goodsgoods.R;
 
 public class BackHandler {
 
@@ -20,7 +17,8 @@ public class BackHandler {
 
     public void onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 3000) {
-            backKeyPressedTime = System.currentTimeMillis(); showGuide();
+            backKeyPressedTime = System.currentTimeMillis();
+            showGuide();
             return;
         }
         if (System.currentTimeMillis() <= backKeyPressedTime + 3000) {
@@ -29,7 +27,7 @@ public class BackHandler {
         }
     }
 
-    public void showGuide() {
+    private void showGuide() {
         toast = Toast.makeText(this.activity, this.message, Toast.LENGTH_SHORT);
         toast.show();
     }

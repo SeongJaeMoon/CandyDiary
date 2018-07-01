@@ -3,7 +3,6 @@ package goods.cap.app.goodsgoods.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
-import java.util.Locale;
 
-import goods.cap.app.goodsgoods.Model.DietDtl;
+import goods.cap.app.goodsgoods.Model.Diet.DietDtl;
 import goods.cap.app.goodsgoods.R;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
@@ -32,7 +30,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         private TextView stepNum;
         private TextView stepText;
         private TextView stepTip;
-        private ImageView stepArrow;
 
         public ViewHolder(View v) {
             super(v);
@@ -40,7 +37,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             stepNum = (TextView)v.findViewById(R.id.step_num);
             stepText = (TextView)v.findViewById(R.id.step_text);
             stepTip = (TextView)v.findViewById(R.id.step_tip);
-            stepArrow = (ImageView)v.findViewById(R.id.arrow_img);
         }
     }
 
@@ -60,6 +56,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public void onBindViewHolder(@NonNull DetailAdapter.ViewHolder holder, int position) {
 
         RequestOptions ro = new RequestOptions()
+                .placeholder(R.drawable.none2)
+                .error(R.drawable.none2)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter();
 
@@ -67,9 +65,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 .setDefaultRequestOptions(ro)
                 .load(data.get(position).getRtnImageDc())
                 .into(holder.stepImg);
-        if(position == data.size() - 1){
-            holder.stepArrow.setVisibility(View.GONE);
-        }
+
         holder.stepText.setText(data.get(position).getMatrlInfo());
         holder.stepNum.setText(data.get(position).getCntntsSj());
         holder.stepTip.setText(data.get(position).getCkngMthInfo());

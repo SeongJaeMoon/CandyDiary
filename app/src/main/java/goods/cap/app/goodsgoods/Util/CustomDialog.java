@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -23,6 +21,7 @@ import java.util.regex.Pattern;
 import goods.cap.app.goodsgoods.R;
 
 public class CustomDialog extends Dialog{
+
     private static final String logger = CustomDialog.class.getSimpleName();
     private PieChart mChart;
     private String[] calorieInfo;
@@ -55,7 +54,7 @@ public class CustomDialog extends Dialog{
     }
 
     public CustomDialog(Context context) {
-        // Dialog 배경을 투명 처리 해준다.
+        // Dialog 배경을 투명 처리
         super(context , android.R.style.Theme_Translucent_NoTitleBar);
     }
 
@@ -65,10 +64,6 @@ public class CustomDialog extends Dialog{
     }
 
     private void initChart(String[] dietInfo){
-        if(dietInfo == null) {
-            Toast.makeText(getContext(), getContext().getResources().getString(R.string.data_error),Toast.LENGTH_LONG).show();
-            return;
-        }
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
@@ -84,7 +79,7 @@ public class CustomDialog extends Dialog{
 
         Random random = new Random();
         for (int i = 1; i < len; ++i){
-            entries.add(new PieEntry(Float.parseFloat(dietVal.get(i)), dietUnit.get(i) + dietKey.get(i)));
+            entries.add(new PieEntry(Float.parseFloat(dietVal.get(i)), dietKey.get(i)));
             colors.add(Color.rgb(random.nextInt(255) + 1,random.nextInt(255) + 1, random.nextInt(255) + 1));
         }
         PieDataSet pieDataSet = new PieDataSet(entries, "Result");

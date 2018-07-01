@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SignUpActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,13 +40,30 @@
             android:layout_marginRight="30dp"
             android:background="@drawable/tv_style"
             android:ems="10"
-            android:hint="@string/email_account"
+            android:hint="@string/email_confirm"
             android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textColorHint="@color/common_google_signin_btn_text_light_focused" />
 
         <EditText
             android:id="@+id/signUpPW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/signUpPW2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/tv_style"
+            android:ems="10"
+            android:hint="@string/pw_account2"
+            android:inputType="textPassword"
+            android:padding="15dp"
+            android:textColorHint="@color/common_google_signin_btn_text_light_focused" />
+
+        <EditText
+            android:id="@+id/signUpPW2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btnSignUp"
@@ -92,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="65dp"
             android:text="@string/new_account"
             android:textSize="30sp" />
 

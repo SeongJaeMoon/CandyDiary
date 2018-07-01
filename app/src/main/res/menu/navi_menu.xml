@@ -14,7 +14,7 @@
             <item
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_question_answer_black_24dp"
-                android:title="@string/statistic_menu"/>
+                android:title="@string/manager"/>
         </menu>
     </item>
     <item android:title="@string/recent_title">

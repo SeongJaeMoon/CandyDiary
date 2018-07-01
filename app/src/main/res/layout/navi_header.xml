@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="#11FFFF"
-    android:backgroundTint="@android:drawable/screen_background_dark_transparent"
-    android:backgroundTintMode="src_over"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
+    android:background="@color/colorAccent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     android:paddingTop="70dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -15,25 +14,29 @@
         android:layout_height="70dp"
         android:src="@mipmap/empty_user" />
 
-    <TextView
-        android:id="@+id/profieName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/profieImage"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="10dp"
-        android:text=""
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/profieImage"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/profieEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/profieName"
-        android:text=""/>
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/profieEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </RelativeLayout>

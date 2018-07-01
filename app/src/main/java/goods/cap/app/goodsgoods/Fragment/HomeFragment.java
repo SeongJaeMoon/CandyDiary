@@ -1,11 +1,9 @@
 package goods.cap.app.goodsgoods.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,43 +27,37 @@ import java.util.List;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
+import goods.cap.app.goodsgoods.Activity.DetailTherapyActivity;
 import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
+import goods.cap.app.goodsgoods.GoodsApplication;
 import goods.cap.app.goodsgoods.Helper.DietHelper;
-import goods.cap.app.goodsgoods.Helper.GroceryHelper;
-import goods.cap.app.goodsgoods.Helper.RecentDBHelper;
-import goods.cap.app.goodsgoods.Helper.RecipeHelper;
-import goods.cap.app.goodsgoods.MainActivity;
-import goods.cap.app.goodsgoods.Model.Diet;
-import goods.cap.app.goodsgoods.Model.DietResponseModel;
-import goods.cap.app.goodsgoods.Model.Grocery;
-import goods.cap.app.goodsgoods.Model.GroceryResponseModel;
-import goods.cap.app.goodsgoods.Model.Recipe;
-import goods.cap.app.goodsgoods.Model.RecipeResponseModel;
-import goods.cap.app.goodsgoods.Model.Firebase;
-import goods.cap.app.goodsgoods.Model.FireResponseModel;
+import goods.cap.app.goodsgoods.Helper.TherapyHelper;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Diet.DietResponseModel;
+import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
+import goods.cap.app.goodsgoods.Model.Therapy.TherapyResponseModel;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
 import goods.cap.app.goodsgoods.R;
-import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
 /* HomeFragment, created by supermoon. */
 
-public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener
-        , AdapterView.OnItemClickListener {
+public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     private static final String logger = HomeFragment.class.getSimpleName();
     public static final String ARG_PAGE = "ARG_PAGE";
     private TextView mainText;
-    private GridViewWithHeaderAndFooter gridView;
-    private List<Recipe> recipeList;
-    private List<Diet> dietList;
+    private ListView gridView;
+    private List<Object> allList = new ArrayList<Object>();
     private MultiSwipeRefreshLayout swipeRefreshLayout;
-    private GirdViewAdapter girdViewAdapter;
-    private TextView footer;
-    private static final int limitCount = 103;
-    private boolean isLimitCount = false;
+    private GirdViewAdapter gridViewAdapter;
     private SharedPreferences sharedPreferences;
-    private static int pageNo = 1;
     private boolean lastitemVisibleFlag;
+    public static int limitCount = Config.limitCount[1]; //limitCount
+    public static int isSelect = Config.dietCode[1]; //현재 선택된 선택 요청 페이지
+    public static int pageNo = 1; //API 페이징 처리 변수
+    public static int changeView; //View 변경 처리 변수
+    public static int key = 1;
+    private static String mainTitle;
 
     public static HomeFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -77,24 +71,22 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.w(logger, "onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(logger, "onCreate");
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.w(logger, "onCreateView");
-
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = (MultiSwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        gridView = (GridViewWithHeaderAndFooter) view.findViewById(R.id.gridMain);
+        gridView = (ListView) view.findViewById(R.id.gridMain);
         mainText = (TextView) view.findViewById(R.id.mainTitle);
+        Button sortDiet = (Button) view.findViewById(R.id.sort_diet);
+        Button sortTherapy = (Button) view.findViewById(R.id.sort_therapy);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setSwipeableChildren(R.id.gridMain);
         gridView.setOnItemClickListener(this);
@@ -102,18 +94,51 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastitemVisibleFlag) {
-                    addData();
+                    try {
+                        if(changeView != 11) {
+                            if(limitCount > allList.size()) {
+                                addData(isSelect);
+                            }
+                        }else{
+                            if(limitCount > allList.size()) {
+                                addData();
+                            }
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                //현재 화면에 보이는 첫번째 리스트 아이템의 번호(firstVisibleItem)
-                // + 현재 화면에 보이는 리스트 아이템의 갯수(visibleItemCount)가 리스트 전체의 갯수(totalItemCount) -1 보다 크거나 같을때
                 lastitemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
-
             }
         });
+        sortDiet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HomeFragment.changeView != 11){
+                    Toast.makeText(getActivity(), getResources().getString(R.string.already_show1),Toast.LENGTH_SHORT).show();
+                }else {
+                    changeView = 10;
+                    limitCount = Config.limitCount[key];
+                    initData(isSelect);
+                }
+            }
+        });
+        sortTherapy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(HomeFragment.changeView == 11){
+                    Toast.makeText(getActivity(), getResources().getString(R.string.already_show2), Toast.LENGTH_SHORT).show();
+                }else {
+                    changeView = 11;
+                    limitCount = 173;
+                    initData();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -126,12 +151,12 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         }
         super.onActivityCreated(savedInstanceState);
         // 뷰에 데이터를 넣는 작업 등을 추가
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.w(logger, "onViewCreated");
     }
 
     @Override
@@ -141,29 +166,38 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        initData();
+        if(changeView != 11){
+            initData(isSelect);
+        }else{
+            initData();
+        }
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
     }
 
-    private void initData() {
-        MainHttp mainHttp = new MainHttp(getActivity(), getResources().getString(R.string.data_refresh_title),
-                getResources().getString(R.string.data_refresh), Config.API_KEY2);
+    private void initData(int key) {
+        final MainHttp mainHttp = new MainHttp(getActivity(), getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
         mainHttp.setPageNo(1);
+        mainHttp.setFlag(key);
         mainHttp.getDiet(new DietHelper() {
             @Override
             public void success(DietResponseModel response) {
-                dietList = response.getBody().getItems().getDietList();
-                if (dietList == null) {
-                    Log.w(logger, "dietList is null");
+                final List<Diet> diets = response.getBody().getItems().getDietList();
+                //데이터가 null => Network Error
+                if (diets == null) {
+                    mainText.setText(getResources().getString(R.string.data_error));
                 } else {
-                    girdViewAdapter = new GirdViewAdapter(getActivity(), dietList, R.layout.grid_single);
-                    gridView.setAdapter(girdViewAdapter);
-                    mainText.setText(getResources().getString(R.string.main_title2));
+                    if(gridView.getAdapter() != null){
+                        gridViewAdapter.refreshDiet(diets);
+                    } else{
+                        allList.addAll(diets);
+                        gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                        gridView.setAdapter(gridViewAdapter);
+                    }
+                    mainText.setText(mainTitle);
                 }
             }
-
             @Override
             public void failure(String message) {
                 Log.w(logger, message);
@@ -172,98 +206,153 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
         });
     }
 
-    private void addData() {
-        final Activity activity = getActivity();
-        Log.w(logger, "activity : " + activity);
-        MainHttp mainHttp = new MainHttp(activity, getResources().getString(R.string.data_refresh_title),
-                getResources().getString(R.string.data_refresh), Config.API_KEY2);
-        if (limitCount > this.dietList.size()) {
-            Log.w(logger, "dietList size : " + dietList.size());
-            mainHttp.setPageNo(pageNo + 1);
-            mainHttp.getDiet(new DietHelper() {
-                @Override
-                public void success(DietResponseModel response) {
-                    List<Diet> templist = response.getBody().getItems().getDietList();
-                    if (templist == null) {
-                        Log.w(logger, "templist is null");
-                    } else {
-                        dietList.addAll(templist);
-                        girdViewAdapter.notifyDataSetChanged();
-                    }
+    private void initData(){
+        MainHttp mainHttp = new MainHttp(getActivity(), getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
+        //paging 1~23500
+        mainHttp.setPageNo(1);
+        mainHttp.getTherapy(new TherapyHelper() {
+            @Override
+            public void success(TherapyResponseModel response) {
+                final List<Therapy> therapies = response.getBody().getItems().getTherapyList();
+                // 데이터가 null => Network Error
+                if(therapies  == null){
+                    mainText.setText(getResources().getString(R.string.data_error));
+                }else {
+                    gridViewAdapter.refreshTherapy(therapies);
                 }
+                mainText.setText(getResources().getString(R.string.main_therapy));
+            }
+            @Override
+            public void failure(String message) {
+                mainText.setText(getResources().getString(R.string.data_error));
+            }
+        });
+    }
 
-                @Override
-                public void failure(String message) {
+    private void addData(int key) {
+        MainHttp mainHttp = new MainHttp(getActivity(), getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
+        mainHttp.setPageNo(++pageNo);
+        mainHttp.setFlag(key);
+        mainHttp.getDiet(new DietHelper() {
+            @Override
+            public void success(DietResponseModel response) {
+                List<Diet> templist = response.getBody().getItems().getDietList();
+                if (templist == null) {
                     mainText.setText(getResources().getString(R.string.data_error));
+                } else {
+                    allList.addAll(templist);
+                    gridViewAdapter.notifyDataSetChanged();
                 }
-            });
-        }
-        /*else{
-            Log.w(logger, "recipeList size : " + dietList.size());
-            //mainHttp.setStartIndex(recipeList.size());
-            //mainHttp.setEndIndex(recipeList.size() + 6);
-            mainHttp.getDiet(new DietHelper() {
-                @Override
-                public void success(DietResponseModel response) {
-                    List<Diet> templist = response.getBody().getItems().getDietList();
-                    if(templist == null){
-                        Log.w(logger, "templist is null");
-                    }else {
-                        dietList.addAll(templist);
-                        girdViewAdapter.notifyDataSetChanged();
-                        footer.setText(getResources().getString(R.string.data_limit));
-                        isLimitCount = true;
-                    }
-                }
-                @Override
-                public void failure(String message) {
+            }
+            @Override
+            public void failure(String message) {
+                mainText.setText(getResources().getString(R.string.data_error));
+            }
+        });
+    }
+
+    private void addData(){
+        MainHttp mainHttp = new MainHttp(getActivity(), getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
+        //paging 1~23500
+        mainHttp.setPageNo(++pageNo);
+        mainHttp.getTherapy(new TherapyHelper() {
+            @Override
+            public void success(TherapyResponseModel response) {
+                Log.i(logger, response.toString());
+                List<Therapy>templist = response.getBody().getItems().getTherapyList();
+                if(templist == null){
                     mainText.setText(getResources().getString(R.string.data_error));
+                }else{
+                    allList.addAll(templist);
+                    gridViewAdapter.notifyDataSetChanged();
                 }
-            });
-        }*/
+            }
+            @Override
+            public void failure(String message) {
+                mainText.setText(getResources().getString(R.string.data_error));
+            }
+        });
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), DetailItemActivity.class);
-        Gson gson = new Gson();
-        String diet = gson.toJson(dietList.get(position));
-        intent.putExtra("diet", diet);
-        getActivity().startActivity(intent);
+        if(allList.get(position) instanceof Diet){
+            Intent intent = new Intent(getActivity(), DetailItemActivity.class);
+            Gson gson = new Gson();
+            Diet temp = (Diet)allList.get(position);
+            temp.setFilePath(Config.getAbUrl(temp.getRtnImageDc(), temp.getRtnStreFileNm()));
+            String diet = gson.toJson(temp);
+            intent.putExtra("diet", diet);
+            getActivity().startActivity(intent);
+        }else if(allList.get(position) instanceof  Therapy){
+            Intent intent = new Intent(getActivity(), DetailTherapyActivity.class);
+            Gson gson = new Gson();
+            Therapy temp = (Therapy)allList.get(position);
+            String therapy = gson.toJson(temp);
+            intent.putExtra("therapy", therapy);
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         Log.w(logger, "onStart");
+        setChangeView();
     }
 
     @Override
-    public void onResume() {
+    public void onResume(){
         super.onResume();
-        Log.w(logger, "onResume");
+    }
+
+    private void setChangeView(){
+        //기존의 데이터가 있는지 확인
         Gson gson = new Gson();
         String json = sharedPreferences.getString("dataList", null);
-        if (json == null) {
-            Log.w(logger, "initData" + "," + pageNo);
-            initData();
-        } else {
-            Diet[] diets = gson.fromJson(json, Diet[].class);
-            dietList = new ArrayList<Diet>(Arrays.asList(diets));
-            girdViewAdapter = new GirdViewAdapter(getActivity(), dietList, R.layout.grid_single);
-            gridView.setAdapter(girdViewAdapter);
+        //Search 값 확인
+        GoodsApplication goodsApplication = GoodsApplication.getInstance();
+        //기본 선택 키
+        //기존의 데이터가 없다면 (최초 실행 or 검색 or 식단 <-> 약초)
+        if(json == null){
+            //null 체크
+            if (goodsApplication != null) {
+                Log.i(logger, "change diet key => " + goodsApplication.getKey());
+                key = goodsApplication.getKey();
+            }
+            //key 검사
+            if (key < 5) {
+                isSelect = Config.dietCode[key]; //dietCode
+                limitCount = Config.limitCount[key];//dietLimit
+                mainTitle = Config.tabList[key]; //dietTitle
+            }
+            //선택 값 특정
+            initData(isSelect);
+        }else{
+            if (changeView != 11){
+                Diet[] diets = gson.fromJson(json, Diet[].class);
+                allList = new ArrayList<Object>(Arrays.asList(diets));
+                gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                gridView.setAdapter(gridViewAdapter);
+                mainText.setText(Config.tabList[key]); //dietTitle
+            }else{
+                Therapy[] therapies = gson.fromJson(json, Therapy[].class);
+                allList = new ArrayList<Object>(Arrays.asList(therapies));
+                gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                gridView.setAdapter(gridViewAdapter);
+                mainText.setText(getResources().getString(R.string.main_therapy));
+            }
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.w(logger, "onPause");
-        if (dietList != null && dietList.size() > 0) {
+        if (allList != null && allList.size() > 0) {
             Gson gson = new Gson();
-            String recipe = gson.toJson(dietList);
+            String list = gson.toJson(allList);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("dataList", recipe);
+            editor.putString("dataList", list);
             editor.apply();
         }
     }
@@ -271,25 +360,22 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     @Override
     public void onStop() {
         super.onStop();
-        Log.w(logger, "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.w(logger, "onDestroyView");
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.w(logger, "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.w(logger, "onDetach");
     }
 
     private static boolean isTablet(Context context) {
@@ -297,5 +383,4 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
-
 }
