@@ -29,7 +29,7 @@ import me.gujun.android.taggroup.TagGroup;
 
 /*===========================================================================
  * -> 키워드 검색, 해시 태그 검색 or 사용자 검색 추천 -> Firebase DB 데이터 비교 및 검색 데이터 저장.
- * -> 좋아요(인기순), 함께 많이 본 데이터 보여주기(Firebase DB 연동)
+ * -> 좋아요(인기순), 함께 많이 본 데이터 보여주기(Firebase DB 연동), 추천(추천 알고리즘 적용 => 식단 정보 바탕)
  * */
 public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagClickListener {
 
@@ -43,12 +43,19 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private String[] tagList;
+    //검색 키워드
+    private String searchKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        //ComFragment 포스팅 tag 클릭시 넘어 오는 intent 값
+        Intent intent = getIntent();
+        String tag = intent.getStringExtra("tag");
+        if(tag != null){
+            searchKey = tag;
+        }
         ButterKnife.bind(this);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
@@ -129,7 +136,6 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         public SearchViewHolder(View itemView) {
             super(itemView);
         }
-
     }
     // 검색 추천
     static class SearchListHolder extends RecyclerView.ViewHolder{

@@ -69,7 +69,7 @@
                     android:layout_width="60dp"
                     android:layout_height="32dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="110dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/com_show"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -86,7 +86,7 @@
                     app:layout_constraintRight_toRightOf="@+id/comment_img"
                     app:layout_constraintTop_toBottomOf="@+id/comment_img"
                     tools:text="" />
-                <!--공유-->
+                <!--신고-->
                 <ImageView
                     android:id="@+id/share_img"
                     style="@style/weather_properties_icon"
@@ -94,10 +94,11 @@
                     android:layout_height="32dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_share_white_24dp"
+                    android:src="@drawable/ic_dissatisfied_white_24dp"
                     android:contentDescription="@string/app_name"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+                <!--신고-->
                 <TextView
                     android:id="@+id/share_nm"
                     android:layout_width="wrap_content"
@@ -106,11 +107,12 @@
                     android:layout_marginBottom="8dp"
                     style="@style/detail_properties_textview"
                     android:textColor="@color/white"
+                    android:text="@string/declaration"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@+id/share_img"
                     app:layout_constraintRight_toRightOf="@+id/share_img"
                     app:layout_constraintTop_toBottomOf="@+id/share_img"
-                    tools:text="" />
+                    tools:text="@string/declaration" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
         <android.support.constraint.ConstraintLayout

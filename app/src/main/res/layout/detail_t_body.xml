@@ -75,7 +75,7 @@
                     android:layout_width="60dp"
                     android:layout_height="32dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="110dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/com_show"
                     app:layout_constraintLeft_toLeftOf="parent"

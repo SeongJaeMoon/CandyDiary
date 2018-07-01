@@ -42,6 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import goods.cap.app.goodsgoods.Activity.AnotherUserActivity;
 import goods.cap.app.goodsgoods.Activity.PostDtlActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
+import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
 import goods.cap.app.goodsgoods.R;
 import goods.cap.app.goodsgoods.Util.MultiSwipeRefreshLayout;
@@ -482,9 +483,12 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 @Override
                 public void onClick(View v) {
                     //start AnotherUserActivity
-                    if(uid != null){
+                    if(uid != null && !uid.equals(auth.getCurrentUser().getUid())){
                         Intent intent = new Intent(context.getApplicationContext(), AnotherUserActivity.class);
                         intent.putExtra("uid", uid);
+                        context.startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context.getApplicationContext(), UserProfileActivity.class);
                         context.startActivity(intent);
                     }
                 }
@@ -496,9 +500,12 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 @Override
                 public void onClick(View v) {
                     //start AnotherUserActivity
-                    if(uid != null){
+                    if(uid != null && !uid.equals(auth.getCurrentUser().getUid())){
                         Intent intent = new Intent(context.getApplicationContext(), AnotherUserActivity.class);
                         intent.putExtra("uid", uid);
+                        context.startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context.getApplicationContext(), UserProfileActivity.class);
                         context.startActivity(intent);
                     }
                 }

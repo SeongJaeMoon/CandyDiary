@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -96,7 +95,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private StorageReference stRef;
     private static final int PICK_IMAGE = 2;
     private Uri resultUri;
-    private String uid;
+    private String uid, userName, userImg;
     private ProgressDialog progressDialog;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm aa", Locale.KOREA);
     private FirebaseRecyclerAdapter<Post, UserProfileActivity.PostViewHolder>firebaseRecyclerAdapter;
@@ -106,6 +105,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private DatabaseReference postRef;
     private DatabaseReference starRef;
     private DatabaseReference likeRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +140,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 final String name = dataSnapshot.child(user.getUid()).child("name").getValue(String.class);
                 final String email = dataSnapshot.child(user.getUid()).child("email").getValue(String.class);
                 final String pimage = dataSnapshot.child(user.getUid()).child("profile_image").getValue(String.class);
+                userName = name;
+                userImg = pimage;
                 nameText.setText(name);
                 emailText.setText(email);
                 final RequestOptions ro = new RequestOptions()
@@ -156,8 +158,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 });
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
         Query postsQuery = postRef.orderByChild("uid").equalTo(uid);
         postsQuery.addValueEventListener(new ValueEventListener() {
@@ -242,9 +243,6 @@ public class UserProfileActivity extends AppCompatActivity {
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         postList.setLayoutManager(layoutManager);
-        if(starsList.size() == 0){
-            starsText.setTextColor(getResources().getColor(R.color.white));
-        }
         starsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -476,28 +474,10 @@ public class UserProfileActivity extends AppCompatActivity {
             }
             @Override
             protected void onBindViewHolder(@NonNull final UserProfileActivity.PostViewHolder holder, final int position, @NonNull final Post model) {
-                final String postUid = model.getUid();
                 final String postKey = getRef(position).getKey();
                 holder.setContext(getApplicationContext());
-                DatabaseReference dbUserRef = FirebaseDatabase.getInstance().getReference().child("users").child(postUid);
                 DatabaseReference dbRef = postRef.child(postKey);
-                dbUserRef.keepSynced(true);
                 dbRef.keepSynced(true);
-                dbUserRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            String userName = dataSnapshot.child("name").getValue(String.class);
-                            String userProfileImage = dataSnapshot.child("profile_image").getValue(String.class);
-                            holder.setUserImage(UserProfileActivity.this, userProfileImage);
-                            holder.setUserName(userName);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
                 dbRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -532,6 +512,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
+                holder.setUserImage(getApplicationContext(), userImg);
+                holder.setUserName(userName);
                 holder.setTitle(model.getTitle());
                 holder.setPostDate(model.getDate());
                 holder.setLike(postKey);

@@ -2,7 +2,6 @@ package goods.cap.app.goodsgoods.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,26 +20,13 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.kakao.kakaolink.v2.KakaoLinkResponse;
-import com.kakao.kakaolink.v2.KakaoLinkService;
-import com.kakao.kakaolink.v2.model.ButtonObject;
-import com.kakao.kakaolink.v2.model.ContentObject;
-import com.kakao.kakaolink.v2.model.FeedTemplate;
-import com.kakao.kakaolink.v2.model.LinkObject;
-import com.kakao.kakaolink.v2.model.SocialObject;
-import com.kakao.network.ErrorResult;
-import com.kakao.network.callback.ResponseCallback;
-import com.kakao.util.helper.log.Logger;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,8 +52,8 @@ public class PostDtlActivity extends AppCompatActivity {
     @BindView(R.id.contents)TextView contents;
     @BindView(R.id.like_img)ImageView likeImg;//좋아요 이미지
     @BindView(R.id.likes)TextView likes;//좋아요 수
-    @BindView(R.id.share_img)ImageView shareImg;//공유 이미지
-    @BindView(R.id.share_nm)TextView shares;//공유 수
+    @BindView(R.id.share_img)ImageView shareImg;//신고 이미지
+    @BindView(R.id.share_nm)TextView shareNm;
     @BindView(R.id.comment_img)ImageView commentImg;//댓글 이미지
     @BindView(R.id.comment_detail)TextView commentDetail;//댓글보기
     @BindView(R.id.comments)TextView comments;//댓글 수
@@ -77,11 +63,9 @@ public class PostDtlActivity extends AppCompatActivity {
     private boolean isLikeStarProcess = false;
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
-    private String shareText = "";
-    private String imgUrl = "";
+
     private String shareTitle = "";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
-    private long like, comment, share;
     private boolean isMyPost = false;
     private String deleteKey;
     @Override
@@ -136,13 +120,13 @@ public class PostDtlActivity extends AppCompatActivity {
                               String desc = post.getDesc();
                                 if (desc != null) {
                                 contents.setText(desc);
-                                shareText = desc;
                             }
                               setHeadLayout(String.format("%s님이 작성한 글", userName));
                             }
                             String childUid = dataSnapshot.child("uid").getValue(String.class);
                             if(childUid.equals(uid)){
                                 starImg.setVisibility(View.GONE);
+                                shareImg.setVisibility(View.GONE);
                                 isMyPost = true;
                             }
                         }
@@ -156,7 +140,6 @@ public class PostDtlActivity extends AppCompatActivity {
 
                 }
             });
-
             commentDetail.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -225,49 +208,18 @@ public class PostDtlActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostDtlActivity.this);
-                alertDialog.setTitle(getResources().getString(R.string.shareTitle));
-                alertDialog.setItems(new CharSequence[]{getResources().getString(R.string.facebookShare), getResources().getString(R.string.kakaoShare), getResources().getString(R.string.close)}, new DialogInterface.OnClickListener() {
+                alertDialog.setTitle(getResources().getString(R.string.declaration_post));
+                alertDialog.setMessage(getResources().getString(R.string.declaration_noti));
+                alertDialog.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(imgUrl == null) imgUrl = ""; //이미지 로고 url 넣기
-                        if (which == 0) {
-                            dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
-                            //마켓URL 넣기
-                            ShareLinkContent content = new ShareLinkContent.Builder()
-                                    .setContentUrl(Uri.parse(imgUrl))
-                                    .setQuote(getResources().getString(R.string.shareText))
-                                    .build();
-                            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
-                        } else if(which == 1){
-                            dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
-                            FeedTemplate params = FeedTemplate
-                                    .newBuilder(ContentObject.newBuilder(shareTitle, imgUrl,
-                                            LinkObject.newBuilder().setWebUrl("market://details?id=goods.cap.app.goodsgoods")
-                                                    .setMobileWebUrl("market://details?id=goods.cap.app.goodsgoods").build())
-                                            .setDescrption(shareText)
-                                            .build())
-                                    .setSocial(SocialObject.newBuilder().setLikeCount((int)like).setCommentCount((int)comment)
-                                            .setSharedCount(((int)share)).build())
-                                    .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                                            .setMobileWebUrl("'market://details?id=goods.cap.app.goodsgoods")
-                                            .setAndroidExecutionParams("market://details?id=goods.cap.app.goodsgoods")
-                                            .setWebUrl("'market://details?id=goods.cap.app.goodsgoods")
-                                            .build()))
-                                    .build();
-
-                            KakaoLinkService.getInstance().sendDefault(PostDtlActivity.this, params, new ResponseCallback<KakaoLinkResponse>() {
-                                @Override
-                                public void onFailure(ErrorResult errorResult) {
-                                    Logger.w(errorResult.toString());
-                                }
-                                @Override
-                                public void onSuccess(KakaoLinkResponse result) {
-
-                                }
-                            });
-                        }else{
-                            dialog.cancel();
-                        }
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.setPositiveButton(getResources().getString(R.string.declaration_post), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.declaration_success), Toast.LENGTH_LONG).show();
                     }
                 });
                 alertDialog.create().show();
@@ -307,7 +259,6 @@ public class PostDtlActivity extends AppCompatActivity {
                     likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
                 }
                 long likesCount = dataSnapshot.getChildrenCount();
-                like = likesCount;
                 likes.setText(String.valueOf(likesCount));
             }
 
@@ -320,20 +271,7 @@ public class PostDtlActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long commetCount = dataSnapshot.getChildrenCount();
-                comment = commetCount;
                 comments.setText(String.valueOf(commetCount));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        dbRef3.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long sharesCount = dataSnapshot.getChildrenCount();
-                share = sharesCount;
-                shares.setText(String.valueOf(sharesCount));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

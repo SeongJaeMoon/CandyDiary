@@ -119,8 +119,14 @@
     <string name="no_permission">권한에 동의하지 않으셨습니다. 권한이 필요한 기능을 사용하실 때는 권한에 동의해주세요!</string>
     <string name="ok_permission">권한에 동의 하셨습니다.</string>
     <string name="go_setting">설정으로 가기</string>
-    <string name="reference_privacy"></string>
-    <string name="reference_notice"></string>
+    <!--개인정보처리방침-->
+    <string name="reference_privacy">
+
+    </string>
+    <!--이용약관-->
+    <string name="reference_notice">
+
+    </string>
     <!--User Profile-->
     <string name="profile_image">사용자 이미지</string>
     <string name="img_upload_error">이미지 등록 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
@@ -138,6 +144,11 @@
     <string name="star_post">즐겨찾기 포스팅\n</string>
     <string name="diet_and_post">식단을 관리하고 식단을 공유해보세요!</string>
     <string name="post_list">나의 식단 글쓰기 목록</string>
+    <!--Another User Profile-->
+    <string name="diet_post_another">식단 관리 정보를 확인해보세요.</string>
+    <string name="post_list_another">님의 식단 글쓰기 목록</string>
+    <string name="my_post_another">포스팅\n</string>
+    <string name="star_post_another">즐겨찾기 포스팅\n</string>
     <!--Star-->
     <string name="no_star_data">아직 저장된 데이터가 없습니다.\n 관심 있는 식단을 저장해보세요.</string>
     <string name="star_error">즐겨찾기 목록에 저장 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
@@ -175,5 +186,8 @@
     <string name="confrim_delete">해당 포스팅을 삭제하시겠습니까?</string>
     <string name="fail_delete_post">해당 포스팅를 삭제하는 도중 오류가 발생하였습니다. 잠시후 다시 시도해주세요.</string>
     <string name="success_delete">해당 포스팅이 삭제되었습니다.</string>
+    <string name="declaration">신고</string>
     <string name="declaration_post">신고하기</string>
+    <string name="declaration_noti">해당 포스팅을 신고합니다.</string>
+    <string name="declaration_success">신고가 접수되었습니다. 검수 후 조치합니다.</string>
 </resources>
