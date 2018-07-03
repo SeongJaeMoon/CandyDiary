@@ -127,6 +127,26 @@
     <string name="reference_notice">
 
     </string>
+    <!--NoticeFragment-->
+    <string name="pref_version">버전</string>
+    <string name="pref_contact">문의하기</string>
+    <string name="pref_alaram">알람 설정</string>
+    <string name="pref_alaram_sub">알람을 설정하면 여러가지 정보를 받아봅니다.</string>
+    <string name="pref_notice">공지사항</string>
+    <string name="pref_privacy">개인정보처리방침</string>
+    <string name="pref_terms">이용약관</string>
+    <string name="pref_opensource">오픈소스 라이센스</string>
+    <string name="pref_version_up">버전 업데이트를 하시겠습니까?</string>
+
+    <string-array name="notiArray">
+        <item name="notice">버전</item>
+        <item name="notice">문의하기</item>
+        <item name="notice">공지사항</item>
+        <item name="notice">개인정보처리방침</item>
+        <item name="notice">이용약관</item>
+        <item name="notice">오픈소스 라이센스</item>
+    </string-array>
+
     <!--User Profile-->
     <string name="profile_image">사용자 이미지</string>
     <string name="img_upload_error">이미지 등록 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>

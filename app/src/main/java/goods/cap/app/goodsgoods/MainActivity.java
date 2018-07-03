@@ -35,6 +35,7 @@ import goods.cap.app.goodsgoods.Fragment.ComFragment;
 import goods.cap.app.goodsgoods.Fragment.HomeFragment;
 import goods.cap.app.goodsgoods.Fragment.NoticeFragment;
 import goods.cap.app.goodsgoods.Fragment.StarFragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;

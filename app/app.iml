@@ -121,6 +121,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-simplexml:2.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v4-27.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-phenotype-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-core-16.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-api-phone-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-base-15.0.1" level="project" />
@@ -191,6 +192,7 @@
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-crash-16.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.facebook.android:facebook-core-4.34.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.14.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-abt-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: jp.wasabeef:glide-transformations-3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.ss.bannerslider:bannerslider-2.0.0" level="project" />
@@ -222,7 +224,9 @@
     <orderEntry type="library" name="Gradle: in.srain.cube:grid-view-with-header-footer:1.0.12@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-16.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource-3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-config-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-storage-3.3.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:preference-v7-27.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-interop-16.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:exifinterface-27.1.1" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core-1.1.0" level="project" />
