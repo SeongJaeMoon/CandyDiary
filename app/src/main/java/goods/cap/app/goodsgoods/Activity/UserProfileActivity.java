@@ -113,8 +113,10 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+
         mainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +125,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivityForResult(pickImageIntent, PICK_IMAGE);
             }
         });
+
         uid = auth.getCurrentUser().getUid();
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -140,13 +143,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 final String name = dataSnapshot.child(user.getUid()).child("name").getValue(String.class);
                 final String email = dataSnapshot.child(user.getUid()).child("email").getValue(String.class);
                 final String pimage = dataSnapshot.child(user.getUid()).child("profile_image").getValue(String.class);
+
                 userName = name;
                 userImg = pimage;
                 nameText.setText(name);
                 emailText.setText(email);
+
                 final RequestOptions ro = new RequestOptions()
                         .placeholder(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user))
                         .error(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user));
+
                 mainImage.post(new Runnable() {
                     @Override
                     public void run() {
@@ -222,7 +228,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                             }
                                             stars.setTags(tagList);
                                         }
-                                        stars.setTitle(title);
+                                        stars.setTitle(String.format("%s %s", "제목:", title));
                                         starsList.add(stars);
                                     }
                                 }

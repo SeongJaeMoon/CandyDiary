@@ -1,6 +1,7 @@
 package goods.cap.app.goodsgoods.Adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -24,6 +26,15 @@ public class StarPostAdapter extends RecyclerView.Adapter<StarPostAdapter.StarsV
     private List<Stars>stars;
     private Context context;
     private ItemListener mListener;
+
+    public StarPostAdapter(){
+        this.stars = new ArrayList<>();
+    }
+
+    public StarPostAdapter(Context context){
+        this.stars = new ArrayList<>();
+        this.context = context;
+    }
 
     public StarPostAdapter(List<Stars>stars, Context context, ItemListener listener){
         this.stars = stars;
@@ -51,6 +62,20 @@ public class StarPostAdapter extends RecyclerView.Adapter<StarPostAdapter.StarsV
         return stars.size();
     }
 
+    public void addAll(Stars newStars) {
+        stars.add(newStars);
+        notifyDataSetChanged();
+    }
+
+    public String getLastItemId() {
+        return stars.get(stars.size() - 1).getFkey();
+    }
+
+    public void clear(){
+        stars.clear();
+        notifyDataSetChanged();
+    }
+
     public class StarsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public CircleImageView userImg;
         public TextView user;
@@ -67,20 +92,22 @@ public class StarPostAdapter extends RecyclerView.Adapter<StarPostAdapter.StarsV
             tagGroup = (TagGroup)itemView.findViewById(R.id.bottom_tag);
         }
 
-        public void setStars(Stars star, Context context){
+        public void setStars(Stars star, final Context context){
             this.stars = star;
-            RequestOptions ro = new RequestOptions()
+            final RequestOptions ro = new RequestOptions()
                     .placeholder(ContextCompat.getDrawable(context, R.mipmap.empty_user))
                     .error(ContextCompat.getDrawable(context, R.mipmap.empty_user));
-            Glide.with(context)
-                    .setDefaultRequestOptions(ro)
-                    .load(stars.getImg())
-                    .into(userImg);
+
+            userImg.post(new Runnable() {
+                @Override
+                public void run() {
+                    Glide.with(context).setDefaultRequestOptions(ro).load(stars.getImg()).into(userImg);
+                    user.setText(stars.getUser());
+                }
+            });
             title.setText(stars.getTitle());
-            user.setText(stars.getUser());
             if(stars.getTags() != null) tagGroup.setTags(stars.getTags());
         }
-
         @Override
         public void onClick(View v) {
             if (mListener != null) {

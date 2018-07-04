@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -226,6 +227,28 @@ public class AnotherUserActivity extends AppCompatActivity {
                 }
             });
             Slider.init(new PostImageLoader(this));
+
+            declarationText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(AnotherUserActivity.this);
+                    alertDialog.setTitle(getResources().getString(R.string.declaration_post));
+                    alertDialog.setMessage(getResources().getString(R.string.declaration_noti));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.declaration_post), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.declaration_success), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            });
         }else{
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
         }

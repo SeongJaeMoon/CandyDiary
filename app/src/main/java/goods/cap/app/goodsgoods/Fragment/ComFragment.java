@@ -41,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import goods.cap.app.goodsgoods.Activity.AnotherUserActivity;
 import goods.cap.app.goodsgoods.Activity.PostDtlActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
+import goods.cap.app.goodsgoods.Activity.TagActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
 import goods.cap.app.goodsgoods.R;
@@ -182,15 +183,20 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                                 comImg1.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg1);
+                                        if(isAdded())
+                                            Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg1);
                                     }
                                 });
                                 comImg1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(0));
-                                        startActivity(intent);
+                                        if(tempList.get(0).equals(auth.getCurrentUser().getUid())){
+                                            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                        }else {
+                                            Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                            intent.putExtra("uid", tempList.get(0));
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }
@@ -206,15 +212,20 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                                 comImg2.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg2);
+                                        if(isAdded())
+                                            Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg2);
                                     }
                                 });
                                 comImg2.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(1));
-                                        startActivity(intent);
+                                        if(tempList.get(1).equals(auth.getCurrentUser().getUid())){
+                                            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                        }else {
+                                            Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                            intent.putExtra("uid", tempList.get(1));
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }
@@ -231,15 +242,20 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                                 comImg3.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg3);
+                                        if(isAdded())
+                                            Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg3);
                                     }
                                 });
                                 comImg3.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(2));
-                                        startActivity(intent);
+                                        if(tempList.get(2).equals(auth.getCurrentUser().getUid())){
+                                            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                        }else {
+                                            Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                            intent.putExtra("uid", tempList.get(2));
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }
@@ -255,15 +271,20 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                                 comImg4.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
+                                        if(isAdded())
+                                            Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
                                     }
                                 });
                                 comImg4.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(3));
-                                        startActivity(intent);
+                                        if(tempList.get(3).equals(auth.getCurrentUser().getUid())){
+                                            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                        }else {
+                                            Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                            intent.putExtra("uid", tempList.get(3));
+                                            startActivity(intent);
+                                        }
                                     }
                                 });
                             }
@@ -309,12 +330,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
 
                     holder.setContext(getActivity());
 
-                    DatabaseReference dbUserRef = userRef.child(postUid);
-                    DatabaseReference dbRef = postRef.child(postKey);
-                    dbUserRef.keepSynced(true);
-                    dbRef.keepSynced(true);
-
-                    dbUserRef.addValueEventListener(new ValueEventListener() {
+                    userRef.child(postUid).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
@@ -329,7 +345,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {}
                     });
-                    dbRef.addValueEventListener(new ValueEventListener() {
+                    postRef.child(postKey).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
@@ -463,7 +479,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 public void onTagClick(String tag) {
                     //start SearchActivity
                     if(tag != null){
-                        Intent intent = new Intent(context.getApplicationContext(), SearchActivity.class);
+                        Intent intent = new Intent(context.getApplicationContext(), TagActivity.class);
                         intent.putExtra("tag", tag);
                         context.startActivity(intent);
                     }

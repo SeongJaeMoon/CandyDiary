@@ -119,14 +119,14 @@ public class PostDtlActivity extends AppCompatActivity {
                               shareTitle = title;
                               String desc = post.getDesc();
                                 if (desc != null) {
-                                contents.setText(desc);
+                                    contents.setText(desc);
                             }
                               setHeadLayout(String.format("%s님이 작성한 글", userName));
                             }
                             String childUid = dataSnapshot.child("uid").getValue(String.class);
                             if(childUid.equals(uid)){
                                 starImg.setVisibility(View.GONE);
-                                shareImg.setVisibility(View.GONE);
+                                shareNm.setVisibility(View.GONE);
                                 isMyPost = true;
                             }
                         }

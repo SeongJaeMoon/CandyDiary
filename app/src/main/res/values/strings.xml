@@ -67,11 +67,17 @@
     <string name="resetPwEmail">해당 이메일로 비밀번호 재설정 메일을 전송하였습니다.</string>
     <string name="resetPwEmailFail">확인 메일을 보내는데 실패하였습니다. 다시 시도해주세요.</string>
     <!--Search-->
-    <string name="search_hint">태그, 식단&#8230;</string>
+    <string name="search_hint">#태그, @약초 효능, !식단&#8230;</string>
     <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>
     <string name="search_nothing">앗, 검색 기록을 찾을 수 없습니다. 다른 검색어로 검색해주세요.</string>
     <string name="search_no">앗, 아직 검색 기록이 없습니다.</string>
     <string name="search_rec">이런 건 어떻세요?</string>
+    <string name="search_tag"></string>
+    <string name="search_diet"></string>
+    <string name="search_title">님의 글</string>
+    <string name="search_text">검색어가 너무 짧습니다!</string>
+    <!--Tag-->
+    <string name="tag_title">개의 태그 검색 목록을 찾았습니다.</string>
     <!--DetailItem-->
     <string name="like">좋아요</string>
     <string name="share">공유</string>
@@ -185,7 +191,7 @@
     <string name="post_img_title">나만의 식단 사진을 등록해보세요.</string>
     <string name="post_add">사진 등록</string>
     <string name="post_title_hint">제목을 작성해주세요.</string>
-    <string name="post_desc_hint">설명을 작성해주세요.</string>
+    <string name="post_desc_hint">설명을 작성해주세요.\n(#으로 태그를 작성할 수 있습니다.)</string>
     <string name="post_hashtag">태그 추가</string>
     <string name="post_regist">등록하기</string>
     <string name="add_tags">태그를 작성해보세요.</string>

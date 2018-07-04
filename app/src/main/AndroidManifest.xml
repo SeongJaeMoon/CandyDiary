@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".Activity.SignInActivity" />
         <activity
             android:name=".Activity.PermissionActivity"
@@ -34,9 +34,8 @@
         <activity android:name=".Activity.ForgotActivity" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.NoticeActivity" />
-        <activity
-            android:name=".Activity.PostActivity"/>
-        <!--android:windowSoftInputMode="stateVisible|adjustResize"-->
+        <activity android:name=".Activity.PostActivity" />
+        <!-- android:windowSoftInputMode="stateVisible|adjustResize" -->
         <activity android:name=".Activity.StatActivity" />
         <activity android:name=".Activity.UserProfileActivity" />
         <activity
@@ -93,7 +92,7 @@
         </activity>
         <activity android:name=".Activity.PrivacyActivity" />
         <activity android:name=".Activity.PostImageActivity" />
-        <activity android:name=".Activity.AnotherUserActivity"></activity>
+        <activity android:name=".Activity.AnotherUserActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -104,6 +103,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <activity android:name=".Activity.TagActivity" />
+        <activity android:name=".Activity.SearchDtlActivity"></activity>
     </application>
 
 </manifest>
