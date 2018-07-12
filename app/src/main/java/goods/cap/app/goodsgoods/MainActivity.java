@@ -29,6 +29,7 @@ import goods.cap.app.goodsgoods.Activity.PermissionActivity;
 import goods.cap.app.goodsgoods.Activity.PostActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
+import goods.cap.app.goodsgoods.Activity.StatActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
 import goods.cap.app.goodsgoods.Adapter.RecentAdapter;
 import goods.cap.app.goodsgoods.Fragment.ComFragment;
@@ -45,6 +46,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.net.NetworkInfo;
+import android.net.ConnectivityManager;
 
 import com.bumptech.glide.Glide;
 import com.astuetz.PagerSlidingTabStrip;
@@ -92,12 +96,20 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private static final String PACKAGE_URL_SCHEME = "package:";
-    private StarDBHelper starDBHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        final boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(!isConnected){
+            Log.i(logger, "no-connect");
+        }
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -124,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 fab.setVisibility(View.GONE);
-                Log.i(logger,"opend");
                 setRecentAdapter();
             }
 
@@ -183,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_logout: Logout();
                         break;
-                    case R.id.nav_contact:
+                    case R.id.nav_contact: startActivity(new Intent(MainActivity.this, StatActivity.class));
                         break;
                 }
                 return true;

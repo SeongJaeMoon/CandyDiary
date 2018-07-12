@@ -29,7 +29,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,7 +73,6 @@ public class AnotherUserActivity extends AppCompatActivity {
     private static final String logger = UserProfileActivity.class.getSimpleName();
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
-    private StorageReference stRef;
     private BottomSheetDialog bottomSheetDialog;
     private List<Stars> starsList;
     private boolean likeProcess = false;
@@ -90,7 +88,7 @@ public class AnotherUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_another_user);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent != null) {
             anotherUid = intent.getStringExtra("uid");
             auth = FirebaseAuth.getInstance();
@@ -129,6 +127,14 @@ public class AnotherUserActivity extends AppCompatActivity {
                                     .setDefaultRequestOptions(ro)
                                     .load(pimage)
                                     .into(mainImage);
+                        }
+                    });
+                    mainImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(AnotherUserActivity.this, PostImageActivity.class);
+                            intent.putExtra("image_uri", anotherImg);
+                            startActivity(intent);
                         }
                     });
                 }

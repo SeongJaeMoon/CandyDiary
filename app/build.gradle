@@ -23,8 +23,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:preference-v7:27.1.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
@@ -68,8 +68,11 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
+    //태그, 달력, 피커
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.0'
+    implementation 'com.github.vatsaldesai92:MyDynamicCalendarLibrary:1.0.1'
+    implementation 'com.wx.wheelview:wheelview:1.3.3'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.ss.bannerslider:bannerslider:2.0.0'

@@ -105,7 +105,12 @@
         </provider>
 
         <activity android:name=".Activity.TagActivity" />
-        <activity android:name=".Activity.SearchDtlActivity"></activity>
+        <activity android:name=".Activity.StatInputActivity" />
+        <activity android:name=".Activity.StatDtlActivity" />
+        <activity
+            android:name=".Activity.StatSearchActivity"
+            android:theme="@style/Base.Theme.AppCompat.Dialog">
+        </activity>
     </application>
 
 </manifest>

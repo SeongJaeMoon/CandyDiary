@@ -350,7 +350,11 @@ public class DetailTherapyActivity extends AppCompatActivity {
             public void success(TherapyDtlResponseModel response) {
                 TherapyDtl therapyDtl = response.getBody().getItem();
                 hbdcNm.setText(therapyDtl.getHbdcNm());
-                prvateTherpy.setText(therapyDtl.getPrvateTherpy());
+                try {
+                    prvateTherpy.setText(removeTag(therapyDtl.getPrvateTherpy()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 shareText = "";
                 try {
                     shareText = removeTag(therapyDtl.getPrvateTherpy());

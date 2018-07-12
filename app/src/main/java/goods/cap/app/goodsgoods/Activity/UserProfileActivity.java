@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -258,6 +259,14 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
         Slider.init(new PostImageLoader(this));
+        //식단 관리 클릭
+        statisticText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserProfileActivity.this, StatActivity.class));
+                UserProfileActivity.this.finish();
+            }
+        });
     }
     @OnClick(R.id.textView)
     void nameChange(){

@@ -7,7 +7,6 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
@@ -17,13 +16,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.HashMap;
 import java.util.Map;
 
-import goods.cap.app.goodsgoods.Util.PostImageLoader;
-import ss.com.bannerslider.Slider;
+import android.net.NetworkInfo;
+import android.net.ConnectivityManager;
 
 public class GoodsApplication extends Application {
 
     private int key = 1; //Diet or Health 선택값 0, 1, 2, 3, 4, 5(Health) if 6 < key => search
-    private String searchKey; //검색
     private static GoodsApplication goodsApplication;
 
     @Override
@@ -51,14 +49,6 @@ public class GoodsApplication extends Application {
 
     public void setKey(int key) {
         this.key = key;
-    }
-
-    public String getSearchKey() {
-        return searchKey;
-    }
-
-    public void setSearchKey(String searchKey) {
-        this.searchKey = searchKey;
     }
 
     private void remoteConfigInit(){

@@ -3,9 +3,7 @@ package goods.cap.app.goodsgoods.Fragment;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,10 +20,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import goods.cap.app.goodsgoods.Activity.SignInActivity;
-import goods.cap.app.goodsgoods.BuildConfig;
-import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,7 +30,6 @@ public class NoticeFragment extends Fragment{
 
     private static final String logger = NoticeFragment.class.getSimpleName();
     public static final String ARG_PAGE = "ARG_PAGE";
-    private SharedPreferences sharedPreferences;
     private ListView notiListView;
     private String cVersion, lVersion;
     public static NoticeFragment newInstance(int page) {
@@ -67,9 +60,11 @@ public class NoticeFragment extends Fragment{
         list.add(String.format("현재 버전: %s, 최신 버전: %s", cVersion, lVersion));
         list.add("문의하기");
         list.add("공지사항");
+        list.add("운영정책");
         list.add("개인정보 처리방침");
         list.add("이용약관");
-        list.add("오픈소스 라이센스");
+        list.add("오픈소스 라이선스");
+        list.add("별점 주기");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         notiListView.setAdapter(adapter);
         notiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,9 +72,14 @@ public class NoticeFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.w(logger, "position => " + position);
                 switch (position){
-                    case 0:
-                        if (!TextUtils.equals(cVersion, lVersion)) { showUpdateDialog();}
-                        break;
+                    case 0: if (!TextUtils.equals(cVersion, lVersion)) { showUpdateDialog();}break;//버전 정보
+                    case 1: sendEmail(getActivity()); break; //문의하기
+                    case 2: break; //공지사항
+                    case 3: break; //운영 정책
+                    case 4: break; //개인정보 처리방침
+                    case 5: break; //이용 약관
+                    case 6: break; //오픈소스 라이센스
+                    case 7: break; //별점 주기
                 }
             }
         });
@@ -131,6 +131,21 @@ public class NoticeFragment extends Fragment{
         super.onDetach();
     }
 
+    private void sendEmail(Context context){
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        try {
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"seongjae.m@gmail.com"});
+            emailIntent.setType("text/html");
+            emailIntent.setPackage("com.google.android.gm");
+            if(emailIntent.resolveActivity(context.getPackageManager())!=null) startActivity(emailIntent);
+//            startActivity(emailIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            emailIntent.setType("text/html");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"seongjae.m@gmail.com"});
+            startActivity(Intent.createChooser(emailIntent, "Send Email"));
+        }
+    }
     private void checkPlayStore(){
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int status = googleApiAvailability.isGooglePlayServicesAvailable(getActivity());

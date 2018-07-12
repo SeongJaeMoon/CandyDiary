@@ -116,14 +116,14 @@ public class CustomDialog extends Dialog{
 
     private String getNumber(String str){
         String temp = "";
-        String num = "";
+        StringBuilder num = new StringBuilder();
         for( int i = 0; i < str.length(); i++ ) {
             temp = str.substring(i, i + 1);
             if(isNum(temp.charAt(0)+"")){
-                num += temp;
+                num.append(temp);
             }
         }
-        return num;
+        return num.toString();
     }
 
     private boolean isNum(String str) { return Pattern.matches("^[0-9]*$", str); }

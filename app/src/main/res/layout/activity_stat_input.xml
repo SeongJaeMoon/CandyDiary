@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.StatInputActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorAccent"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+    <!--사진 등록, 식단(검색), 함께한 사람, 식사 시간(시작~종료)-->
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:id="@+id/imgEdit"
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white_pressed"
+        app:srcCompat="@drawable/ic_action_add"/>
+
+    <EditText
+        android:id="@+id/withEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/tv_style"
+        android:hint="@string/hint_with"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:textColorHint="@color/cardview_shadow_start_color"
+        android:textSize="15sp"
+        android:maxLength="20"/>
+
+    <TextView
+        android:id="@+id/dietEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/tv_style"
+        android:hint="@string/hint_diet"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:textColorHint="@color/cardview_shadow_start_color"
+        android:scrollbars="vertical"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/startEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/tv_style"
+        android:hint="@string/hint_start"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:textColorHint="@color/cardview_shadow_start_color"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/endEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/tv_style"
+        android:hint="@string/hint_end"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:padding="15dp"
+        android:textColorHint="@color/cardview_shadow_start_color"
+        android:textSize="15sp" />
+</LinearLayout>

@@ -5,11 +5,11 @@ import java.util.List;
 public class Search {
     //검색 목록 키워드 -> 고유번호
     private int flag; //0: post, 1: diet, 2: therapy
-    private String uid, fkey;
-    private String mainText; //메인 이름
-    private String userName; //포스팅의 경우 사용자 이름
-    private List<String> tags; //태그
-    private String image; //이미지 주소
+    private String uid, fkey; //포스팅의 경우 uid, (식단 고유번호 <-> 약초 고유번호) ctnno
+    private String mainText; //메인 이름, (포스팅 제목, 식단 메인이름 <-> 약초 메인이름) smy
+    private String userName; //포스팅의 경우 사용자 이름(식단 정보 <-> 약초 효능) cntnt
+    private List<String> tags; //태그(포스팅만 해당)
+    private String image; //이미지 주소(포스팅 이미지 경로, 식단 이미지 경로, 약초 이미지 경로) url
 
     public int getFlag() {
         return flag;

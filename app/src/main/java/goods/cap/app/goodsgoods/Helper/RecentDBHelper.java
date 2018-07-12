@@ -20,7 +20,7 @@ public class RecentDBHelper {
     private static final String DATABASE_NAME = "recent.db";
     private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "recentDB";
-    // recent -> 0: Diet, 1: Health
+    // recent -> 0: Diet, 1: Therapy
     private static final String COLUMN_FLAG  = "flag"; //식단, 민간약초 구분
     private static final String COLUMN_URL = "url"; //식단 이미지 경로, 약초 이미지 경로
     private static final String COLUMN_SMY = "smy"; //식단 메인이름 <-> 약초 메인이름

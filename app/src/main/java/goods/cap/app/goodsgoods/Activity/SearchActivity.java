@@ -1,7 +1,6 @@
 package goods.cap.app.goodsgoods.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -17,42 +16,31 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.Adapter.SearchAdapter;
-import goods.cap.app.goodsgoods.Fragment.ComFragment;
 import goods.cap.app.goodsgoods.Fragment.HomeFragment;
+import goods.cap.app.goodsgoods.Helper.SearchDBHelper;
 import goods.cap.app.goodsgoods.MainActivity;
-import goods.cap.app.goodsgoods.Model.Firebase.Post;
+import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import goods.cap.app.goodsgoods.Model.Therapy.Therapy;
 import goods.cap.app.goodsgoods.R;
-import goods.cap.app.goodsgoods.Util.PostMainSlider;
 import goods.cap.app.goodsgoods.Util.Search;
 import me.gujun.android.taggroup.TagGroup;
 
@@ -75,12 +63,11 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
     private DatabaseReference dietRef;
     private DatabaseReference userRef;
     private String[] tagList;
-    private FirebaseAuth auth;
     //검색 키워드
     private SearchAdapter searchAdapter;
-    private List<String> searchList = new ArrayList<String>();
     private ProgressDialog progressDialog;
-    private boolean isLoading = false;
+    private SearchDBHelper searchDBHelper;
+    private String[] searchDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,11 +94,61 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         rvSearch.setLayoutManager(layoutManager);
 
         searchAdapter = new SearchAdapter(getApplicationContext());
+        searchAdapter.setListener(new SearchAdapter.ItemListener() {
+            @Override
+            public void onItemClick(Search search) {
+                if(search != null){
+                    int flag = search.getFlag();
+                    if(flag == 0){
+                        Intent intent = new Intent(SearchActivity.this, PostDtlActivity.class);
+                        intent.putExtra("postKey", search.getFkey());
+                        intent.putExtra("userName", search.getUserName());
+                        startActivity(intent);
+                    }else if(flag == 1){
+                        Intent intent = new Intent(SearchActivity.this, DetailItemActivity.class);
+                        Gson gson = new Gson();
+                        Diet temp = new Diet();
+                        temp.setFilePath(search.getImage());
+                        temp.setCntntsNo(search.getUid());
+                        temp.setCntntsSj(search.getMainText());
+                        temp.setFdNm(search.getUserName());
+                        String diet = gson.toJson(temp);
+                        intent.putExtra("diet", diet);
+                        startActivity(intent);
+                    }else if(flag == 2){
+                        Intent intent = new Intent(SearchActivity.this, DetailTherapyActivity.class);
+                        Gson gson = new Gson();
+                        Therapy temp = new Therapy();
+                        temp.setImgUrl(search.getImage());
+                        temp.setCntntsNo(search.getUid());
+                        temp.setCntntsSj(search.getMainText());
+                        temp.setBneNm(search.getUserName());
+                        String therapy = gson.toJson(temp);
+                        intent.putExtra("therapy", therapy);
+                        startActivity(intent);
+                    }
+                }
+            }
+        });
         rvSearch.setAdapter(searchAdapter);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        searchDBHelper = new SearchDBHelper(SearchActivity.this);
+
+        searchDB = getSearchList();
+        if(searchDB != null){
+            searchView.setSuggestions(searchDB);
+            searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.i(logger, "clcik-Search => " + position + "seachDB" + searchDB[position]);
+                    searching(searchDB[position]);
+                }
+            });
+        }
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -120,6 +157,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.search_text), Toast.LENGTH_SHORT).show();
                 }else{
                     searching(query);
+                    setSearch(query);
                 }
                 return false;
             }
@@ -136,7 +174,16 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
             }
             @Override
             public void onSearchViewClosed() {
-
+                searchDB = getSearchList();
+                if(searchDB != null){
+                    searchView.setSuggestions(searchDB);
+                    searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Log.i(logger, "clcik-Search => " + position);
+                        }
+                    });
+                }
             }
         });
 
@@ -144,7 +191,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         tagList = Config.tabList;
         tagGroup.setTags(tagList);
         tagGroup.setOnTagClickListener(this);
-        searchView.setEllipsize(true);
+        //searchView.setEllipsize(true);
     }
 
     @Override
@@ -188,10 +235,10 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
     // 검색 추천
     static class SearchListHolder extends RecyclerView.ViewHolder{
-
         public SearchListHolder(View itemView) {
             super(itemView);
         }
+
     }
 
     private void showProgressDialog() {
@@ -210,6 +257,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
     //태그, 약초 효능, 식단
     private void searching(final String text){
         showProgressDialog();
+        //posts
         if(text.charAt(0) == '#') {
             postRef.orderByChild("date").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -294,19 +342,32 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
                     hideProgressDialog();
                 }
             });
-            noMatchQuery();
+            noMatchQuery(5000);
+            //Diets
         } else if(text.charAt(0) == '!') {
-            showProgressDialog();
+            final String query = text.replace("!", "");
             dietRef.orderByChild("cnt_sj").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot datas : dataSnapshot.getChildren()) {
                             String cnt_sj = datas.child("cnt_sj").getValue(String.class);
+                            Log.w(logger, "dietKey: " + datas.getKey() + " cnt_sj: " + cnt_sj);
                             if (cnt_sj != null) {
-                                if (cnt_sj.contains(text)) {
+                                if (cnt_sj.contains(query)) {
                                     String cnt_no = datas.child("cnt_no").getValue(String.class);
-                                    Log.w(logger, "dietKey: " + datas.getKey() + " cnt_sj: " + cnt_sj + " cnt_no: " + cnt_no);
+                                    String old_path = datas.child("old_img").getValue(String.class);
+                                    String new_path = datas.child("new_img").getValue(String.class);
+                                    String fdNm = datas.child("fdNm").getValue(String.class);
+                                    Search search = new Search();
+                                    search.setFlag(1);
+                                    search.setUid(cnt_no);
+                                    if(old_path != null && new_path != null)
+                                        search.setImage(Config.getAbUrl(old_path, new_path));
+                                    search.setMainText(cnt_sj);
+                                    search.setUserName(fdNm);
+                                    searchAdapter.addAll(search);
+                                    Log.w(logger, "gotta: " + datas.getKey() + " cnt_sj: " + cnt_sj + " cnt_no: " + cnt_no);
                                 }
                             }
                         }
@@ -319,36 +380,50 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
                     hideProgressDialog();
                 }
             });
-            noMatchQuery();
+            noMatchQuery(5000);
+            //Therapies
         } else if(text.charAt(0) == '@'){
+            final String query = text.replace("@", "");
             therapyRef.orderByChild("prvate").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()){
                         for (DataSnapshot datas : dataSnapshot.getChildren()) {
                             String prvate = datas.child("prvate").getValue(String.class);
+                            Log.w(logger, "therapyKey: " + datas.getKey() + " cnt_sj: " + prvate);
                             if (prvate != null) {
-                                if (prvate.contains(text)) {
+                                if (prvate.contains(query)) {
                                     String cnt_no = datas.child("cnt_no").getValue(String.class);
-                                    Log.w(logger, "therapyKey: " + datas.getKey() + " cnt_sj: " + prvate + " cnt_no: " + cnt_no);
+                                    String cnt_sj = datas.child("cnt_sj").getValue(String.class);
+                                    String img = datas.child("img").getValue(String.class);
+                                    String bneNm = datas.child("bneNm").getValue(String.class);
+                                    Search search = new Search();
+                                    search.setFlag(2);
+                                    search.setUid(cnt_no);
+                                    search.setMainText(cnt_sj);
+                                    search.setImage(img);
+                                    search.setUserName(bneNm);
+                                    searchAdapter.addAll(search);
+                                    Log.w(logger, "gotta: " + datas.getKey() + " cnt_sj: " + prvate + " cnt_no: " + cnt_no);
                                 }
                             }
                         }
                     }
+                    hideProgressDialog();
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     hideProgressDialog();
                 }
             });
-            noMatchQuery();
+            noMatchQuery(5000);
         }else{
             hideProgressDialog();
+            noMatchQuery(1000);
         }
     }
 
-    private void noMatchQuery(){
+    private void noMatchQuery(int time){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -358,7 +433,36 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
                     searchAdapter.addAll(noMatch);
                 }
             }
-        }, 3000);
+        }, time);
+    }
+
+    private String[] getSearchList(){
+        String[]result = null;
+        try{
+            searchDBHelper = new SearchDBHelper(getApplicationContext());
+            searchDBHelper.open();
+            List<String>temp = searchDBHelper.getSearchList();
+            if(temp.size() > 0){
+                result = temp.toArray(new String[temp.size()]);
+            }
+            searchDBHelper.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private void setSearch(String keyword){
+        try{
+            searchDBHelper = new SearchDBHelper(getApplicationContext());
+            searchDBHelper.open();
+            if(searchDBHelper.isSearchExists(keyword)){
+                searchDBHelper.addSearch(keyword);
+            }
+            searchDBHelper.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     @Override
     protected void onStart() {
