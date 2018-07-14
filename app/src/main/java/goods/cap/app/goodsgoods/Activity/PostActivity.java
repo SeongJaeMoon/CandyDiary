@@ -40,17 +40,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import goods.cap.app.goodsgoods.MainActivity;
 import goods.cap.app.goodsgoods.R;
-import me.gujun.android.taggroup.TagGroup;
 
-public class PostActivity extends AppCompatActivity implements TagGroup.OnTagClickListener{
+public class PostActivity extends AppCompatActivity{
     @BindView(R.id.my_toolbar)Toolbar toolbar;
     @BindView(R.id.add_img1)ImageView addImg1;
     @BindView(R.id.add_img2)ImageView addImg2;
@@ -59,7 +61,7 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     @BindView(R.id.add_img5)ImageView addImg5;
     @BindView(R.id.etTitle)EditText etTitle;
     @BindView(R.id.etDesc)EditText etDesc;
-    @BindView(R.id.tag_group)TagGroup tagGroup;
+
     private static final String logger = PostActivity.class.getSimpleName();
     private DatabaseReference dbRef;
     private StorageReference stRef;
@@ -87,9 +89,6 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
         uid = auth.getCurrentUser().getUid();
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("posts");
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        tagGroup.setOnTagClickListener(this);
     }
     @OnClick(R.id.btn_add)
     void click(){
@@ -143,6 +142,158 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             startActivityForResult(pickcamIntent, PICK_CAMERA);
         }
     }
+
+    @OnClick(R.id.add_img1)
+    void clickOne(){
+        try {
+            if (imgList != null) {
+                if(imgList.size() > 0 && imgList.get(0)!=null){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
+                    alertDialog.setMessage(getResources().getString(R.string.retry_photo));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(addImg1 != null){
+                                addImg1.setImageResource(R.drawable.ic_action_add);
+                                imgList.set(0, null);
+                            }
+
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @OnClick(R.id.add_img2)
+    void clickTwo(){
+        try {
+            if (imgList != null) {
+                if(imgList.size() > 1 && imgList.get(1)!=null){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
+                    alertDialog.setMessage(getResources().getString(R.string.retry_photo));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(addImg2 != null){
+                                addImg2.setImageResource(R.drawable.ic_action_add);
+                                imgList.set(1, null);
+                            }
+
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @OnClick(R.id.add_img3)
+    void clickThree(){
+        try {
+            if (imgList != null) {
+                if(imgList.size() > 2 && imgList.get(2)!=null){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
+                    alertDialog.setMessage(getResources().getString(R.string.retry_photo));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(addImg3 != null){
+                                addImg3.setImageResource(R.drawable.ic_action_add);
+                                imgList.set(2, null);
+                            }
+
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @OnClick(R.id.add_img4)
+    void clickFour(){
+        try {
+            if (imgList != null) {
+                if(imgList.size() > 3 && imgList.get(3)!=null){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
+                    alertDialog.setMessage(getResources().getString(R.string.retry_photo));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(addImg4 != null){
+                                addImg4.setImageResource(R.drawable.ic_action_add);
+                                imgList.set(3, null);
+                            }
+
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @OnClick(R.id.add_img5)
+    void clickFive(){
+        try {
+            if (imgList != null) {
+                if(imgList.size() > 4 && imgList.get(4)!=null){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
+                    alertDialog.setMessage(getResources().getString(R.string.retry_photo));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(addImg5!= null){
+                                addImg5.setImageResource(R.drawable.ic_action_add);
+                                imgList.set(4, null);
+                            }
+
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,12 +319,16 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
                 }
             }
             int size = imgList.size();
-            for(int i = 0; i < size; ++i){
-                if(i == 0)addImg1.setImageURI(imgList.get(0));
-                else if(i == 1)addImg2.setImageURI(imgList.get(1));
-                else if(i == 2)addImg3.setImageURI(imgList.get(2));
-                else if(i == 3)addImg4.setImageURI(imgList.get(3));
-                else if(i == 4)addImg5.setImageURI(imgList.get(4));
+            if(size == 5){
+                addImg1.setImageURI(imgList.get(size - 1));
+            }else {
+                for (int i = 0; i < size; ++i) {
+                    if (i == 0) addImg1.setImageURI(imgList.get(0));
+                    else if (i == 1) addImg2.setImageURI(imgList.get(1));
+                    else if (i == 2) addImg3.setImageURI(imgList.get(2));
+                    else if (i == 3) addImg4.setImageURI(imgList.get(3));
+                    else if (i == 4) addImg5.setImageURI(imgList.get(4));
+                }
             }
         }
         if (requestCode == PICK_CAMERA){
@@ -251,7 +406,12 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     private void postingClick(){
         String title = etTitle.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();
-        String[] tags = tagGroup.getTags();
+        Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+        Matcher m = p.matcher(desc);
+        List<String> tags = new ArrayList<>();
+        while (m.find()){
+            tags.add(m.group());
+        }
         if(TextUtils.isEmpty(title)){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.need_title), Toast.LENGTH_SHORT).show();
         }else if(imgList == null || imgList.size() == 0){
@@ -265,11 +425,11 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
             pushRef.child("uid").setValue(uid);
             Map<String, Object> tagUpdates = new HashMap<String, Object>();
             //HashTag 저장
-            int tagLen = tags.length;
+            int tagLen = tags.size();
             if(tagLen != 0){
-                for(String s : tags){
-                    if(!s.equals("") && !s.equals(getResources().getString(R.string.post_hashtag))){
-                        tagUpdates.put(UUID.randomUUID().toString(), s);
+                for(String tag : tags){
+                    if(!tag.equals("") && !tag.equals(getResources().getString(R.string.post_hashtag))){
+                        tagUpdates.put(UUID.randomUUID().toString(), tag);
                     }
                 }
                 pushRef.child("tags").updateChildren(tagUpdates);
@@ -368,8 +528,4 @@ public class PostActivity extends AppCompatActivity implements TagGroup.OnTagCli
     }
     @Override
     public void onBackPressed() { super.onBackPressed(); this.finish();}
-    @Override
-    public void onTagClick(String tag) {
-        tagGroup.submitTag();
-    }
 }

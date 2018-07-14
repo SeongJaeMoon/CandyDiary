@@ -24,7 +24,7 @@ import goods.cap.app.goodsgoods.R;
 
 /* 메인 화면 GridView 연결 컨트롤 Adapter, created by supermoon. */
 
-public class GirdViewAdapter extends ArrayAdapter{
+public class GridViewAdapter extends ArrayAdapter{
 
     private Context context; //연결할 화면 context
     private int resourceId; //이미지 연결용 R.id
@@ -36,7 +36,7 @@ public class GirdViewAdapter extends ArrayAdapter{
         ImageView image;
     }
     //그리드 뷰 어뎁터 생성자
-    public GirdViewAdapter(Context context, List<Object>data, int resourceId){
+    public GridViewAdapter(Context context, List<Object>data, int resourceId){
         //슈퍼클래스 생성자 호출 필요.
         super(context, resourceId, data);
         this.resourceId = resourceId;

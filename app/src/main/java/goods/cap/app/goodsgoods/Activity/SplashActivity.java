@@ -27,7 +27,12 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                setAds();
+                //테스트 종료 후 setAds로 변경 필요
+                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                SplashActivity.this.finish();
+//                setAds();
             }
         }, 3000);
     }

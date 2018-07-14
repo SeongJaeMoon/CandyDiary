@@ -8,7 +8,7 @@ android {
         targetSdkVersion 27
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,7 +23,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:preference-v7:27.1.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
@@ -45,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.firebase:firebase-config:16.0.0'
     implementation 'com.google.firebase:firebase-ads:15.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
     implementation 'com.firebaseui:firebase-ui-database:3.3.1'
@@ -66,8 +68,10 @@ dependencies {
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
     }
+    //태그, 달력, 피커
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.0'
+    implementation 'com.github.vatsaldesai92:MyDynamicCalendarLibrary:1.0.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.ss.bannerslider:bannerslider:2.0.0'

@@ -67,11 +67,15 @@
     <string name="resetPwEmail">해당 이메일로 비밀번호 재설정 메일을 전송하였습니다.</string>
     <string name="resetPwEmailFail">확인 메일을 보내는데 실패하였습니다. 다시 시도해주세요.</string>
     <!--Search-->
-    <string name="search_hint">태그, 식단&#8230;</string>
+    <string name="search_hint">#태그, @약초 효능, !식단&#8230;</string>
     <string name="tag_group">태그를 선택하시면 해당 목록이 검색됩니다.</string>
     <string name="search_nothing">앗, 검색 기록을 찾을 수 없습니다. 다른 검색어로 검색해주세요.</string>
     <string name="search_no">앗, 아직 검색 기록이 없습니다.</string>
     <string name="search_rec">이런 건 어떻세요?</string>
+    <string name="search_title">님의 글</string>
+    <string name="search_text">검색어가 너무 짧습니다!</string>
+    <!--Tag-->
+    <string name="tag_title">개의 태그 검색 목록을 찾았습니다.</string>
     <!--DetailItem-->
     <string name="like">좋아요</string>
     <string name="share">공유</string>
@@ -105,28 +109,30 @@
     <!--Permssion and Notice-->
     <string name="notice_title">이용 약관</string>
     <string name="notice_config">이용 약관 보기</string>
-    <string name="permission_title">이런食으로에서 요청하는 앱 권한 목록입니다.</string>
+    <string name="permission_title">이런食으로에서 요청하는\n앱 권한 목록입니다.</string>
     <string name="need_permission">해당 앱이 기능을 사용할 수 있도록 동의가 필요합니다.</string>
     <string name="privacy_title">개인정보 처리 방침</string>
     <string name="privacy_config">개인정보 처리 방침 보기</string>
     <string name="need_per">필수 권한</string>
     <string name="not_need_per">이런食으로 앱은 필수 권한을 요청하지 않습니다.</string>
     <string name="no_need_per">선택 권한</string>
-    <string name="is_no_need_per">1.카메라 및 갤러리 접근 권한\n(커뮤니티에 사진을 업로드 하기 위해 사용)\n\n2.내부 저장소 접근 권한\n(통계 및 식단 데이터 백업을 위해 사용)\n\n3.외부 저장소 접근 권한\n(통계 및 식단 데이터 백업을 위해 사용)</string>
+    <string name="is_no_need_per">1.카메라 및 갤러리 접근 권한\n(커뮤니티에 사진을 업로드 하고 식단 정보를 나타내기 위해 사용)\n\n2.내부 저장소 접근 권한\n(통계 및 식단 데이터 백업을 위해 사용)\n\n3.외부 저장소 접근 권한\n(통계 및 식단 데이터 백업을 위해 사용)</string>
     <string name="all_ok">동의를 선택하시면 권한 사용과 더불어 이용 약관 및 개인정보 처리 방침도 읽고 함께 동의한 것으로 간주합니다.</string>
     <string name="agree">동의</string>
     <string name="no_agree">다음에</string>
     <string name="no_permission">권한에 동의하지 않으셨습니다. 권한이 필요한 기능을 사용하실 때는 권한에 동의해주세요!</string>
     <string name="ok_permission">권한에 동의 하셨습니다.</string>
     <string name="go_setting">설정으로 가기</string>
-    <!--개인정보처리방침-->
-    <string name="reference_privacy">
-
-    </string>
-    <!--이용약관-->
-    <string name="reference_notice">
-
-    </string>
+    <!--NoticeFragment-->
+    <string name="pref_version">버전</string>
+    <string name="pref_contact">문의하기</string>
+    <string name="pref_alaram">알람 설정</string>
+    <string name="pref_alaram_sub">알람을 설정하면 여러가지 정보를 받아봅니다.</string>
+    <string name="pref_notice">공지사항</string>
+    <string name="pref_privacy">개인정보처리방침</string>
+    <string name="pref_terms">이용약관</string>
+    <string name="pref_opensource">오픈소스 라이센스</string>
+    <string name="pref_version_up">버전 업데이트를 하시겠습니까?</string>
     <!--User Profile-->
     <string name="profile_image">사용자 이미지</string>
     <string name="img_upload_error">이미지 등록 중에 오류가 발생하였습니다. 다시 시도해주세요.</string>
@@ -137,6 +143,7 @@
     <string name="too_short">입력 값이 너무 짧습니다. 다시 시도해주세요.</string>
     <string name="no_validation">입력 값의 형식이 잘못되었습니다. 다시 시도해주세요.</string>
     <string name="pw_change">비밀번호 변경</string>
+    <string name="secession">회원 탈퇴</string>
     <string name="noti_name">변경할 이름을 입력해주세요.</string>
     <string name="noti_pw">변경할 비밀번호를 입력해주세요.</string>
     <string name="noti_email">변경할 이메일을 입력해주세요.</string>
@@ -144,6 +151,9 @@
     <string name="star_post">즐겨찾기 포스팅\n</string>
     <string name="diet_and_post">식단을 관리하고 식단을 공유해보세요!</string>
     <string name="post_list">나의 식단 글쓰기 목록</string>
+    <string name="secession_confirm">정말로 삭제하시겠습니까?</string>
+    <string name="secession_delete">회원님과 관련된 모든 정보가 삭제됩니다.</string>
+    <string name="secession_delete_ok">정상적으로 탈퇴 되었습니다. 다음에 만나요~!</string>
     <!--Another User Profile-->
     <string name="diet_post_another">식단 관리 정보를 확인해보세요.</string>
     <string name="post_list_another">님의 식단 글쓰기 목록</string>
@@ -165,7 +175,7 @@
     <string name="post_img_title">나만의 식단 사진을 등록해보세요.</string>
     <string name="post_add">사진 등록</string>
     <string name="post_title_hint">제목을 작성해주세요.</string>
-    <string name="post_desc_hint">설명을 작성해주세요.</string>
+    <string name="post_desc_hint">설명을 작성해주세요.\n(#으로 태그를 작성할 수 있습니다.)</string>
     <string name="post_hashtag">태그 추가</string>
     <string name="post_regist">등록하기</string>
     <string name="add_tags">태그를 작성해보세요.</string>
@@ -189,5 +199,251 @@
     <string name="declaration">신고</string>
     <string name="declaration_post">신고하기</string>
     <string name="declaration_noti">해당 포스팅을 신고합니다.</string>
+    <string name="declaration_user">해당 사용자를 신고합니다.</string>
+    <string name="retry_photo">앗, 사진을 다시 선택하시겠습니까?</string>
     <string name="declaration_success">신고가 접수되었습니다. 검수 후 조치합니다.</string>
+    <!--StatActivity-->
+    <string name="menu_month">월간</string>
+    <string name="menu_week">주간</string>
+    <string name="menu_day">일간</string>
+    <string name="menu_today">오늘</string>
+    <string name="menu_agenda">글목록</string>
+    <string name="sort_stat">통계표로 보기</string>
+    <string name="sort_cal">달력으로 보기</string>
+    <string name="pulldown_refreshing">불러오는 중&#8230;</string>
+    <string name="pulldown_pull">로딩 중</string>
+    <string name="pulldown_release">저장 완료</string>
+    <string name="calendar_item_new_count">%d개</string>
+    <string name="stat_title">식단 정보 입력</string>
+    <string name="stat_input">식단 입력하기</string>
+    <string name="stat_modify">식단 수정하기</string>
+    <string name="stat_delete">식단 삭제하기</string>
+    <string name="delete_error">삭제 도중 오류가 발생했습니다. 다시 시도해주세요.</string>
+    <string name="hint_diet">식단을 검색합니다.</string>
+    <string name="hint_with">누구와 함께 했나요?</string>
+    <string name="hint_start">식사 시작 시간</string>
+    <string name="hint_end">식사 종료 시간</string>
+    <string name="hint_search">식품명을 입력해주세요.</string>
+    <string name="no_data_diet">식단 정보는 필수 입력 정보입니다.</string>
+    <string name="no_data_time">시작, 종료 시간은 필수 입력 정보입니다.</string>
+    <string name="diet_data_error">식단 정보를 가져오는데 문제가 있습니다. 다시 시도해주세요.</string>
+    <string name="no_data_error">정보를 저장하는데 문제가 있습니다. 다시 시도해주세요.</string>
+    <string name="input_diet">식단 정보를 등록하시겠습니까?</string>
+    <string name="update_diet">식단 정보를 수정하시겠습니까?</string>
+    <string name="no_data_date">해당 날짜엔 입력 정보가 없습니다.</string>
+    <string name="long_date_hint">식단이 있는 날짜를 길게 누르면 식품 상세 정보를 볼 수 있습니다.</string>
+    <string name="img_viwer">사진 보기</string>
+    <!--Calorie-->
+    <string name="category">식품군</string>
+    <string name="cho_mg">콜레스테롤(mg)</string>
+    <string name="dan_g">단백질(g)</string>
+    <string name="dang_g">당류(g)</string>
+    <string name="ji_g">지방(g)</string>
+    <string name="na_mg">나트륨(mg)</string>
+    <string name="kal">열량(kal)</string>
+    <string name="pho_g">포화지방산(g)</string>
+    <string name="quanty">1회제공량</string>
+    <string name="tan_g">탄수화물(g)</string>
+    <string name="trans_g">트랜스지방(g)</string>
+
+    <!--이용약관-->
+    <string name="tems_of_user">
+        제 1 장 총칙\n\n제 1 조 [목적]\n\n이 약관은 개발자(이하 "개발자")가 제공하는 안드로이드 어플리케이션 "이런食으로"(https://foodreet-e783e.firebaseapp.com/, 이하 "서비스")의 이용과 관련하여 개발자와 서비스를 이용(이하 "계약")하는 모든 사람(이하 "이용자")의 권리ㆍ의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+        \n\n제 2 조 [용어의 정의]\n\n이 약관에서 사용하는 용어의 정의는 다음과 같습니다.\n\n
+        1. 이런食으로 : 개발자의 서비스명으로서 이용자의 식단 정보를 제공 및 관리하는 기능을 제공하고, 다른 이용자와 이를 사진과 글 등으로 공유할 수 있는 서비스.\n
+        2. 이용자 : 개발자와 서비스 이용계약을 체결한 자\n
+        3. 이용신청 : 개발자가 정한 별도의 기준과 절차에 따라 서비스 이용을 신청하는 것\n
+        4. 이용계약 : 서비스를 제공 받기 위하여 개발자와 이용자 간에 체결하는 계약\n
+        5. 이용정지 : 개발자가 정한 일정한 요건에 따라 일정기간 동안 이용자의 서비스 이용을 보류하는 것\n
+        6. 해지 : 개발자와 이용자가 간의 맺은 이용계약을 해약하는 것\n
+        7. 아이디(ID) : 이용자 식별과 서비스 이용을 위하여 이용자가 선정하고 개발자가 인정한 문자와 숫자의 조합\n
+        8. 비밀번호 : 이용 아이디와 일치된 이용자임을 확인하고, 이용자의 비밀을 보호하기 위해 이용자가 설정한 문자와 숫자의 조합\n
+        9. 휴면아이디 : 24개월 이상 계속해서 로그인을 포함한 서비스 이용이 없는 아이디\n\n
+        제 3 조 [약관의 게시와 개정]\n\n
+        1. 개발자는 이 약관의 내용을 이용자가 쉽게 알 수 있도록 서비스 초기 화면에 게시합니다.\n
+        2. 개발자는 "약관규제에관한법률", "정보통신망이용촉진및정보보호등에관한법률(이하 "정보통신망법")", "전자상거래 등에서의 소비자보호에관한법률" 등 관련법을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다.\n
+        3. 개발자가 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행약관과 함께 제1항의 방식에 따라 그 개정약관의 적용일자 7일 전부터 적용일자 전까지 공지합니다. 다만, 이용자의 권리 또는 의무에 관한 중요한 규정의 변경은 최소한 30일 전에 공지하고 일정기간 서비스내 공지사항, 전자우편, 로그인시 동의창 등의 전자적 수단을 통해 따로 명확히 통지하도록 합니다.\n
+        4. 개발자가 전항에 따라 개정약관을 공지 또는 통지하면서 이용자에게 약관 변경 적용일까지 거부의사를 표시하지 않으면 동의한 것으로 본다는 뜻을 명확하게 공지 또는 통지하였음에도 이용자가 명시적으로 거부의 의사표시를 하지 아니한 경우 이용자가 개정약관에 동의한 것으로 봅니다.\n
+        5. 이용자가 개정약관의 적용에 동의하지 않을 경우 개발자는 개정약관의 내용을 적용할 수 없으며, 이 경우 이용자는 이용계약을 해지할 수 있습니다. 다만, 기존 약관을 적용할 수 없는 특별한 사정이 있는 경우에는 개발자는 이용계약을 해지할 수 있습니다.\n
+        6. 이용자는 약관의 변경에 대하여 주의의무를 다하여야 하며 변경된 약관으로 인한 이용자의 피해는 개발자가 책임지지 않습니다.\n
+        7. 이 약관의 적용기간은 이용자의 가입일 부터 해지일 까지로 규정합니다. 단, 채권 또는 채무관계가 있을 경우에는 채권, 채무의 완료일 까지로 규정합니다.\n\n
+        제 2 장 이용자의 이용계약 및 관리\n\n
+        제 4 조 [이용계약 체결]\n\n
+        1. 이용계약은 이용자가 되고자 하는 자(이하 "가입신청자")가 약관의 내용에 대하여 동의를 한 다음 회원가입신청을 하고 개발자가 이러한 신청에 대하여 승낙함으로써 체결됩니다.\n
+        2. 개발자는 가입신청자의 신청에 대하여 서비스 이용을 승낙함을 원칙으로 합니다. 다만, 개발자는 다음 각 호에 해당하는 신청에 대하여는 승낙을 하지 않거나 사후에 이용계약을 해지할 수 있습니다.\n\n
+        ① 가입신청자가 이 약관에 의하여 이전에 이용자자격을 상실한 적이 있는 경우, 단 개발자의 이용자 재가입 승낙을 얻을 경우에는 예외로 함.\n
+        ② 실명이 아니거나 타인의 명의를 이용한 경우\n
+        ③ 허위의 정보를 기재하거나, 개발자가 제시하는 내용을 기재하지 않은 경우\n
+        ④ 이용자가 서비스의 정상적인 제공을 저해하거나 다른 이용자의 서비스 이용에 지장을 줄 것으로 예상되는 경우\n
+        ⑤ 이용자의 귀책사유로 인하여 승인이 불가능하거나 기타 규정한 제반 사항을 위반하며 신청하는 경우\n
+        ⑥ 기타 개발자가 관련법령 등을 기준으로 하여 명백하게 사회질서 및 미풍양속에 반할 우려가 있음을 인정하는 경우\n
+        ⑦ 개발자가 제공하는 모든 서비스 중 어느 하나에 대하여 제17조[계약해지] 제2항에 의하여 개발자로부터 계약해지를 당한 이후 1년이 경과하지 않은 경우\n\n
+        3. 제1항에 따른 신청에 있어 개발자는 이용자의 종류에 따라 전문기관을 통한 실명확인 및 본인인증을 요청할 수 있습니다.\n
+        4. 개발자는 서비스관련설비의 여유가 없거나 기술상 또는 업무상 문제가 있는 경우에는 승낙을 유보할 수 있습니다.\n
+        5. 이용계약의 성립 시기는 개발자가 가입완료를 신청절차 상에서 표시한 시점으로 합니다.\n
+        6. 개발자는 이용자에 대해 개발자정책에 따라 등급별로 구분하여 이용시간, 이용횟수, 서비스 메뉴 등을 세분하여 이용에 차등을 둘 수 있습니다.\n
+        7. 개발자는 서비스의 대량이용 등 특별한 이용에 관한 계약은 별도 계약을 통하여 제공합니다.\n\n
+        제 5 조 [개인정보 수집]
+        1. 개발자는 적법하고 공정한 수단에 의하여 이용계약의 성립 및 이행에 필요한 최소한의 개인정보를 수집합니다.\n
+        2. 개발자는 개인정보의 수집 시 관련법규에 따라 개인정보취급방침에 그 수집범위 및 목적을 사전 고지합니다.\n\n
+        제 6 조 [개인정보보호 의무]\n\n
+        개발자는 "정보통신망법" 등 관계 법령이 정하는 바에 따라 이용자의 개인정보를 보호하기 위해 노력합니다.개인정보의 보호 및 사용에 대해서는 관련법 및 개발자의 개인정보취급방침이 적용됩니다. 다만, 개발자의 공식 사이트 이외의 링크된 사이트에서는 개발자의 개인정보취급방침이 적용되지 않습니다.\n\n
+        제 7 조 [이용자의 아이디 및 비밀번호의 관리에 대한 의무]\n\n
+        1. 이용자의 아이디와 비밀번호에 관한 관리책임은 이용자에게 있으며 이를 제3자가 이용하도록 하여서는 안 됩니다.\n
+        2. 개발자는 이용자의 아이디가 개인정보 유출 우려가 있거나 반사회적 또는 미풍양속에 어긋나거나 개발자 및 개발자의 운영자로 오인할 우려가 있는 경우 해당 아이디의 활용을 제한할 수 있습니다.\n
+        3. 이용자는 아이디 및 비밀번호가 도용되거나 제3자가 사용하고 있음을 인지한 경우에는 이를 즉시 개발자에 통지하고 개발자의 안내에 따라야 합니다.\n
+        4. 제3항의 경우에 해당 이용자가 개발자에 그 사실을 통지하지 않거나 통지한 경우에도 개발자의 안내에 따르지 않아 발생한 불이익에 대하여 개발자는 책임지지 않습니다.\n\n
+        제 8 조 [이용자정보의 변경]\n\n
+        1. 이용자는 개인정보관리화면을 통하여 언제든지 본인의 개인정보를 열람하고 수정할 수 있습니다. 다만, 서비스 관리를 위해 필요한 아이디(이메일)는 수정이 불가능합니다.\n
+        2. 이용자는 회원가입신청 시 기재한 사항이 변경되었을 경우 서비스에 접속하여 변경사항을 수정하여야 합니다.\n
+        3. 제2항의 변경사항을 수정하지 않아 발생한 불이익에 대하여 개발자는 책임지지 않습니다.\n\n
+        제 9 조 [이용자에 대한 통지]\n\n
+        1. 개발자가 이용자에 대한 통지를 하는 경우 이 약관에 별도 규정이 없는 한 이용자의 등록된 이메일 등으로 통지할 수 있습니다.\n
+        2. 개발자는 전체 또는 불특정 다수 이용자에 대한 통지의 경우 7일 이상 서비스에 게시함으로써 제1항의 통지에 갈음할 수 있습니다.\n\n
+        제 3 장 이용자의 권리 및 의무\n\n
+        제 10 조 [개발자의 의무]\n\n
+        1. 개발자는 관련법과 이 약관이 금지하거나 미풍양속에 반하는 행위를 하지 않으며, 계속적이고 안정적으로 서비스를 제공하기 위하여 최선을 다하여 노력합니다.\n
+        2. 개발자는 이용자가 안전하게 서비스를 이용할 수 있도록 개인정보(신용정보 포함)보호를 위해 보안시스템을 갖추어야 하며 개인정보취급방침을 공시하고 준수합니다.\n
+        3. 개발자는 서비스 제공과 관련하여 알고 있는 이용자의 개인정보를 본인의 승낙 없이 제3자에게 누설, 배포하지 않습니다. 다만, 관계법령에 의한 관계기관으로부터의 요청 등 법률의 규정에 따른 적법한 절차에 의한 경우에는 그러하지 않습니다.\n
+        4. 개발자는 서비스 제공목적에 맞는 서비스 이용 여부를 확인하기 위하여 상시적으로 모니터링을 실시합니다.\n
+        5. 개발자는 스팸메세지 수신거부 처리 등 스팸메세지 관련 민원을 자체적으로 처리하기 위한 고충처리창구를 아래와 같이 운영합니다.\n
+        ※ 고충처리창구 이메일 : (seongjae.m@gmail.com)
+        6. 개발자는 이용자가 불법행위를 한 사실을 확인한 경우 한국인터넷진흥원 등 관계기관에 관련 자료를 첨부하여 신고할 수 있습니다.\n
+        7. 개발자는 이용자에게 제공하는 유료 및 무료 서비스를 계속적이고 안정적으로 제공하기 위하여 설비에 장애가 생기거나 멸실 되었을 때 지체 없이 이를 수리 또는 복구합니다. 다만, 천재지변이나 비상사태 등 부득이한 경우에는 서비스를 일시 중단하거나 영구 중지할 수 있습니다.\n\n
+        제 11 조 [이용자의 의무]\n\n
+        1. 이용자는 다음 행위를 하여서는 안 됩니다.\n\n
+        ① 신청 또는 변경 시 허위내용을 등록하는 행위\n
+        ② 타인의 정보를 도용하는 행위\n
+        ③ 다른 이용자의 개인정보를 그 동의 없이 수집, 저장, 공개하는 행위\n
+        ④ 개발자가 게시한 정보를 변경하거나 제3자에게 제공하는 행위\n
+        ⑤ 개발자와 기타 제3자의 저작권 등 지적재산권에 대한 침해 행위\n
+        ⑥ 개발자 및 기타 제3자의 명예를 손상시키거나 업무를 방해하는 행위\n
+        ⑦ 외설 또는 폭력적인 메시지, 팩스, 음성, 메일, 기타 공서양속에 반하는 정보를 서비스에 공개 또는 게시하는 행위\n
+        ⑧ 개발자의 동의 없이 영리를 목적으로 서비스를 사용하는 행위\n
+        ⑨ 타인의 의사에 반하는 내용을 지속적으로 게시하는 행위\n
+        ⑩ 범죄행위를 목적으로 하거나 범죄행위를 교사하는 행위\n
+        ⑪ 선량한 풍속 또는 기타 사회질서를 해치는 행위\n
+        ⑫ 현행 법령, 개발자가 제공하는 서비스에 정한 약관, 이용안내 및 서비스와 관련하여 공지한 주의사항, 개발자가 통지하는 사항, 기타 서비스 이용에 관한 규정을 위반하는 행위\n
+        ⑬ 서비스의 안정적인 운영에 지장을 주거나 줄 우려가 있는 일체의 행위\n
+        ⑭ 제3자에게 임의로 서비스를 임대하는 행위\n
+        ⑮ 기타 불법적이거나 부당한 행위\n\n
+        2. 개발자는 이용자가 제1항의 행위를 하는 경우 이용자의 서비스이용을 정지하고 일방적으로 본 계약을 해지할 수 있습니다.\n
+        3. 이용자는 정보통신망법률의 광고성 정보 전송 시 의무사항 및 개발자의 이용약관을 준수하여야 합니다.\n
+        4. 이용자는 불법ㆍ음란물 게시 등 불법행위를 하거나 전기통신사업법 등 관련 법령을 준수하지 않아 발생하는 모든 민ㆍ형사상의 책임을 부담합니다.\n
+        5. 개발자는 이용자가 본인 명의가 아닌 타인의 전화번호를 부정하게 사용하는 경우에 서비스의 전부 또는 일부의 이용을 제한할 수 있습니다.\n\n
+        제 4 장 이용자의 권리에 관한 조치\n\n
+        제 12 조 [동의의 철회]\n\n
+        개발자는 이용자가 서비스 화면에서 자신의 개인정보에 대한 수집, 이용 또는 제공에 대한 동의를 철회 할 수 있도록 필요한 조치를 취해야 합니다.\n\n
+        제 13 조 [불만처리]\n\n
+        1. 개발자는 개인정보와 관련하여 이용자의 의견을 수렴하고 불만을 처리하기 위한 절차를 마련하여야 합니다.\n
+        2. 개발자는 전화 또는 전자우편 등의 상담창구를 통하여 이용고객의 불만사항을 접수, 처리 하여야 합니다.\n\n
+        제 5 장 서비스의 이용\n\n
+        제 14 조 [서비스 제공]\n\n
+        1. 개발자는 이용자에게 아래와 같은 서비스를 제공합니다.\n\n
+        ① 식단 및 식품 정보 제공 서비스\n
+        ② 민간 약초 정보 제공 서비스\n
+        ③ 다른 이용자와 사진 및 글 공유 서비스\n
+        ➃ 일별 식단 등록 서비스\n
+        ⑤ 일별 식단 통계 서비스\n
+        ⑥ 기타 개발자가 추가 개발하거나 다른 개발자와의 제휴계약 등을 통해 이용자에게 제공하는 일체의 서비스\n\n
+        2. 개발자는 서비스를 일정범위로 분할하여 각 범위 별로 이용가능시간을 별도로 지정할 수 있습니다. 다만 이러한 경우에는 그 내용을 사전에 공지합니다.\n
+        3. 서비스는 연중무휴, 1일 24시간 제공함을 원칙으로 합니다.\n
+        4. 개발자는 컴퓨터 등 정보통신설비의 보수점검ㆍ교체 및 고장, 통신두절 또는 운영상의 상당한 이유가 있는 경우 서비스의 제공을 일시적으로 중단할 수 있습니다. 이 경우 개발자는 제9조[이용자에 대한 통지]에 정한 방법으로 이용자에게 통지합니다. 다만, 개발자가 사전에 통지할 수 없는 부득이한 사유가 있는 경우 사후에 통지할 수 있습니다.\n
+        5. 개발자는 서비스의 제공에 필요한 경우 정기점검을 실시할 수 있으며 정기점검시간은 서비스제공화면에 공지한 바에 따릅니다.\n\n
+        제 15 조 [서비스의 변경]\n\n
+        1. 개발자는 상당한 이유가 있는 경우에 운영상, 기술상의 필요에 따라 제공하고 있는 전부 또는 일부 서비스를 변경할 수 있습니다.\n
+        2. 서비스의 내용, 이용방법, 이용시간에 대하여 변경이 있는 경우에는 변경사유, 변경될 서비스의 내용 및 제공일자 등을 그 변경 전에 해당 서비스 초기화면에 게시하여야 합니다.\n
+        3. 개발자는 무료로 제공되는 서비스의 일부 또는 전부를 개발자의 정책 및 운영의 필요상 수정, 중단, 변경할 수 있으며 이에 대하여 관련법에 특별한 규정이 없는 한 이용자에게 별도의 보상을 하지 않습니다.\n\n
+        제 16 조 [서비스 이용의 제한 및 정지]\n\n
+        1. 개발자는 이용자가 이 약관의 의무를 위반하거나 서비스의 정상적인 운영을 방해한 경우 서비스 이용을 제한하거나 정지할 수 있습니다.\n
+        2. 개발자는 전항에도 불구하고 주민등록법을 위반한 명의도용 및 결제도용, 저작권법을 위반한 불법프로그램의 제공 및 운영방해, 정보통신망법을 위반한 스팸메세지 및 불법통신, 해킹, 악성프로그램의 배포, 접속권한 초과행위 등과 같이 관련법을 위반한 경우에는 즉시 영구이용정지를 할 수 있습니다. 본 항에 따른 서비스 이용정지 시 서비스 내의 금액, 포인트, 혜택 및 권리 등도 모두 소멸되며 개발자는 이에 대해 별도로 보상하지 않습니다.\n
+        3. 개발자는 이용자가 다음 중 하나에 해당하는 경우 1개월 동안의 기간을 정하여 당해 서비스의 이용을 정지 할 수 있습니다.\n\n
+        ① 방송통신위원회ㆍ한국인터넷진흥원ㆍ미래창조과학부 등 관계기관이 불법ㆍ음란물 게시 등 불법행위에 해당하는 사실을 확인하여 이용정지를 요청하는 경우\n
+        ② 이용자가 게시하는 광고로 인하여 개발자의 서비스 제공에 장애를 야기하거나 야기할 우려가 있는 경우\n
+        ③ 이용자가 게시하는 광고의 수신자가  불법ㆍ음란물 등의 게시로 신고하는 경우\n
+        ④ 이용자에게 제공하는 서비스가 불법ㆍ음란물 등 게시에 이용되고 있는 경우\n\n
+        4. 개발자는 이용자의 정보가 부당한 목적으로 사용되는 것을 방지하고 보다 원활한 서비스 제공을 위하여 24개월 이상 계속해서 로그인을 포함한 서비스 이용이 없는 아이디를 휴면아이디로 분류하고 서비스 이용을 정지할 수 있습니다.\n
+        5. 개발자는  불법ㆍ음란물 등의 게시를 방지하기 위하여 게시글의 일일 게시량을 제한 할 수 있으며 자체 모니터링을 강화할 수 있습니다.\n\n
+        제 17 조 [계약해지]\n\n
+        1. 이용자는 이용계약을 해지 하고자 할 때 본인이 직접 서비스를 통하여 신청할 수 있으며 개발자는 관련법 등이 정하는 바에 따라 이를 즉시 처리하여야 합니다.\n
+        2. 개발자는 이용자가 다음 각 호에 해당할 경우에는 이용자의 동의 없이 이용계약을 해지할 수 있으며 그 사실을 이용자에게 통지합니다. 다만 개발자가 긴급하게 해지할 필요가 있다고 인정하는 경우나 이용자의 귀책사유로 인하여 통지할 수 없는 경우에는 통지를 생략할 수 있습니다.\n\n
+        ① 이용자가 이 약관을 위반하고 일정 기간 이내에 위반 내용을 해소하지 않는 경우\n
+        ② 개발자의 서비스 제공목적 외의 용도로 서비스를 이용하거나 제3자에게 임의로 서비스를 임대한 경우\n
+        ③ 방송통신위원회ㆍ한국인터넷진흥원ㆍ미래창조과학부 등 관계기관이 불법ㆍ음란물 게시 등 불법행위에 해당하는 사실을 확인하여 계약해지를 요청하는 경우\n
+        ④ 제 11조[이용자의 의무] 규정을 위반한 경우\n
+        ⑤ 제 16조[서비스 이용의 제한 및 정지] 규정에 의하여 이용정지를 당한 이후 1년 이내에 이용정지 사유가 재발한 경우\n
+        ⑥ 개발자의 이용요금 등의 납입청구에 대하여 이용자가 이용요금을 체납할 경우\n\n
+        3. 개발자는 휴면아이디 상태가 3년 이상 지속될 경우 본 계약을 해지할 수 있으며 해지되기 30일 전 전자우편으로 서비스 계약이 해지 된다는 사실을 통지합니다. 이용자는 통지기간 내에 로그인을 통해 이용계약 해지를 해제할 수 있습니다.\n
+        4. 이용자가 계약을 해지할 경우 관련법 및 개인정보취급방침에 따라 개발자가 이용자정보를 보유하는 경우를 제외하고는 해지 즉시 이용자의 모든 데이터는 소멸됩니다.\n\n
+        제 18 조 [서비스 이용의 제한]\n\n
+        개발자는 개인 이용자의 아이디 당 게시글 게시량을 1일 최대 10건으로 제한할 수 있습니다. 다만, 적법한 게시글 게시, 기타 필요사항에 따른 게시 등 이용자 불편을 최소화하기 위하여 사전승인을 얻은 경우, 게시글 대량 게시 서비스를 신청해 자격을 얻은 경우 게시량 제한 없이 발송 가능하도록 예외를 인정 할 수 있습니다.\n\n
+        제 19 조 [각종 자료의 저장기간]\n\n
+        개발자는 서비스 별로 이용자가 필요에 의해 저장하고 있는 자료에 대하여 일정한 저장기간을 정할 수 있으며 필요에 따라 그 기간을 변경할 수 있습니다.\n
+        제 20 조 [게시물의 저작권]\n\n
+        1. 이용자가 서비스 페이지에 게시하거나 등록한 자료의 지적재산권은 이용자에게 귀속됩니다. 단, 개발자는 서비스 자체의 게재권을 가지며 개발자의 서비스 내에 한하여 이용자의 게시물을 활용할 수 있습니다.\n
+        2. 이용자는 서비스를 이용하여 얻은 정보를 가공, 판매하는 행위 등 게재된 자료를 상업적으로 이용할 수 없으며 이를 위반하여 발생하는 제반 문제에 대한 책임은 이용자에게 있습니다.\n\n
+        제 6 장 손해배상 등\n\n
+        제 21 조 [손해배상의 범위 및 청구]\n\n
+        1. 개발자가 제공하는 서비스 중 무료서비스의 경우에는 손해배상에 해당되지 않습니다.\n
+        2. 개발자는 그 손해가 천재지변 등 불가항력이거나 이용자의 고의 또는 과실로 인하여 발생된 때에는 손해배상을 하지 않습니다.\n
+        3. 손해배상의 청구는 개발자에 청구사유, 청구금액 및 산출근거를 기재하여 전자우편, 전화 등으로 신청하여야 하며 그 사유가 발생한 날로부터 3개월 이내에 신청한 경우에만 유효합니다.\n
+        4. 개발자 및 타인에게 피해를 주어 피해자의 고발 또는 소송 제기로 인하여 손해배상이 청구된 이용자는 이에 응하여야 합니다.\n\n
+        제 22 조 [면책]\n\n
+        1. 개발자는 다음 각 호의 경우로 서비스를 제공할 수 없는 경우 이로 인하여 이용자에게 발생한 손해에 대해서는 책임을 부담하지 않습니다.\n\n
+        ① 천재지변 또는 이에 준하는 불가항력의 상태가 있는 경우\n
+        ② 서비스의 효율적인 제공을 위한 시스템 개선, 장비 증설 등 계획된 서비스 중지 일정을 사전에 공지한 경우\n
+        ③ 서비스 제공을 위하여 개발자와 서비스 제휴계약을 체결한 제3자의 고의적인 서비스 방해가 있는 경우\n
+        ④ 이용자의 귀책사유로 서비스 이용에 장애가 있는 경우\n
+        ⑤ 개발자의 고의 과실이 없는 사유로 인한 경우\n\n
+        2. 개발자는 이용자가 서비스를 통해 얻은 정보 또는 자료 등으로 인해 발생한 손해와 서비스를 이용하거나 이용할 것으로부터 발생하거나 기대하는 손익 등에 대하여 책임을 면합니다.\n
+        3. 개발자는 이용자가 게시 또는 전송한 자료의 내용에 대해서는 책임을 면합니다.\n
+        4. 개발자는 이용자 상호간 또는 이용자와 제3자 상호간에 서비스를 매개로 하여 물품거래 등을 한 경우에는 책임을 면합니다.\n
+        5. 개발자는 무료로 제공하는 서비스에 대하여 개발자의 귀책사유로 이용자에게 서비스를 제공하지 못하는 경우 책임을 면합니다.\n
+        6. 이 약관의 적용은 이용계약을 체결한 이용자에 한하며 제3자로부터의 어떠한 배상, 소송 등에 대하여 개발자는 책임을 면합니다.\n\n
+        제 23 조 [분쟁조정]\n\n
+        1. 본 약관은 대한민국법령에 의하여 규정되고 이행됩니다.\n
+        2. 서비스 이용과 관련하여 개발자와 이용자 간에 발생한 분쟁에 대해서는 민사소송법상의 주소지를 관할하는 법원을 합의관할로 합니다.\n\n
+        * 부 칙 *\n\n
+        1. 이 약관은 2018년 07월 20일부터 적용됩니다.\n\n
+        서비스이용약관 버전번호: v1.0\n\n
+        서비스이용약관 시행일자 : 2018년 07월 20일\n\n
+    </string>
+    <!--오픈소스 라이선스-->
+    <string name="open_source_license">
+        \n\nI\'m deeply grateful to many developers for their work. I\'m inspired and helped by it. So many world developers for your encouragement and careful concern. If you have any questions or concerns, please contact us at seongjae.m@gmail.com\n\n\n
+        공공데이터 출처\n\n
+        ①식품영양정보: 식품안전정보포털(식품 안전 나라)\n
+        ②민간약초: 농촌진흥청(농사로)\n
+        ③식단정보: 농촌진흥청(농사로)\n
+        \n\n
+        오픈소스 라이센스 명단\n\n
+        - okhttp(square), Apache License 2.0\nhttps://github.com/square/okhttp\n\n- picasso(square), Apache License 2.0\nhttps://github.com/square/picasso\n\n- retrofit(square), Apache License 2.0\nhttps://github.com/square/retrofit\n\n- Glide(square), Apache License 2.0\nhttps://github.com/bumptech/glide\n\n- gson(Google), Apache License 2.0\nhttps://github.com/google/gson\n\n- Google Play Services API(Google), Apache License 2.0\nhttps://developers.google.com/android/reference\n\n- material-design-icons(Google), Apache License 2.0\nhttps://github.com/google/material-design-icons\n\n- Kakao Open SDK(Kakao), Apache License 2.0\n"https://developers.kakao.com/docs/sdk\n\n- CicleImageView(hdodenhof), Apache License 2.0\nhttps://github.com/hdodenhof/CircleImageView\n\n- FloatingActionButton(futuresimple), Apache License 2.0\nhttps://github.com/futuresimple/android-floating-action-button\n\n- ButterKnife(JakeWharton), Apache License 2.0\nhttps://github.com/JakeWharton/butterknife\n\n- FirebaseUI-Android(Google), Apache License 2.0\nhttps://github.com/firebase/FirebaseUI-Android\n\ - Android-Image-Cropper(ArthurHub), Apache License 2.0\nhttps://github.com/ArthurHub/Android-Image-Cropper\n\n- PagerSlidingTabStrip(astuetz), Apache License 2.0\nhttps://github.com/astuetz/PagerSlidingTabStrip\n\n- android-GridViewWithHeaderAndFooter(liaohuqiu), Apache License 2.0\nhttps://github.com/liaohuqiu/android-GridViewWithHeaderAndFooter\n\n- MPAndroidChart(PhilJay), Apache License 2.0\nhttps://github.com/PhilJay/MPAndroidChart\n\n- AndroidTagGroup(2dxgujun), Apache License 2.0\nhttps://github.com/2dxgujun/AndroidTagGroup\n\n- MaterialDateTimePicker(wdullaer), Apache License 2.0\nhttps://github.com/wdullaer/MaterialDateTimePicker\n\n- MaterialSearchView(MiguelCatalan), Apache License 2.0\nhttps://github.com/MiguelCatalan/MaterialSearchView\n\n- Banner-Slider(saeedsh92), Apache License 2.0\nhttps://github.com/saeedsh92/Banner-Slider\n\n- PermissionGen(lovedise), Apache License 2.0\nhttps://github.com/lovedise/PermissionGen\n\n- Android SDK Crashlytics(Google), Apache License 2.0\nhttps://mvnrepository.com/artifact/com.crashlytics.sdk.android/crashlytics/2.9.1\n\n\n
+        "Apache License\n\n
+                Version 2.0, January 2004\n\n
+                http://www.apache.org/licenses/\n\n
+                TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n
+                1. Definitions.\n\"License\" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.\n
+                \"Licensor\" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.\n
+                \"Legal Entity\" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, \"control\" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.\n
+                \"You\" (or \"Your\") shall mean an individual or Legal Entity exercising permissions granted by this License.\n
+                \"Source\" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.\n
+                \"Object\" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.\n
+                \"Work\" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).\n
+                \"Derivative Works\" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.\n
+                \"Contribution\" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, \"submitted\" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as \"Not a Contribution.\"\n
+                \"Contributor\" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.\n
+                2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.\n
+                3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.\n
+                4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:\n
+                a.You must give any other recipients of the Work or Derivative Works a copy of this License; and\n
+                b.You must cause any modified files to carry prominent notices stating that You changed the files; and\n
+                c.You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and\n
+                d.If the Work includes a \"NOTICE\" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License. \n\n
+                 You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License. \n\n
+                 5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.\n
+                 6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.\n
+                 7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.\n
+                 8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.\n
+                 9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.\n\n"END OF TERMS AND CONDITIONS"
+    </string>
 </resources>

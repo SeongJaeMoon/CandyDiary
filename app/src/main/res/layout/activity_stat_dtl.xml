@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.StatDtlActivity">
+
+    <com.github.mikephil.charting.charts.RadarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <TextView
+        android:id="@+id/total_kal"
+        android:text=""
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:text="@string/close"
+            style="@style/detail_properties_textview"
+            android:textColor="@color/white"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            android:id="@+id/close_dialog"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:text="@string/img_viwer"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            style="@style/detail_properties_textview"
+            android:textColor="@color/white"
+            android:id="@+id/image_dialog"/>
+    </LinearLayout>
+</LinearLayout>

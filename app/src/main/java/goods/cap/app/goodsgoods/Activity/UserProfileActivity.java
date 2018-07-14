@@ -36,8 +36,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +61,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,6 +90,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @BindView(R.id.my_toolbar)Toolbar toolbar;
     @BindView(R.id.postTitle)TextView postTitle;
     @BindView(R.id.post_list)RecyclerView postList;
+    @BindView(R.id.secession)TextView secession; //회원탈퇴
     private static final String logger = UserProfileActivity.class.getSimpleName();
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
@@ -105,7 +107,9 @@ public class UserProfileActivity extends AppCompatActivity {
     private DatabaseReference postRef;
     private DatabaseReference starRef;
     private DatabaseReference likeRef;
-
+    private String token;
+    private AuthCredential credential;
+    private FirebaseAuth.AuthStateListener authListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,8 +117,10 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         auth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
+
         mainImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +129,20 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivityForResult(pickImageIntent, PICK_IMAGE);
             }
         });
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(UserProfileActivity.this, SignInActivity.class));
+                    finish();
+                }
+            }
+        };
+
         uid = auth.getCurrentUser().getUid();
         stRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -140,13 +160,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 final String name = dataSnapshot.child(user.getUid()).child("name").getValue(String.class);
                 final String email = dataSnapshot.child(user.getUid()).child("email").getValue(String.class);
                 final String pimage = dataSnapshot.child(user.getUid()).child("profile_image").getValue(String.class);
+
                 userName = name;
                 userImg = pimage;
                 nameText.setText(name);
                 emailText.setText(email);
+
                 final RequestOptions ro = new RequestOptions()
                         .placeholder(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user))
                         .error(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.empty_user));
+
                 mainImage.post(new Runnable() {
                     @Override
                     public void run() {
@@ -222,7 +245,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                             }
                                             stars.setTags(tagList);
                                         }
-                                        stars.setTitle(title);
+                                        stars.setTitle(String.format("%s %s", "제목:", title));
                                         starsList.add(stars);
                                     }
                                 }
@@ -252,6 +275,13 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
         Slider.init(new PostImageLoader(this));
+        //식단 관리 클릭
+        statisticText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserProfileActivity.this, StatActivity.class));
+            }
+        });
     }
     @OnClick(R.id.textView)
     void nameChange(){
@@ -281,7 +311,158 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         ad.show();
     }
+    @OnClick(R.id.secession)
+    void secessionUser() {
+        if (auth != null) {
+            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserProfileActivity.this);
+            alertDialog.setTitle(getResources().getString(R.string.secession_confirm));
+            alertDialog.setMessage(getResources().getString(R.string.secession_delete));
+            alertDialog.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // get Token
+                    if(auth.getCurrentUser() != null) {
+                        final FirebaseUser mFirebaseUser = auth.getCurrentUser();
+//                        mFirebaseUser.getIdToken(false).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+//                                if (task.isSuccessful()) {
+//                                    Log.e(logger, "getToken Task is successful");
+//                                    token = task.getResult().getToken();
+//                                }
+//                            }
+//                        });
+//                        if (mFirebaseUser.getProviders() != null && mFirebaseUser.getProviders().get(0).equals("google.com")) {
+//                            credential = GoogleAuthProvider.getCredential(token, null);
+//                        }
+                        try {
+                            mFirebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    final String uid = mFirebaseUser.getUid();
+                                    // 사용자 삭제
+                                    mFirebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            try {
+                                                if (task.isSuccessful()) {
+                                                    // Database 삭제
+                                                    Log.e(logger, "Uid" + uid);
+                                                    final DatabaseReference comRef = FirebaseDatabase.getInstance().getReference().child("comments");
+                                                    comRef.orderByKey().addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            if (dataSnapshot.exists()) {
+                                                                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                                                    if (datas.getKey() != null) {
+                                                                        if (datas.getKey().equals(uid)) {
+                                                                            comRef.child(uid).removeValue();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
 
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        }
+                                                    });
+                                                    postRef.orderByKey().addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            if (dataSnapshot.exists()) {
+                                                                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                                                    if (datas.getKey() != null) {
+                                                                        if (datas.getKey().equals(uid)) {
+                                                                            postRef.child(uid).removeValue();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        }
+                                                    });
+                                                    starRef.orderByKey().addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            if (dataSnapshot.exists()) {
+                                                                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                                                    if (datas.getKey() != null) {
+                                                                        if (datas.getKey().equals(uid)) {
+                                                                            starRef.child(uid).removeValue();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        }
+                                                    });
+                                                    likeRef.orderByKey().addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            if (dataSnapshot.exists()) {
+                                                                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                                                                    if (datas.getKey() != null) {
+                                                                        if (datas.getKey().equals(uid)) {
+                                                                            likeRef.child(uid).removeValue();
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        }
+                                                    });
+                                                    dbRef.child(uid).removeValue();
+//                                                dbRef.child(uid).child("email").removeValue();
+//                                                dbRef.child(uid).child("name").removeValue();
+//                                                dbRef.child(uid).child("profile_image").removeValue();
+//                                                Map<String, Object> recordUpdate = new HashMap<>();
+//                                                recordUpdate.put(uid, null);
+//                                                dbRef.updateChildren(recordUpdate);
+                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                    UserProfileActivity.this.finish();
+                                                }else{
+                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(getApplicationContext(), SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                    UserProfileActivity.this.finish();
+                                                }
+                                            } catch (Exception e) {
+                                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }catch (Exception e){
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                        //users, comments, likes, posts, stars
+                    }else{
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            alertDialog.create().show();
+        }
+    }
 //    @OnClick(R.id.textView2)
 //    void emailChange(){
 //       AlertDialog.Builder ad = new AlertDialog.Builder(UserProfileActivity.this);
@@ -363,11 +544,16 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onStart();
         initFirebase();
         firebaseRecyclerAdapter.startListening();
+        auth.addAuthStateListener(authListener);
+
     }
     @Override
     protected void onStop(){
         super.onStop();
         firebaseRecyclerAdapter.stopListening();
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener);
+        }
     }
     @Override
     protected void onRestart(){

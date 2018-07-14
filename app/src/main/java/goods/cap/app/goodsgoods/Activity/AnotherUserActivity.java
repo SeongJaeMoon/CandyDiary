@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +29,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,7 +73,6 @@ public class AnotherUserActivity extends AppCompatActivity {
     private static final String logger = UserProfileActivity.class.getSimpleName();
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
-    private StorageReference stRef;
     private BottomSheetDialog bottomSheetDialog;
     private List<Stars> starsList;
     private boolean likeProcess = false;
@@ -89,7 +88,7 @@ public class AnotherUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_another_user);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent != null) {
             anotherUid = intent.getStringExtra("uid");
             auth = FirebaseAuth.getInstance();
@@ -128,6 +127,14 @@ public class AnotherUserActivity extends AppCompatActivity {
                                     .setDefaultRequestOptions(ro)
                                     .load(pimage)
                                     .into(mainImage);
+                        }
+                    });
+                    mainImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(AnotherUserActivity.this, PostImageActivity.class);
+                            intent.putExtra("image_uri", anotherImg);
+                            startActivity(intent);
                         }
                     });
                 }
@@ -226,8 +233,41 @@ public class AnotherUserActivity extends AppCompatActivity {
                 }
             });
             Slider.init(new PostImageLoader(this));
+
+            declarationText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(AnotherUserActivity.this);
+                    alertDialog.setTitle(getResources().getString(R.string.declaration_post));
+                    alertDialog.setMessage(getResources().getString(R.string.declaration_user));
+                    alertDialog.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.setPositiveButton(getResources().getString(R.string.declaration_post), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setDeclaration();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.declaration_success), Toast.LENGTH_LONG).show();
+                            //신고접수
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            });
         }else{
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void setDeclaration(){
+        try {
+            final DatabaseReference deRef = FirebaseDatabase.getInstance().getReference().child("declarate").push();
+            deRef.child("id").setValue(anotherUid);
+            deRef.child("time").setValue(sdf.format(new Date(System.currentTimeMillis())));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     private void bottomDialog(){

@@ -2,9 +2,8 @@ package goods.cap.app.goodsgoods.Model.Firebase;
 
 import java.util.List;
 
-
-
 public class Stars {
+    private String uid;
     private String fkey;
     private String title, user, img;
     private List<String>tags;
@@ -17,6 +16,14 @@ public class Stars {
         this.user = user;
         this.img = img;
         this.tags = tags;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getFkey() {
@@ -57,5 +64,16 @@ public class Stars {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    @Override
+    public String toString() {
+        return "Stars{" +
+                "fkey='" + fkey + '\'' +
+                ", title='" + title + '\'' +
+                ", user='" + user + '\'' +
+                ", img='" + img + '\'' +
+                ", tags=" + tags +
+                '}';
     }
 }

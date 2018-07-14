@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,8 +31,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +42,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import goods.cap.app.goodsgoods.Activity.AnotherUserActivity;
 import goods.cap.app.goodsgoods.Activity.PostDtlActivity;
-import goods.cap.app.goodsgoods.Activity.SearchActivity;
+import goods.cap.app.goodsgoods.Activity.TagActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
 import goods.cap.app.goodsgoods.R;
@@ -170,114 +171,153 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 try {
                     if (dataSnapshot.exists()) {
                         final List<String> tempList = new ArrayList<String>();
+                        HashSet<String>sets = new HashSet<String>();
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             String uid = data.child("uid").getValue(String.class);
-                            tempList.add(uid);
+                            if (uid != null && !uid.isEmpty()) {
+                                    sets.add(uid);
+                            }
                         }
-                        userRef.child(tempList.get(0)).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                final String img = dataSnapshot.child("profile_image").getValue(String.class);
-                                final String name = dataSnapshot.child("name").getValue(String.class);
-                                comTxt1.setText(name);
-                                comImg1.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg1);
-                                    }
-                                });
-                                comImg1.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(0));
-                                        startActivity(intent);
-                                    }
-                                });
+                        if(sets.size() > 0){
+                            for(String s : sets) {
+                                Collections.addAll(tempList, s);
                             }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
-                        userRef.child(tempList.get(1)).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                final String img = dataSnapshot.child("profile_image").getValue(String.class);
-                                final String name = dataSnapshot.child("name").getValue(String.class);
-                                comTxt2.setText(name);
-                                comImg2.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg2);
-                                    }
-                                });
-                                comImg2.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(1));
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
+                        }
+                        if (tempList.size() != 0) {
+                            userRef.child(tempList.get(0)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    final String img = dataSnapshot.child("profile_image").getValue(String.class);
+                                    final String name = dataSnapshot.child("name").getValue(String.class);
+                                    comTxt1.setText(name);
+                                    comImg1.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (isAdded())
+                                                Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg1);
+                                        }
+                                    });
+                                    comImg1.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (tempList.get(0).equals(auth.getCurrentUser().getUid())) {
+                                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                            } else {
+                                                Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                                intent.putExtra("uid", tempList.get(0));
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+                                }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
-                        userRef.child(tempList.get(2)).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                final String img = dataSnapshot.child("profile_image").getValue(String.class);
-                                final String name = dataSnapshot.child("name").getValue(String.class);
-                                comTxt3.setText(name);
-                                comImg3.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg3);
-                                    }
-                                });
-                                comImg3.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(2));
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
-                        userRef.child(tempList.get(3)).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                final String img = dataSnapshot.child("profile_image").getValue(String.class);
-                                final String name = dataSnapshot.child("name").getValue(String.class);
-                                comTxt4.setText(name);
-                                comImg4.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
-                                    }
-                                });
-                                comImg4.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                        intent.putExtra("uid", tempList.get(3));
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {}
-                        });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                            userRef.child(tempList.get(1)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    final String img = dataSnapshot.child("profile_image").getValue(String.class);
+                                    final String name = dataSnapshot.child("name").getValue(String.class);
+                                    comTxt2.setText(name);
+                                    comImg2.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (isAdded())
+                                                Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg2);
+                                        }
+                                    });
+                                    comImg2.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (tempList.get(1).equals(auth.getCurrentUser().getUid())) {
+                                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                            } else {
+                                                Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                                intent.putExtra("uid", tempList.get(1));
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                            userRef.child(tempList.get(2)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    final String img = dataSnapshot.child("profile_image").getValue(String.class);
+                                    final String name = dataSnapshot.child("name").getValue(String.class);
+                                    comTxt3.setText(name);
+                                    comImg3.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (isAdded())
+                                                Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg3);
+                                        }
+                                    });
+                                    comImg3.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (tempList.get(2).equals(auth.getCurrentUser().getUid())) {
+                                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                            } else {
+                                                Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                                intent.putExtra("uid", tempList.get(2));
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                            userRef.child(tempList.get(3)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    final String img = dataSnapshot.child("profile_image").getValue(String.class);
+                                    final String name = dataSnapshot.child("name").getValue(String.class);
+                                    comTxt4.setText(name);
+                                    comImg4.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (isAdded())
+                                                Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
+                                        }
+                                    });
+                                    comImg4.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (tempList.get(3).equals(auth.getCurrentUser().getUid())) {
+                                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                            } else {
+                                                Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                                intent.putExtra("uid", tempList.get(3));
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                        }
                     }
-                } catch (Exception e) {
+                } catch(Exception e){
                     e.printStackTrace();
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(logger, "error " + databaseError);
+            }
         });
     }
     private void loadPosts(){
@@ -310,12 +350,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
 
                     holder.setContext(getActivity());
 
-                    DatabaseReference dbUserRef = userRef.child(postUid);
-                    DatabaseReference dbRef = postRef.child(postKey);
-                    dbUserRef.keepSynced(true);
-                    dbRef.keepSynced(true);
-
-                    dbUserRef.addValueEventListener(new ValueEventListener() {
+                    userRef.child(postUid).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
@@ -330,7 +365,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {}
                     });
-                    dbRef.addValueEventListener(new ValueEventListener() {
+                    postRef.child(postKey).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
@@ -464,7 +499,7 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                 public void onTagClick(String tag) {
                     //start SearchActivity
                     if(tag != null){
-                        Intent intent = new Intent(context.getApplicationContext(), SearchActivity.class);
+                        Intent intent = new Intent(context.getApplicationContext(), TagActivity.class);
                         intent.putExtra("tag", tag);
                         context.startActivity(intent);
                     }

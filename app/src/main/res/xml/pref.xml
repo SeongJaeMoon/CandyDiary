@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/settings">
+        <Preference
+            android:key="prefVersion"
+            android:title="@string/pref_version"/>
+        <Preference
+            android:key="prefContact"
+            android:title="@string/pref_contact"/>
+        <SwitchPreference
+            android:key="prefAlaram"
+            android:summary="@string/pref_alaram_sub"
+            android:title="@string/pref_alaram" />
+        <Preference
+            android:key="prefNotice"
+            android:title="@string/pref_notice"/>
+        <Preference
+            android:key="prefPrivacy"
+            android:title="@string/pref_privacy"/>
+        <Preference
+            android:key="prefTerms"
+            android:title="@string/pref_terms"/>
+        <Preference
+            android:key="prefOpenSource"
+            android:title="@string/pref_opensource"/>
+    </PreferenceCategory>
+</PreferenceScreen>

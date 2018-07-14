@@ -29,12 +29,14 @@ import goods.cap.app.goodsgoods.Activity.PermissionActivity;
 import goods.cap.app.goodsgoods.Activity.PostActivity;
 import goods.cap.app.goodsgoods.Activity.SearchActivity;
 import goods.cap.app.goodsgoods.Activity.SignInActivity;
+import goods.cap.app.goodsgoods.Activity.StatActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
 import goods.cap.app.goodsgoods.Adapter.RecentAdapter;
 import goods.cap.app.goodsgoods.Fragment.ComFragment;
 import goods.cap.app.goodsgoods.Fragment.HomeFragment;
 import goods.cap.app.goodsgoods.Fragment.NoticeFragment;
 import goods.cap.app.goodsgoods.Fragment.StarFragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +46,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.net.NetworkInfo;
+import android.net.ConnectivityManager;
 
 import com.bumptech.glide.Glide;
 import com.astuetz.PagerSlidingTabStrip;
@@ -91,12 +96,20 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private static final String PACKAGE_URL_SCHEME = "package:";
-    private StarDBHelper starDBHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        final boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if(!isConnected){
+            Log.i(logger, "no-connect");
+        }
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -123,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 fab.setVisibility(View.GONE);
-                Log.i(logger,"opend");
                 setRecentAdapter();
             }
 
@@ -176,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.nav_profile: startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
                         break;
                     case R.id.nav_logout: Logout();
                         break;
                     case R.id.nav_contact:
+                        startActivity(new Intent(MainActivity.this, StatActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                 }
                 return true;
@@ -271,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setPermissionDialog();
+
+        if(StatActivity.isToast){
+            StatActivity.isToast = false;
+        }
     }
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);

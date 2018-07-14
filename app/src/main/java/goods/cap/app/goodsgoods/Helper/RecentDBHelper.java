@@ -20,7 +20,7 @@ public class RecentDBHelper {
     private static final String DATABASE_NAME = "recent.db";
     private static final int DATABASE_VERSION = 6;
     private static final String TABLE_NAME = "recentDB";
-    // recent -> 0: Diet, 1: Health
+    // recent -> 0: Diet, 1: Therapy
     private static final String COLUMN_FLAG  = "flag"; //식단, 민간약초 구분
     private static final String COLUMN_URL = "url"; //식단 이미지 경로, 약초 이미지 경로
     private static final String COLUMN_SMY = "smy"; //식단 메인이름 <-> 약초 메인이름
@@ -83,7 +83,7 @@ public class RecentDBHelper {
     }
     // 1. DB에 이미 들어있다면, 데이터를 저장하지 않는다.(데이터 확인)
     public boolean isRecentExists(String no){
-        String sql = "SELECT " + COLUMN_NO + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 3";
+        String sql = "SELECT " + COLUMN_NO + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 7";
         Cursor cursor = mDb.rawQuery(sql, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
@@ -101,14 +101,14 @@ public class RecentDBHelper {
     // 2. DB에 데이터를 저장할 때, 최신 상태를 유지하기 위해서 마지막에 저장된 3개의 데이터를 제외하곤 삭제한다.
     public void deletOlder(){
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + _ID
-                + " NOT IN (SELECT " + _ID + " FROM " + TABLE_NAME + " ORDER BY "+ _ID + " DESC LIMIT 3)";
+                + " NOT IN (SELECT " + _ID + " FROM " + TABLE_NAME + " ORDER BY "+ _ID + " DESC LIMIT 7)";
         mDb.execSQL(sql);
     }
 
     //3. DB에 저장된 데이터를 List로 반환한다.
     public List<Recent> getList(){
         String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN + "," + COLUMN_FLAG
-                + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 3";
+                + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC LIMIT 7";
         List<Recent> list = new ArrayList<Recent>();
         mDbHelper = new DatabaseHelper(context);
         mDb =  mDbHelper.getReadableDatabase();
