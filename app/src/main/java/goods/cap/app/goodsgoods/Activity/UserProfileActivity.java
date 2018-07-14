@@ -434,11 +434,11 @@ public class UserProfileActivity extends AppCompatActivity {
 //                                                Map<String, Object> recordUpdate = new HashMap<>();
 //                                                recordUpdate.put(uid, null);
 //                                                dbRef.updateChildren(recordUpdate);
-                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_LONG).show();
                                                     startActivity(new Intent(getApplicationContext(), SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                     UserProfileActivity.this.finish();
                                                 }else{
-                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.secession_delete_ok), Toast.LENGTH_LONG).show();
                                                     startActivity(new Intent(getApplicationContext(), SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                     UserProfileActivity.this.finish();
                                                 }

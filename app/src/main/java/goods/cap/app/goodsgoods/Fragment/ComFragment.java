@@ -277,37 +277,39 @@ public class ComFragment extends Fragment implements MultiSwipeRefreshLayout.OnR
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                 }
                             });
-                            userRef.child(tempList.get(3)).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    final String img = dataSnapshot.child("profile_image").getValue(String.class);
-                                    final String name = dataSnapshot.child("name").getValue(String.class);
-                                    comTxt4.setText(name);
-                                    comImg4.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (isAdded())
-                                                Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
-                                        }
-                                    });
-                                    comImg4.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            if (tempList.get(3).equals(auth.getCurrentUser().getUid())) {
-                                                startActivity(new Intent(getActivity(), UserProfileActivity.class));
-                                            } else {
-                                                Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
-                                                intent.putExtra("uid", tempList.get(3));
-                                                startActivity(intent);
+                            if(tempList.size() > 3) {
+                                userRef.child(tempList.get(3)).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        final String img = dataSnapshot.child("profile_image").getValue(String.class);
+                                        final String name = dataSnapshot.child("name").getValue(String.class);
+                                        comTxt4.setText(name);
+                                        comImg4.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (isAdded())
+                                                    Glide.with(getActivity()).setDefaultRequestOptions(ro).load(img).into(comImg4);
                                             }
-                                        }
-                                    });
-                                }
+                                        });
+                                        comImg4.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (tempList.get(3).equals(auth.getCurrentUser().getUid())) {
+                                                    startActivity(new Intent(getActivity(), UserProfileActivity.class));
+                                                } else {
+                                                    Intent intent = new Intent(getActivity(), AnotherUserActivity.class);
+                                                    intent.putExtra("uid", tempList.get(3));
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        });
+                                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                }
-                            });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    }
+                                });
+                            }
                         }
                     }
                 } catch(Exception e){

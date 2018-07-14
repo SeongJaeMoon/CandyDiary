@@ -151,9 +151,9 @@
     <string name="star_post">즐겨찾기 포스팅\n</string>
     <string name="diet_and_post">식단을 관리하고 식단을 공유해보세요!</string>
     <string name="post_list">나의 식단 글쓰기 목록</string>
-    <string name="secession_confirm">정말로 삭제하시겠습니까?</string>
-    <string name="secession_delete">회원님과 관련된 모든 정보가 삭제됩니다.</string>
-    <string name="secession_delete_ok">정상적으로 탈퇴 되었습니다. 다음에 만나요~!</string>
+    <string name="secession_confirm">정말로 탈퇴하시겠습니까?</string>
+    <string name="secession_delete">정말, 정말.. 정말로요..?</string>
+    <string name="secession_delete_ok">회원님의 일부 데이터는 30일간 임시 저장합니다. 다음에 또 만나요 :)</string>
     <!--Another User Profile-->
     <string name="diet_post_another">식단 관리 정보를 확인해보세요.</string>
     <string name="post_list_another">님의 식단 글쓰기 목록</string>

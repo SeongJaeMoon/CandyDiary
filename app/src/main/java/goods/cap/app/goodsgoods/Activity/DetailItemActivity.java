@@ -196,165 +196,179 @@ public class DetailItemActivity extends AppCompatActivity {
     }
 
     private void initData(String cntntsNo){
-        MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
-        mainHttp.setCntntsNo(cntntsNo);
-        mainHttp.getDietDtl(new DietDtlHelper() {
-            @Override
-            public void success(DietDtlResponseModel response) {
-                List<DietDtl> list = response.getBody().getItems().getDietDtlList();
-                adapter = new DetailAdapter(DetailItemActivity.this, list);
-                recyclerView.setAdapter(adapter);
-                GoodsApplication goodsApplication = GoodsApplication.getInstance();
-                int key = goodsApplication.getKey();
-                if(key < 3){
-                    calorie = list.get(0).getDietNtrsmallInfo().split(",");
-                }else{
-                    calorie = null;
+        try {
+            MainHttp mainHttp = new MainHttp(DetailItemActivity.this, getResources().getString(R.string.data_refresh_title), getResources().getString(R.string.data_refresh), Config.API_KEY2);
+            mainHttp.setCntntsNo(cntntsNo);
+            mainHttp.getDietDtl(new DietDtlHelper() {
+                @Override
+                public void success(DietDtlResponseModel response) {
+                    List<DietDtl> list = response.getBody().getItems().getDietDtlList();
+                    adapter = new DetailAdapter(DetailItemActivity.this, list);
+                    recyclerView.setAdapter(adapter);
+                    GoodsApplication goodsApplication = GoodsApplication.getInstance();
+                    int key = goodsApplication.getKey();
+                    if (key < 3) {
+                        calorie = list.get(0).getDietNtrsmallInfo().split(",");
+                    } else {
+                        calorie = null;
+                    }
                 }
-            }
-            @Override
-            public void failure(String message) {
-                Log.i(logger, "error" + message);
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error),Toast.LENGTH_SHORT).show();
-            }
-        });
+
+                @Override
+                public void failure(String message) {
+                    Log.i(logger, "error" + message);
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+            DetailItemActivity.this.finish();
+        }
     }
 
     private void initFirebase(String cntntsNo) {
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        //사용자 정보
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        final String uid = auth.getCurrentUser().getUid();
-        //좋아요
-        final DatabaseReference dbRef = db.getReference().child("likes").child(cntntsNo);
-        final DatabaseReference dbRef2 = db.getReference().child("comments").child(cntntsNo);
-        final DatabaseReference dbRef3 = db.getReference().child("shares").child(cntntsNo);
+        try {
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+            //사용자 정보
+            final FirebaseAuth auth = FirebaseAuth.getInstance();
+            final String uid = auth.getCurrentUser().getUid();
+            //좋아요
+            final DatabaseReference dbRef = db.getReference().child("likes").child(cntntsNo);
+            final DatabaseReference dbRef2 = db.getReference().child("comments").child(cntntsNo);
+            final DatabaseReference dbRef3 = db.getReference().child("shares").child(cntntsNo);
 
-        dbRef.keepSynced(true);
-        dbRef2.keepSynced(true);
-        dbRef3.keepSynced(true);
+            dbRef.keepSynced(true);
+            dbRef2.keepSynced(true);
+            dbRef3.keepSynced(true);
 
-        likeImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isLikeProcess = true;
-                dbRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(isLikeProcess) {
-                            if(dataSnapshot.hasChild(uid)) {
-                                dbRef.child(uid).removeValue();
-                                likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
-                            } else {
-                                dbRef.child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
-                                likeImg.setImageResource(R.drawable.like_orange);
+            likeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isLikeProcess = true;
+                    dbRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (isLikeProcess) {
+                                if (dataSnapshot.hasChild(uid)) {
+                                    dbRef.child(uid).removeValue();
+                                    likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
+                                } else {
+                                    dbRef.child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                    likeImg.setImageResource(R.drawable.like_orange);
+                                }
+                                isLikeProcess = false;
                             }
-                            isLikeProcess = false;
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        shareImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailItemActivity.this);
-                alertDialog.setTitle(getResources().getString(R.string.shareTitle));
-                alertDialog.setItems(new CharSequence[]{getResources().getString(R.string.facebookShare), getResources().getString(R.string.kakaoShare), getResources().getString(R.string.close)}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
-                            //마켓URL 넣기
-                            ShareLinkContent content = new ShareLinkContent.Builder()
-                                    .setContentUrl(Uri.parse(imgUrl))
-                                    .setQuote(getResources().getString(R.string.shareText))
-                                    .build();
-                            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
-                        } else if(which == 1){
-                            dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
-                            FeedTemplate params = FeedTemplate
-                                    .newBuilder(ContentObject.newBuilder(shareTitle, imgUrl,
-                                            LinkObject.newBuilder().setWebUrl("market://details?id=goods.cap.app.goodsgoods")
-                                                    .setMobileWebUrl("market://details?id=goods.cap.app.goodsgoods").build())
-                                            .setDescrption(shareText)
-                                            .build())
-                                    .setSocial(SocialObject.newBuilder().setLikeCount((int)like).setCommentCount((int)comment)
-                                            .setSharedCount(((int)share)).build())
-                                    .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                                            .setMobileWebUrl("'market://details?id=goods.cap.app.goodsgoods")
-                                            .setAndroidExecutionParams("market://details?id=goods.cap.app.goodsgoods")
-                                            .setWebUrl("'market://details?id=goods.cap.app.goodsgoods")
-                                            .build()))
-                                    .build();
-
-                            KakaoLinkService.getInstance().sendDefault(DetailItemActivity.this, params, new ResponseCallback<KakaoLinkResponse>() {
-                                @Override
-                                public void onFailure(ErrorResult errorResult) {
-                                    Logger.w(errorResult.toString());
-                                }
-                                @Override
-                                public void onSuccess(KakaoLinkResponse result) {
-
-                                }
-                            });
-                        }else{
-                            dialog.cancel();
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
-                alertDialog.create().show();
-            }
-        });
-
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(uid)) {
-                    likeImg.setImageResource(R.drawable.like_orange);
-                } else {
-                    likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    });
                 }
-                long likesCount = dataSnapshot.getChildrenCount();
-                like = likesCount;
-                likes.setText(String.valueOf(likesCount));
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            shareImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailItemActivity.this);
+                    alertDialog.setTitle(getResources().getString(R.string.shareTitle));
+                    alertDialog.setItems(new CharSequence[]{getResources().getString(R.string.facebookShare), getResources().getString(R.string.kakaoShare), getResources().getString(R.string.close)}, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                //마켓URL 넣기
+                                ShareLinkContent content = new ShareLinkContent.Builder()
+                                        .setContentUrl(Uri.parse(imgUrl))
+                                        .setQuote(getResources().getString(R.string.shareText))
+                                        .build();
+                                shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+                            } else if (which == 1) {
+                                dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
+                                FeedTemplate params = FeedTemplate
+                                        .newBuilder(ContentObject.newBuilder(shareTitle, imgUrl,
+                                                LinkObject.newBuilder().setWebUrl("market://details?id=goods.cap.app.goodsgoods")
+                                                        .setMobileWebUrl("market://details?id=goods.cap.app.goodsgoods").build())
+                                                .setDescrption(shareText)
+                                                .build())
+                                        .setSocial(SocialObject.newBuilder().setLikeCount((int) like).setCommentCount((int) comment)
+                                                .setSharedCount(((int) share)).build())
+                                        .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
+                                                .setMobileWebUrl("'market://details?id=goods.cap.app.goodsgoods")
+                                                .setAndroidExecutionParams("market://details?id=goods.cap.app.goodsgoods")
+                                                .setWebUrl("'market://details?id=goods.cap.app.goodsgoods")
+                                                .build()))
+                                        .build();
 
-            }
-        });
-        dbRef2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long commetCount = dataSnapshot.getChildrenCount();
-                comment = commetCount;
-                comments.setText(String.valueOf(commetCount));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                KakaoLinkService.getInstance().sendDefault(DetailItemActivity.this, params, new ResponseCallback<KakaoLinkResponse>() {
+                                    @Override
+                                    public void onFailure(ErrorResult errorResult) {
+                                        Logger.w(errorResult.toString());
+                                    }
 
-            }
-        });
-        dbRef3.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long sharesCount = dataSnapshot.getChildrenCount();
-                share = sharesCount;
-                shares.setText(String.valueOf(sharesCount));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    @Override
+                                    public void onSuccess(KakaoLinkResponse result) {
 
-            }
-        });
+                                    }
+                                });
+                            } else {
+                                dialog.cancel();
+                            }
+                        }
+                    });
+                    alertDialog.create().show();
+                }
+            });
+
+            dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(uid)) {
+                        likeImg.setImageResource(R.drawable.like_orange);
+                    } else {
+                        likeImg.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    }
+                    long likesCount = dataSnapshot.getChildrenCount();
+                    like = likesCount;
+                    likes.setText(String.valueOf(likesCount));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            dbRef2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    long commetCount = dataSnapshot.getChildrenCount();
+                    comment = commetCount;
+                    comments.setText(String.valueOf(commetCount));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            dbRef3.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    long sharesCount = dataSnapshot.getChildrenCount();
+                    share = sharesCount;
+                    shares.setText(String.valueOf(sharesCount));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+            DetailItemActivity.this.finish();
+        }
     }
 
     @Override

@@ -161,7 +161,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg1 != null){
                                 addImg1.setImageResource(R.drawable.ic_action_add);
-                                imgList.set(0, null);
+                                imgList.remove(0);
                             }
 
                         }
@@ -191,7 +191,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg2 != null){
                                 addImg2.setImageResource(R.drawable.ic_action_add);
-                                imgList.set(1, null);
+                                imgList.remove(1);
                             }
 
                         }
@@ -221,7 +221,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg3 != null){
                                 addImg3.setImageResource(R.drawable.ic_action_add);
-                                imgList.set(2, null);
+                                imgList.remove(2);
                             }
 
                         }
@@ -251,7 +251,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg4 != null){
                                 addImg4.setImageResource(R.drawable.ic_action_add);
-                                imgList.set(3, null);
+                                imgList.remove(3);
                             }
 
                         }
@@ -281,7 +281,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg5!= null){
                                 addImg5.setImageResource(R.drawable.ic_action_add);
-                                imgList.set(4, null);
+                                imgList.remove(4);
                             }
 
                         }
@@ -338,20 +338,25 @@ public class PostActivity extends AppCompatActivity{
             }
             int size = imgList.size();
             switch (size){
-                case 0: //rotationPic(resultUri.toString(), addImg1);
-                    addImg1.setImageURI(resultUri);
+                case 0:
+                    rotationPic(resultUri.toString(), addImg1);
+                    //addImg1.setImageURI(resultUri);
                     break;
-                case 1: //rotationPic(resultUri.toString(), addImg2);
+                case 1:
+                    rotationPic(resultUri.toString(), addImg2);
                     addImg2.setImageURI(resultUri);
                     break;
-                case 2: //rotationPic(resultUri.toString(), addImg3);
-                    addImg3.setImageURI(resultUri);
+                case 2:
+                    rotationPic(resultUri.toString(), addImg3);
+                    //addImg3.setImageURI(resultUri);
                     break;
-                case 3: //rotationPic(resultUri.toString(), addImg4);
-                    addImg4.setImageURI(resultUri);
+                case 3:
+                    rotationPic(resultUri.toString(), addImg4);
+                    //addImg4.setImageURI(resultUri);
                     break;
-                case 4: //rotationPic(resultUri.toString(), addImg5);
-                    addImg5.setImageURI(resultUri);
+                case 4:
+                    rotationPic(resultUri.toString(), addImg5);
+                    //addImg5.setImageURI(resultUri);
                     break;
             }
             imgList.add(resultUri);

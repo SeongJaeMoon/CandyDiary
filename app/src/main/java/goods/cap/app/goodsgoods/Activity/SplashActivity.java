@@ -32,17 +32,17 @@ public class SplashActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 SplashActivity.this.finish();
-//                setAds();
+                setAds();
             }
         }, 3000);
     }
+    //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+    //.addTestDevice("E44604670F4699F07069260DD700FEA7")
     //Admob 전면 광고
     public void setAds(){
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ads_id));
         interstitialAd.loadAd(new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("E44604670F4699F07069260DD700FEA7")
                 .build());
         interstitialAd.setAdListener(new AdListener() {
             @Override

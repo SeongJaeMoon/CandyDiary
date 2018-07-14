@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
@@ -74,45 +75,56 @@ public class GridViewAdapter extends ArrayAdapter{
             holder = (ViewHolder) row.getTag();
         }
         if (data.get(position) instanceof Diet) {
-            Diet diet = (Diet)data.get(position);
-            holder.text.setText(diet.getCntntsSj());
+            try {
+                Diet diet = (Diet) data.get(position);
+                holder.text.setText(diet.getCntntsSj());
 
-            String oldPath = diet.getRtnImageDc();
-            String newPath = diet.getRtnStreFileNm();
+                String oldPath = diet.getRtnImageDc();
+                String newPath = diet.getRtnStreFileNm();
 
-            RequestOptions ro = new RequestOptions()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .format(DecodeFormat.PREFER_ARGB_8888);
-
-            Glide.with(context)
-                    .setDefaultRequestOptions(ro)
-                    .load(Config.getAbUrl(oldPath, newPath))
-                    .into(holder.image);
-
-        }else if(data.get(position) instanceof Therapy){
-            Therapy therapy = (Therapy)data.get(position);
-            holder.text.setText(therapy.getCntntsSj());
-
-            RequestOptions ro = new RequestOptions()
+                RequestOptions ro = new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .format(DecodeFormat.PREFER_ARGB_8888);
 
-            Glide.with(context)
+                Glide.with(context)
+                        .setDefaultRequestOptions(ro)
+                        .load(Config.getAbUrl(oldPath, newPath))
+                        .into(holder.image);
+            }catch (Exception e){
+                Toast.makeText(context, context.getResources().getString(R.string.data_error),Toast.LENGTH_SHORT).show();
+            }
+        }else if(data.get(position) instanceof Therapy){
+            try {
+                Therapy therapy = (Therapy) data.get(position);
+                holder.text.setText(therapy.getCntntsSj());
+
+                RequestOptions ro = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .format(DecodeFormat.PREFER_ARGB_8888);
+
+                Glide.with(context)
                         .setDefaultRequestOptions(ro)
                         .load(therapy.getImgUrl())
                         .into(holder.image);
+            }catch (Exception e){
+                Toast.makeText(context, context.getResources().getString(R.string.data_error),Toast.LENGTH_SHORT).show();
+            }
         }else if(data.get(position) instanceof Recent){
-            Recent recent = (Recent)data.get(position);
-            holder.text.setText(recent.getCntnt());
+            try {
+                Recent recent = (Recent) data.get(position);
+                holder.text.setText(recent.getCntnt());
 
-            RequestOptions ro = new RequestOptions()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .format(DecodeFormat.PREFER_ARGB_8888);
+                RequestOptions ro = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .format(DecodeFormat.PREFER_ARGB_8888);
 
-            Glide.with(context)
-                    .setDefaultRequestOptions(ro)
-                    .load(recent.getImgUrl())
-                    .into(holder.image);
+                Glide.with(context)
+                        .setDefaultRequestOptions(ro)
+                        .load(recent.getImgUrl())
+                        .into(holder.image);
+            }catch (Exception e){
+                Toast.makeText(context, context.getResources().getString(R.string.data_error),Toast.LENGTH_SHORT).show();
+            }
         }
         return row;
     }
