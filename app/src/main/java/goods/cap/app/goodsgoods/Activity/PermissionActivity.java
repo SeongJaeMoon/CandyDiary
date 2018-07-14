@@ -1,6 +1,8 @@
 package goods.cap.app.goodsgoods.Activity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,12 +39,15 @@ public class PermissionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //이용 약관 보기 연결
+                startActivity(new Intent(getApplicationContext(), PrivacyActivity.class).putExtra("privacy", 0));
             }
         });
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //개인정보 처리 방침 연결
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://foodreet-e783e.firebaseapp.com/"));
+                startActivity(intent);
             }
         });
         okBtn.setOnClickListener(new View.OnClickListener() {

@@ -52,7 +52,7 @@
         android:padding="15dp"
         android:textColorHint="@color/cardview_shadow_start_color"
         android:scrollbars="vertical"
-        android:textSize="15sp"/>
+        android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/startEdit"

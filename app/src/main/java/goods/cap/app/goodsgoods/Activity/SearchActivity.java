@@ -15,8 +15,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -52,10 +50,10 @@ import me.gujun.android.taggroup.TagGroup;
  * */
 public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagClickListener {
 
+    //@BindView(R.id.rvRecommend)RecyclerView rvRecommend; //추천 RecyclerView
+    @BindView(R.id.search_view)MaterialSearchView searchView;
     @BindView(R.id.tag_group)TagGroup tagGroup;
     @BindView(R.id.rvSearch)RecyclerView rvSearch; //검색 RecyclerView
-    @BindView(R.id.rvRecommend)RecyclerView rvRecommend; //추천 RecyclerView
-    @BindView(R.id.search_view)MaterialSearchView searchView;
     @BindView(R.id.toolbar)Toolbar toolbar;
     private final String logger = SearchActivity.class.getSimpleName();
     private DatabaseReference postRef;
@@ -67,7 +65,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
     private SearchAdapter searchAdapter;
     private ProgressDialog progressDialog;
     private SearchDBHelper searchDBHelper;
-    private String[] searchDB;
+//    private String[] searchDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +81,7 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         userRef = FirebaseDatabase.getInstance().getReference().child("users");
         userRef.keepSynced(true);
 
-        rvRecommend.setLayoutManager(new LinearLayoutManager(this));
+//        rvRecommend.setLayoutManager(new LinearLayoutManager(this));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -138,17 +136,17 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 
         searchDBHelper = new SearchDBHelper(SearchActivity.this);
 
-        searchDB = getSearchList();
-        if(searchDB != null){
-            searchView.setSuggestions(searchDB);
-            searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.i(logger, "clcik-Search => " + position + "seachDB" + searchDB[position]);
-                    searching(searchDB[position]);
-                }
-            });
-        }
+//        searchDB = getSearchList();
+//        if(searchDB != null){
+//            searchView.setSuggestions(searchDB);
+//            searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    Log.i(logger, "clcik-Search => " + position + "seachDB" + searchDB[position]);
+//                    searching(searchDB[position]);
+//                }
+//            });
+//        }
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -174,16 +172,16 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
             }
             @Override
             public void onSearchViewClosed() {
-                searchDB = getSearchList();
-                if(searchDB != null){
-                    searchView.setSuggestions(searchDB);
-                    searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Log.i(logger, "clcik-Search => " + position);
-                        }
-                    });
-                }
+//                searchDB = getSearchList();
+//                if(searchDB != null){
+//                    searchView.setSuggestions(searchDB);
+//                    searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                            Log.i(logger, "clcik-Search => " + position);
+//                        }
+//                    });
+//                }
             }
         });
 
@@ -233,13 +231,13 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         }
     }
 
-    // 검색 추천
-    static class SearchListHolder extends RecyclerView.ViewHolder{
-        public SearchListHolder(View itemView) {
-            super(itemView);
-        }
-
-    }
+//    검색 추천
+//    static class SearchListHolder extends RecyclerView.ViewHolder{
+//        public SearchListHolder(View itemView) {
+//            super(itemView);
+//        }
+//
+//    }
 
     private void showProgressDialog() {
         if (progressDialog == null) {

@@ -63,7 +63,7 @@ public class PostDtlActivity extends AppCompatActivity {
     private boolean isLikeStarProcess = false;
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
-
+    private String isAnotherUid;
     private String shareTitle = "";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm aa", Locale.KOREA);
     private boolean isMyPost = false;
@@ -123,11 +123,13 @@ public class PostDtlActivity extends AppCompatActivity {
                             }
                               setHeadLayout(String.format("%s님이 작성한 글", userName));
                             }
-                            String childUid = dataSnapshot.child("uid").getValue(String.class);
-                            if(childUid.equals(uid)){
-                                starImg.setVisibility(View.GONE);
-                                shareNm.setVisibility(View.GONE);
-                                isMyPost = true;
+                            isAnotherUid = dataSnapshot.child("uid").getValue(String.class);
+                            if(isAnotherUid != null) {
+                                if (isAnotherUid.equals(uid)) {
+                                    shareImg.setVisibility(View.GONE);
+                                    shareNm.setVisibility(View.GONE);
+                                    isMyPost = true;
+                                }
                             }
                         }
                     }catch (Exception e){
@@ -162,10 +164,22 @@ public class PostDtlActivity extends AppCompatActivity {
                 @Override
                 public void onError(FacebookException error) { }
             });
-
+            if(tag_cn!=null){
+                tag_cn.setOnTagClickListener(new TagGroup.OnTagClickListener() {
+                    @Override
+                    public void onTagClick(String tag) {
+                        //start SearchActivity
+                        if(tag != null){
+                            Intent intent = new Intent(getApplicationContext(), TagActivity.class);
+                            intent.putExtra("tag", tag);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
         }
     }
-    private void initFirebase(String postKey){
+    private void initFirebase(final String postKey){
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         //사용자 정보
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -219,7 +233,9 @@ public class PostDtlActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton(getResources().getString(R.string.declaration_post), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        setDeclaration(postKey);
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.declaration_success), Toast.LENGTH_LONG).show();
+                        //신고접수
                     }
                 });
                 alertDialog.create().show();
@@ -294,11 +310,32 @@ public class PostDtlActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setDeclaration(String postUid){
+        try {
+            final DatabaseReference deRef = FirebaseDatabase.getInstance().getReference().child("declarate").push();
+            deRef.child("pid").setValue(postUid);
+            deRef.child("time").setValue(sdf.format(new Date(System.currentTimeMillis())));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void setHeadLayout(String title){
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(false);
         toolbar.setTitle(title);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isMyPost){
+                    Intent intent = new Intent(getApplicationContext(), AnotherUserActivity.class);
+                    intent.putExtra("uid", isAnotherUid);
+                    startActivity(intent);
+                }
+            }
+        });
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

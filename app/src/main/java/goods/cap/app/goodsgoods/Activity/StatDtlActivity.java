@@ -2,16 +2,18 @@ package goods.cap.app.goodsgoods.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.RadarData;
@@ -24,11 +26,14 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import goods.cap.app.goodsgoods.Model.Diet.Diet;
+import butterknife.OnClick;
+import goods.cap.app.goodsgoods.Helper.StatDBHelper;
+import goods.cap.app.goodsgoods.Model.Firebase.Calorie;
 import goods.cap.app.goodsgoods.Model.Statistic;
 import goods.cap.app.goodsgoods.R;
 import goods.cap.app.goodsgoods.Util.PostImageLoader;
@@ -37,16 +42,15 @@ import ss.com.bannerslider.Slider;
 
 public class StatDtlActivity extends AppCompatActivity {
     @BindView(R.id.chart) RadarChart mChart;
-    @BindView(R.id.wallpaper)Slider slider;
     @BindView(R.id.close_dialog)Button button;
     @BindView(R.id.total_kal)TextView kalView;
+    @BindView(R.id.image_dialog)Button imgButton;
+    private String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat_dtl);
         ButterKnife.bind(this);
-
-        Slider.init(new PostImageLoader(this));
 
         mChart.setBackgroundColor(Color.rgb(60, 65, 82));
         mChart.getDescription().setEnabled(false);
@@ -55,122 +59,154 @@ public class StatDtlActivity extends AppCompatActivity {
         mChart.setWebLineWidthInner(1f);
         mChart.setWebColorInner(Color.LTGRAY);
         mChart.setWebAlpha(100);
+
         Intent intent = getIntent();
-        if(intent != null){
-            Gson gson = new Gson();
-            final String jsonData = intent.getStringExtra("statistic");
-            final Statistic statistic = gson.fromJson(jsonData, Statistic.class);
+        if(intent != null) {
+            date = intent.getStringExtra("date");
+            StatDBHelper statDBHelper = new StatDBHelper(this);
+            statDBHelper.open();
+            List<Calorie> calories = statDBHelper.getAllCalorie(date);
+            if (calories != null) {
+                try {
+                    double totalKal = 0;
 
-            String imgB = statistic.getImgbrkfast();
-            String imgL = statistic.getImglunch();
-            String imgD = statistic.getImgdinner();
-            String imgS = statistic.getImgsnack();
-            String imgDe = statistic.getImgdinner();
+                    ArrayList<IRadarDataSet> sets = new ArrayList<IRadarDataSet>();
 
-            List<String>imgList = new ArrayList<>();
-            if(imgB != null) imgList.add(imgB);
-            if(imgL != null) imgList.add(imgL);
-            if(imgD != null) imgList.add(imgD);
-            if(imgS != null) imgList.add(imgS);
-            if (imgDe != null) imgList.add(imgDe);
+                    for (Calorie calorie : calories) {
+                        ArrayList<RadarEntry> entries = new ArrayList<RadarEntry>();
+                        Log.e("cals", "cal: " + calorie.toString());
+                        if(calorie.getCho_mg() == null){
+                            entries.add(new RadarEntry(0));
+                        }else{
+                            if(isNum(calorie.getCho_mg())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getCho_mg().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getDan_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getDan_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getDan_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getDang_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getDang_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getDang_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getJi_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getJi_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getJi_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getNa_mg() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getNa_mg())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getNa_mg().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getPho_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getPho_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getPho_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getTan_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getTan_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getTan_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        if(calorie.getTrans_g() == null){
+                            entries.add(new RadarEntry(0));
+                        }else {
+                            if(isNum(calorie.getTrans_g())){
+                                entries.add(new RadarEntry(Float.parseFloat(calorie.getTrans_g().toString())));
+                            }else{
+                                entries.add(new RadarEntry(0));
+                            }
+                        }
+                        totalKal += calorie.getKal();
+                        sets.add(setRadarData(entries, String.format("종류:(%s)", calorie.getCateorgy())));
+                    }
 
-            final PostMainSlider postMainSlider = new PostMainSlider(imgList);
-            slider.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    slider.setAdapter(postMainSlider);
-                    slider.setSelectedSlide(0);
-                    slider.setInterval(5000);
+                    kalView.setText(String.format(Locale.KOREA, "총 섭취 칼로리:%.2fkal(위 차트는 비율을 나타냅니다.)", totalKal));
+
+                    XAxis xAxis = mChart.getXAxis();
+                    xAxis.setTextSize(14f);
+                    xAxis.setYOffset(0f);
+                    xAxis.setXOffset(0f);
+
+                    xAxis.setValueFormatter(new IAxisValueFormatter() {
+                        private String[] mActivities = new String[]{getResources().getString(R.string.cho_mg),
+                                getResources().getString(R.string.dan_g),
+                                getResources().getString(R.string.dang_g),
+                                getResources().getString(R.string.ji_g),
+                                getResources().getString(R.string.na_mg),
+                                getResources().getString(R.string.pho_g),
+                                getResources().getString(R.string.tan_g),
+                                getResources().getString(R.string.trans_g)
+                        };
+                        @Override
+                        public String getFormattedValue(float value, AxisBase axis) {
+                            return mActivities[(int) value % mActivities.length];
+                        }
+                    });
+
+                    xAxis.setTextColor(Color.WHITE);
+
+                    YAxis yAxis = mChart.getYAxis();
+                    yAxis.setLabelCount(8, false);
+                    yAxis.setTextSize(10f);
+                    yAxis.setAxisMinimum(0f);
+                    yAxis.setAxisMaximum(80f);
+                    yAxis.setDrawLabels(false);
+
+                    Legend l = mChart.getLegend();
+                    l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+                    l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+                    l.setOrientation(Legend.LegendOrientation.VERTICAL);
+                    l.setDrawInside(false);
+                    l.setXEntrySpace(3f);
+                    l.setYEntrySpace(3f);
+                    l.setTextColor(Color.WHITE);
+
+                    RadarData data = new RadarData(sets);
+                    data.setValueTextSize(10f);
+                    data.setDrawValues(false);
+                    data.setValueTextColor(Color.WHITE);
+
+                    mChart.setData(data);
+                    mChart.invalidate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    statDBHelper.close();
                 }
-            }, 1500);
-
-            String brk = getNumber(statistic.getBrkfast());
-            String lch = getNumber(statistic.getLunch());
-            String din = getNumber(statistic.getDinner());
-            String snk = getNumber(statistic.getSnack());
-            String des = getNumber(statistic.getDessert());
-
-            double totalKal = 0;
-
-            ArrayList<RadarEntry> entries = new ArrayList<RadarEntry>();
-            if(brk != null) {
-                totalKal += Float.parseFloat(brk);
-                entries.add(new RadarEntry(Float.parseFloat(brk)));
             }
-            if(lch != null) {
-                totalKal += Float.parseFloat(lch);
-                entries.add(new RadarEntry(Float.parseFloat(lch)));
-            }
-            if(din != null) {
-                totalKal += Float.parseFloat(din);
-                entries.add(new RadarEntry(Float.parseFloat(din)));
-            }
-            if(snk != null) {
-                totalKal += Float.parseFloat(snk);
-                entries.add(new RadarEntry(Float.parseFloat(snk)));
-            }
-            if (des != null) {
-                totalKal += Float.parseFloat(des);
-                entries.add(new RadarEntry(Float.parseFloat(des)));
-            }
-
-            kalView.setText(String.format(Locale.KOREA, "총 섭취 칼로리:%fkal", totalKal));
-
-            XAxis xAxis = mChart.getXAxis();
-            xAxis.setTextSize(9f);
-            xAxis.setYOffset(0f);
-            xAxis.setXOffset(0f);
-            xAxis.setValueFormatter(new IAxisValueFormatter() {
-
-                private String[] mActivities = new String[]{getResources().getString(R.string.morining),
-                        getResources().getString(R.string.lunch),
-                        getResources().getString(R.string.dinner),
-                        getResources().getString(R.string.snack),
-                        getResources().getString(R.string.dessert)};
-
-                @Override
-                public String getFormattedValue(float value, AxisBase axis) {
-                    return mActivities[(int) value % mActivities.length];
-                }
-            });
-
-            xAxis.setTextColor(Color.WHITE);
-
-            YAxis yAxis = mChart.getYAxis();
-            yAxis.setLabelCount(5, false);
-            yAxis.setTextSize(9f);
-            yAxis.setAxisMinimum(0f);
-            yAxis.setAxisMaximum(80f);
-            yAxis.setDrawLabels(false);
-
-            Legend l = mChart.getLegend();
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-            l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-            l.setDrawInside(false);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(5f);
-            l.setTextColor(Color.WHITE);
-
-            RadarDataSet set = new RadarDataSet(entries, "");
-            set.setColor(Color.rgb(103, 110, 129));
-            set.setFillColor(Color.rgb(103, 110, 129));
-            set.setDrawFilled(true);
-            set.setFillAlpha(180);
-            set.setLineWidth(2f);
-            set.setDrawHighlightCircleEnabled(true);
-            set.setDrawHighlightIndicators(false);
-
-            ArrayList<IRadarDataSet> sets = new ArrayList<IRadarDataSet>();
-            sets.add(set);
-
-            RadarData data = new RadarData(sets);
-            data.setValueTextSize(8f);
-            data.setDrawValues(false);
-            data.setValueTextColor(Color.WHITE);
-
-            mChart.setData(data);
-            mChart.invalidate();
+        }else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +214,32 @@ public class StatDtlActivity extends AppCompatActivity {
                 StatDtlActivity.this.finish();
             }
         });
+    }
+
+    private RadarDataSet setRadarData(ArrayList<RadarEntry> list, String label){
+        RadarDataSet set1 = new RadarDataSet(list, label);
+        Random random = new Random();
+        set1.setColor(Color.rgb(random.nextInt(255) + 1,random.nextInt(255) + 1, random.nextInt(255) + 1));
+        set1.setFillColor(Color.rgb(random.nextInt(255) + 1,random.nextInt(255) + 1, random.nextInt(255) + 1));
+        set1.setDrawFilled(true);
+        set1.setFillAlpha(180);
+        set1.setLineWidth(2f);
+        set1.setDrawHighlightCircleEnabled(true);
+        set1.setDrawHighlightIndicators(false);
+        return set1;
+    }
+
+    private boolean isNum(Object value){
+        if(value instanceof String) {
+            String s = (String)value;
+            return Pattern.matches("^[0-9\\.]*$", s);
+        }else{
+            return false;
+        }
+    }
+    @OnClick(R.id.image_dialog)
+    public void clickButton(){
+        startActivity(new Intent(StatDtlActivity.this, StatImageActivity.class).putExtra("date", date));
     }
     @Override
     protected void onStart() {
@@ -203,21 +265,28 @@ public class StatDtlActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
     }
-
-    private String getNumber(String str){
-        if(str == null){
-            return null;
-        }
-        String temp = "";
-        StringBuilder num = new StringBuilder();
-        for( int i = 0; i < str.length(); i++ ) {
-            temp = str.substring(i, i + 1);
-            if(isNum(temp.charAt(0)+"")){
-                num.append(temp);
-            }
-        }
-        return num.toString();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(StatDtlActivity.this, StatActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
-    private boolean isNum(String str) { return Pattern.matches("^[0-9]*$", str); }
+//    private String getNumber(String str){
+//        if(str == null){
+//            return null;
+//        }
+//        String temp = "";
+//        StringBuilder num = new StringBuilder();
+//        for( int i = 0; i < str.length(); i++ ) {
+//            temp = str.substring(i, i + 1);
+//            if(isNum(temp.charAt(0)+"")){
+//                num.append(temp);
+//            }
+//        }
+//        return num.toString();
+//    }
+//
+//    private boolean isNum(String str) { return Pattern.matches("^[0-9]*$", str); }
 }

@@ -188,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.nav_profile: startActivity(new Intent(MainActivity.this, UserProfileActivity.class));
                         break;
                     case R.id.nav_logout: Logout();
                         break;
-                    case R.id.nav_contact: startActivity(new Intent(MainActivity.this, StatActivity.class));
+                    case R.id.nav_contact:
+                        startActivity(new Intent(MainActivity.this, StatActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                 }
                 return true;
@@ -283,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setPermissionDialog();
+
+        if(StatActivity.isToast){
+            StatActivity.isToast = false;
+        }
     }
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);

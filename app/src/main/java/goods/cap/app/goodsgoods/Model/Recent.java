@@ -17,22 +17,36 @@ public class Recent {
         this.flag = flag;
     }
 
-    public String getCtnno() {
-        return ctnno;
+    public void setCtnno(String ctnno) {
+        this.ctnno = ctnno;
     }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setCntnt(String cntnt) {
+        this.cntnt = cntnt;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getCtnno() { return ctnno; }
     public String getImgUrl() {
         return imgUrl;
     }
-
     public String getSummary() {
         return summary;
     }
-
     public String getCntnt() {
         return cntnt;
     }
-
     public int getFlag() {
         return flag;
     }

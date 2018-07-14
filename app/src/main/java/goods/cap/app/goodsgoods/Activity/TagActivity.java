@@ -1,9 +1,7 @@
 package goods.cap.app.goodsgoods.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,19 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,8 +30,6 @@ import butterknife.ButterKnife;
 import goods.cap.app.goodsgoods.Adapter.StarPostAdapter;
 import goods.cap.app.goodsgoods.Model.Firebase.Stars;
 import goods.cap.app.goodsgoods.R;
-import goods.cap.app.goodsgoods.Util.Search;
-import me.gujun.android.taggroup.TagGroup;
 
 public class TagActivity extends AppCompatActivity {
     @BindView(R.id.rvSearch)RecyclerView rvSearch;

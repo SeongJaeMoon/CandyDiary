@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
 import goods.cap.app.goodsgoods.Activity.DetailTherapyActivity;
-import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
+import goods.cap.app.goodsgoods.Adapter.GridViewAdapter;
 import goods.cap.app.goodsgoods.Helper.StarDBHelper;
 import goods.cap.app.goodsgoods.Model.Diet.Diet;
 import goods.cap.app.goodsgoods.Model.Recent;
@@ -32,7 +32,7 @@ public class StarFragment extends Fragment implements MultiSwipeRefreshLayout.On
     public static final String ARG_PAGE = "ARG_PAGE";
     private List<Object> allList = new ArrayList<Object>();
     private MultiSwipeRefreshLayout swipeRefreshLayout;
-    private GirdViewAdapter gridViewAdapter;
+    private GridViewAdapter gridViewAdapter;
     private TextView mainText;
     private ListView gridView;
     private StarDBHelper starDBHelper;
@@ -98,7 +98,7 @@ public class StarFragment extends Fragment implements MultiSwipeRefreshLayout.On
             String stars = gson.toJson(ret);
             Recent[] temp = gson.fromJson(stars, Recent[].class);
             allList = new ArrayList<Object>(Arrays.asList(temp));
-            gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+            gridViewAdapter = new GridViewAdapter(getActivity(), allList, R.layout.grid_single);
             gridView.setAdapter(gridViewAdapter);
             mainText.setText(getResources().getString(R.string.star_data));
         }

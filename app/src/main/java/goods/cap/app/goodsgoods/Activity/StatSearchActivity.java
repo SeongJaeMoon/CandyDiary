@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import goods.cap.app.goodsgoods.GoodsApplication;
+import goods.cap.app.goodsgoods.Model.Firebase.Calorie;
 import goods.cap.app.goodsgoods.R;
 
 public class StatSearchActivity extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class StatSearchActivity extends AppCompatActivity {
     @BindView(R.id.list_view)ListView listView;
     private ProgressDialog progressDialog;
     private List<String> searchList = new ArrayList<String>();
+    private List<Calorie>calorieList = new ArrayList<Calorie>();
     private ArrayAdapter<String> arrayAdapter;
     private DatabaseReference calRef;
 
@@ -91,8 +93,7 @@ public class StatSearchActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("StatSearch ", "s-click: " + searchList.get(position));
-                setResult(RESULT_OK, new Intent().putExtra("search", searchList.get(position)));
+                setResult(RESULT_OK, new Intent().putExtra("search", searchList.get(position)).putExtra("calorie", new Gson().toJson(calorieList.get(position))));
                 StatSearchActivity.this.finish();
             }
         });
@@ -109,7 +110,19 @@ public class StatSearchActivity extends AppCompatActivity {
                         if(name != null) {
                             try {
                                 if (name.contains(text)) {
+                                    Calorie calorie = new Calorie();
+                                    calorie.setCateorgy(datas.child("category").getValue(String.class));
+                                    calorie.setCho_mg(datas.child("chol_mg").getValue());
+                                    calorie.setDan_g(datas.child("dan_g").getValue());
+                                    calorie.setDang_g(datas.child("dang_g").getValue());
+                                    calorie.setJi_g(datas.child("ji_g").getValue());
+                                    calorie.setNa_mg(datas.child("na_mg").getValue());
+                                    calorie.setPho_g(datas.child("pho_mg").getValue());
+                                    calorie.setTan_g(datas.child("tan_g").getValue());
+                                    calorie.setTrans_g(datas.child("trans_g").getValue());
                                     double kal = datas.child("kal").getValue(Double.class);
+                                    calorie.setKal(kal);
+                                    calorieList.add(calorie);
                                     String result = String.format(Locale.KOREA, "%s(%.2fkal)", name, kal);
                                     searchList.add(result);
                                     arrayAdapter.notifyDataSetChanged();
@@ -128,7 +141,6 @@ public class StatSearchActivity extends AppCompatActivity {
             }
         });
     }
-
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(StatSearchActivity.this);

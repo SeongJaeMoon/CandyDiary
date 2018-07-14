@@ -28,7 +28,7 @@ import goods.cap.app.goodsgoods.API.Config;
 import goods.cap.app.goodsgoods.API.MainHttp;
 import goods.cap.app.goodsgoods.Activity.DetailItemActivity;
 import goods.cap.app.goodsgoods.Activity.DetailTherapyActivity;
-import goods.cap.app.goodsgoods.Adapter.GirdViewAdapter;
+import goods.cap.app.goodsgoods.Adapter.GridViewAdapter;
 import goods.cap.app.goodsgoods.GoodsApplication;
 import goods.cap.app.goodsgoods.Helper.DietHelper;
 import goods.cap.app.goodsgoods.Helper.TherapyHelper;
@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
     private ListView gridView;
     private List<Object> allList = new ArrayList<Object>();
     private MultiSwipeRefreshLayout swipeRefreshLayout;
-    private GirdViewAdapter gridViewAdapter;
+    private GridViewAdapter gridViewAdapter;
     private SharedPreferences sharedPreferences;
     private boolean lastitemVisibleFlag;
     public static int limitCount = Config.limitCount[1]; //limitCount
@@ -192,7 +192,7 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
                         gridViewAdapter.refreshDiet(diets);
                     } else{
                         allList.addAll(diets);
-                        gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                        gridViewAdapter = new GridViewAdapter(getActivity(), allList, R.layout.grid_single);
                         gridView.setAdapter(gridViewAdapter);
                     }
                     mainText.setText(mainTitle);
@@ -332,13 +332,13 @@ public class HomeFragment extends Fragment implements MultiSwipeRefreshLayout.On
             if (changeView != 11){
                 Diet[] diets = gson.fromJson(json, Diet[].class);
                 allList = new ArrayList<Object>(Arrays.asList(diets));
-                gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                gridViewAdapter = new GridViewAdapter(getActivity(), allList, R.layout.grid_single);
                 gridView.setAdapter(gridViewAdapter);
                 mainText.setText(Config.tabList[key]); //dietTitle
             }else{
                 Therapy[] therapies = gson.fromJson(json, Therapy[].class);
                 allList = new ArrayList<Object>(Arrays.asList(therapies));
-                gridViewAdapter = new GirdViewAdapter(getActivity(), allList, R.layout.grid_single);
+                gridViewAdapter = new GridViewAdapter(getActivity(), allList, R.layout.grid_single);
                 gridView.setAdapter(gridViewAdapter);
                 mainText.setText(getResources().getString(R.string.main_therapy));
             }

@@ -10,14 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.desai.vatsal.mydynamiccalendar.EventModel;
 import com.desai.vatsal.mydynamiccalendar.GetEventListListener;
 import com.desai.vatsal.mydynamiccalendar.MyDynamicCalendar;
 import com.desai.vatsal.mydynamiccalendar.OnDateClickListener;
-import com.desai.vatsal.mydynamiccalendar.OnEventClickListener;
-import com.desai.vatsal.mydynamiccalendar.OnWeekDayViewClickListener;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,11 +32,12 @@ import goods.cap.app.goodsgoods.R;
 public class StatActivity extends AppCompatActivity {
     @BindView(R.id.myCalendar)MyDynamicCalendar myCalendar;
     @BindView(R.id.my_toolbar)Toolbar toolbar;
-    private String logger = StatActivity.class.getSimpleName();
+    private final static String logger = StatActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
     private StatDBHelper statDBHelper;
     private List<Statistic> statisticList;
     private SimpleDateFormat sdfDayMonthYear = new SimpleDateFormat("dd-MM-yyyy", Locale.KOREA);
+    public static boolean isToast = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,36 +55,12 @@ public class StatActivity extends AppCompatActivity {
             if(statisticList != null && statisticList.size() > 0){
                 showProgressDialog();
                 for(Statistic s : statisticList){
-                    String with = "";
-                    if(s.getBrkfast() != null){
-                        if(s.getWhobrkfast() != null){
-                            with = s.getWhobrkfast();
-                        }
-                        myCalendar.addEvent(s.getDate(), s.getBrkstrtime(), s.getBrkendtime(), String.format("%s(%s님과 함께)",s.getBrkfast(), with));
-                    }
-                    if(s.getLunch() != null){
-                        if(s.getWholunch() != null){
-                            with = s.getWhobrkfast();
-                        }
-                        myCalendar.addEvent(s.getDate(), s.getLchstrtime(), s.getLchendtime(), String.format("%s(%s님과 함께)", s.getLunch(), with));
-                    }
-                    if(s.getDinner() != null){
-                        if(s.getWhodinner() != null){
-                            with = s.getWhodinner();
-                        }
-                        myCalendar.addEvent(s.getDate(), s.getDinstrtime(), s.getDinendtime(), String.format("%s(%s님과 함께)", s.getDinner(), with));
-                    }
-                    if(s.getSnack() != null){
-                        if(s.getWhosnack() != null){
-                            with = s.getWhosnack();
-                        }
-                        myCalendar.addEvent(s.getDate(), s.getSnkstrtime(), s.getSnkendtime(), String.format("%s(%s님과 함께)", s.getSnack(), with));
-                    }
-                    if(s.getDessert() != null){
-                        if(s.getWhodessert() != null){
-                            with = s.getWhodessert();
-                        }
-                        myCalendar.addEvent(s.getDate(), s.getDesstrtime(), s.getDesendtime(), String.format("%s(%s님과 함께)", s.getDessert(), with));
+                    Log.e(logger, s.toString());
+                    String with = s.getWhodiet();
+                    if(with != null && !with.equals("")){
+                        myCalendar.addEvent(s.getDietdate(), s.getStrtime(), s.getEndtime(), String.format("%s(%s님과 함께)", s.getNames(), s.getWhodiet()));
+                    }else{
+                        myCalendar.addEvent(s.getDietdate(), s.getStrtime(), s.getEndtime(), String.format("%s", s.getNames()));
                     }
                 }
             }
@@ -105,20 +80,22 @@ public class StatActivity extends AppCompatActivity {
             @Override
             public void onLongClick(Date date) {
                 Log.w(logger, String.valueOf(date));
-                if(statisticList != null && statisticList.size() > 0){
-                    for(Statistic statistic : statisticList){
-                        if(statistic.getDate().equals(sdfDayMonthYear.format(date))){
-                            Intent intent = new Intent(StatActivity.this, StatDtlActivity.class);
-                            Gson gson = new Gson();
-                            intent.putExtra("statistic", gson.toJson(statistic));
-                            startActivity(intent);
-                        }
+                try {
+                    statDBHelper.open();
+                    if(statDBHelper.getALLStatistic(sdfDayMonthYear.format(date)) != null) {
+                        Intent intent = new Intent(StatActivity.this, StatDtlActivity.class);
+                        intent.putExtra("date", sdfDayMonthYear.format(date));
+                        startActivity(intent);
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    statDBHelper.close();
                 }
             }
         });
 
-        //myCalendar.addEvent("5-10-2016", "8:00", "8:15", "Today Event 1");
+        //myCalendar.addEvent("5-07-2018", "8:00", "8:15", "Today Event 1");
         //myCalendar.updateEvent(0, "5-10-2016", "8:00", "8:15", "Today Event 111111");
         //myCalendar.deleteEvent(2);
         //myCalendar.deleteAllEvent();
@@ -126,9 +103,9 @@ public class StatActivity extends AppCompatActivity {
         myCalendar.getEventList(new GetEventListListener() {
             @Override
             public void eventList(ArrayList<EventModel> eventList) {
-                Log.e("tag", "eventList.size():-" + eventList.size());
+                Log.e("tag", "eventList.size(): " + eventList.size());
                 for (int i = 0; i < eventList.size(); i++) {
-                    Log.e("tag", "eventList.getStrName:-" + eventList.get(i).getStrName());
+                    Log.e("tag", "eventList.getStrName: " + eventList.get(i).getStrName());
                 }
             }
         });
@@ -162,7 +139,7 @@ public class StatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        StatActivity.this.finish();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,9 +155,6 @@ public class StatActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.action_month:
                     this.showMonthViewWithBelowEvents();
-                    return true;
-                case R.id.action_week:
-                    this.showWeekView();
                     return true;
                 case R.id.action_day:
                     this.showDayView();
@@ -200,7 +174,6 @@ public class StatActivity extends AppCompatActivity {
             public void onClick(Date date) {
                 Log.e("date", String.valueOf(date));
             }
-
             @Override
             public void onLongClick(Date date) {
                 Log.e("date", String.valueOf(date));
@@ -208,62 +181,20 @@ public class StatActivity extends AppCompatActivity {
         });
 
     }
-    private void showWeekView() {
-        myCalendar.showWeekView();
-        myCalendar.setOnEventClickListener(new OnEventClickListener() {
-            @Override
-            public void onClick() {
-                Log.e("showWeekView","from setOnEventClickListener onClick");
-            }
-            @Override
-            public void onLongClick() {
-                Log.e("showWeekView","from setOnEventClickListener onLongClick");
-            }
-        });
-        myCalendar.setOnWeekDayViewClickListener(new OnWeekDayViewClickListener() {
-            @Override
-            public void onClick(String date, String time) {
-                Log.e("showWeekView", "from setOnWeekDayViewClickListener onClick");
-                Log.e("tag", "date:-" + date + " time:-" + time);
-            }
-            @Override
-            public void onLongClick(String date, String time) {
-                Log.e("showWeekView", "from setOnWeekDayViewClickListener onLongClick");
-                Log.e("tag", "date:-" + date + " time:-" + time);
-            }
-        });
-    }
     private void showDayView() {
-        myCalendar.showDayView();
-        myCalendar.setOnEventClickListener(new OnEventClickListener() {
+        myCalendar.showAgendaView();
+        myCalendar.setOnDateClickListener(new OnDateClickListener() {
             @Override
-            public void onClick() {
-                Log.e("showDayView", "from setOnEventClickListener onClick");
-
+            public void onClick(Date date) {
+                Log.e("showAgendaView","from setOnDateClickListener onClick"+date);
             }
 
             @Override
-            public void onLongClick() {
-                Log.e("showDayView", "from setOnEventClickListener onLongClick");
-
+            public void onLongClick(Date date) {
+                Log.e("showAgendaView","from setOnDateClickListener onClick"+date);
             }
         });
-        myCalendar.setOnWeekDayViewClickListener(new OnWeekDayViewClickListener() {
-            @Override
-            public void onClick(String date, String time) {
-                Log.e("showDayView", "from setOnWeekDayViewClickListener onClick");
-                Log.e("tag", "date:-" + date + " time:-" + time);
-            }
-
-            @Override
-            public void onLongClick(String date, String time) {
-                Log.e("showDayView", "from setOnWeekDayViewClickListener onLongClick");
-                Log.e("tag", "date:-" + date + " time:-" + time);
-            }
-        });
-
     }
-
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(StatActivity.this);
@@ -282,31 +213,19 @@ public class StatActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(StatActivity.this);
         builder.setTitle(getResources().getString(R.string.stat_title));
         builder.setItems(new CharSequence[]{
-                getResources().getString(R.string.morining),
-                getResources().getString(R.string.lunch),
-                getResources().getString(R.string.dinner),
-                getResources().getString(R.string.snack),
-                getResources().getString(R.string.dessert),
+                getResources().getString(R.string.stat_input),
+                getResources().getString(R.string.stat_modify),
                 getResources().getString(R.string.close)}, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
-                    case 0://아침
-                        goStatInput(getResources().getString(R.string.morining), date);
+                    case 0://입력
+                        goStatInput(0, date);
                         break;
-                    case 1://점심
-                        goStatInput(getResources().getString(R.string.lunch), date);
+                    case 1://수정
+                        goStatInput(1, date);
                         break;
-                    case 2://저녁
-                        goStatInput(getResources().getString(R.string.dinner), date);
-                        break;
-                    case 3://간식
-                        goStatInput(getResources().getString(R.string.snack), date);
-                        break;
-                    case 4://후식
-                        goStatInput(getResources().getString(R.string.dessert), date);
-                        break;
-                    case 5:
+                    case 2://닫기
                         dialog.cancel();
                         break;
                 }
@@ -314,38 +233,96 @@ public class StatActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
-    private void goStatInput(String key, String date){
-        Intent intent = new Intent(StatActivity.this, StatInputActivity.class);
-        intent.putExtra("key", key);
-        intent.putExtra("date", date);
-        startActivity(intent);
+    private void goStatInput(int flag, String date){
+        try {
+            if (flag == 0) {
+                Intent intent = new Intent(StatActivity.this, StatInputActivity.class);
+                intent.putExtra("key", "init");
+                intent.putExtra("date", date);
+                startActivity(intent);
+            } else {
+                statDBHelper.open();
+                if(statDBHelper.getALLStatistic(date) != null) {
+                    Intent intent = new Intent(StatActivity.this, StatModifyActivity.class);
+                    intent.putExtra("date", date);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_data_date), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+//        finally {
+//            if(statDBHelper!=null){
+//                statDBHelper.close();
+//            }
+//        }
     }
-
     @Override
     protected void onStart() {
+        Log.i(logger, "start");
         super.onStart();
     }
     @Override
     protected void onResume(){
+        Log.i(logger, "resume");
         super.onResume();
+        if(!isToast) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.long_date_hint), Toast.LENGTH_LONG).show();
+            isToast = true;
+        }
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(statDBHelper != null){
-            statDBHelper.close();
+        Log.i(logger, "destroy");
+        if(myCalendar != null){
+            Log.e(logger, "destroy all");
+            myCalendar.deleteAllEvent();
         }
     }
     @Override
     protected void onStop(){
         super.onStop();
+        Log.i(logger, "stop");
+        if(myCalendar != null){
+            Log.e(logger, "stop all");
+            myCalendar.deleteAllEvent();
+        }
     }
     @Override
     protected void onPause(){
+        Log.i(logger, "pause");
         super.onPause();
     }
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.i(logger, "restart");
+        if(statisticList == null) {
+            try {
+                statDBHelper = new StatDBHelper(this);
+                statDBHelper.open();
+                statisticList = statDBHelper.getALLStatistic();
+                if (statisticList != null && statisticList.size() > 0) {
+                    showProgressDialog();
+                    for (Statistic s : statisticList) {
+                        Log.e(logger, s.toString());
+                        String with = s.getWhodiet();
+                        if (with != null && !with.equals("")) {
+                            myCalendar.addEvent(s.getDietdate(), s.getStrtime(), s.getEndtime(), String.format("%s(%s님과 함께)", s.getNames(), s.getWhodiet()));
+                        } else {
+                            myCalendar.addEvent(s.getDietdate(), s.getStrtime(), s.getEndtime(), String.format("%s", s.getNames()));
+                        }
+                    }
+                }
+                hideProgressDialog();
+                statDBHelper.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -239,7 +239,7 @@ public class AnotherUserActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(AnotherUserActivity.this);
                     alertDialog.setTitle(getResources().getString(R.string.declaration_post));
-                    alertDialog.setMessage(getResources().getString(R.string.declaration_noti));
+                    alertDialog.setMessage(getResources().getString(R.string.declaration_user));
                     alertDialog.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -249,7 +249,9 @@ public class AnotherUserActivity extends AppCompatActivity {
                     alertDialog.setPositiveButton(getResources().getString(R.string.declaration_post), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            setDeclaration();
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.declaration_success), Toast.LENGTH_LONG).show();
+                            //신고접수
                         }
                     });
                     alertDialog.create().show();
@@ -257,6 +259,15 @@ public class AnotherUserActivity extends AppCompatActivity {
             });
         }else{
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void setDeclaration(){
+        try {
+            final DatabaseReference deRef = FirebaseDatabase.getInstance().getReference().child("declarate").push();
+            deRef.child("id").setValue(anotherUid);
+            deRef.child("time").setValue(sdf.format(new Date(System.currentTimeMillis())));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     private void bottomDialog(){

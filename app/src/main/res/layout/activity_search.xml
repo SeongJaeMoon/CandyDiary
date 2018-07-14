@@ -31,8 +31,8 @@
         android:id="@+id/rvSearch"
         android:layout_below="@id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-    <View
+        android:layout_height="350dp"/>
+        <View
         android:layout_below="@id/rvSearch"
         android:id="@+id/seperator1"
         android:layout_width="match_parent"
@@ -40,9 +40,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="#DDD"/>
+        android:background="@color/colorPrimaryDark"/>
     <TextView
         android:id="@+id/tag_hint"
+        android:textAlignment="center"
         android:layout_below="@+id/seperator1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,20 +55,21 @@
         android:id="@+id/tag_group"
         style="@style/TagGroup.Large"
         android:layout_marginTop="10dp" />
-    <TextView
-        android:id="@+id/search_rec"
-        android:layout_below="@+id/tag_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/search_rec"
-        android:textSize="18sp" />
-        <!--추천-->
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/search_rec"
-            android:id="@+id/rvRecommend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <!--<TextView-->
+        <!--android:id="@+id/search_rec"-->
+        <!--android:layout_below="@+id/tag_group"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="@string/search_rec"-->
+        <!--android:textSize="18sp" />-->
+        <!--&lt;!&ndash;추천&ndash;&gt;-->
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_below="@id/search_rec"-->
+        <!--android:id="@+id/rvRecommend"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
     </RelativeLayout>
 </FrameLayout>
+
