@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +41,6 @@ import com.kakao.kakaolink.v2.model.LinkObject;
 import com.kakao.kakaolink.v2.model.SocialObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
-import com.kakao.util.helper.log.Logger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -123,7 +121,6 @@ public class DetailTherapyActivity extends AppCompatActivity {
             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
                 @Override
                 public void onSuccess(Sharer.Result result) {
-                    Log.i(logger, "facebook => "+result.toString());
                 }
 
                 @Override
@@ -133,7 +130,6 @@ public class DetailTherapyActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(FacebookException error) {
-                    Log.i(logger, "facebook => "+error.toString());
                 }
             });
             shareTitle = therapy.getCntntsSj();
@@ -168,10 +164,9 @@ public class DetailTherapyActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
-                Log.w(logger, e.getMessage());
             }
         }else{
-            Log.w(logger, "Error");
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_LONG).show();
         }
     }
     private void setRecent(Therapy therapy) {
@@ -184,7 +179,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
                 recentDBHelper.deletOlder();
             }
         } catch (Exception e) {
-            Log.w(logger, e.getMessage());
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
         } finally {
             recentDBHelper.close();
         }
@@ -202,7 +197,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
             }
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
-            Log.w(logger, e.getMessage());
+
         }
     }
     private void initFirebase(String cntntsNo) {
@@ -283,7 +278,7 @@ public class DetailTherapyActivity extends AppCompatActivity {
                                 KakaoLinkService.getInstance().sendDefault(DetailTherapyActivity.this, params, new ResponseCallback<KakaoLinkResponse>() {
                                     @Override
                                     public void onFailure(ErrorResult errorResult) {
-                                        Logger.w(errorResult.toString());
+//                                        Logger.w(errorResult.toString());
                                     }
 
                                     @Override
@@ -381,7 +376,6 @@ public class DetailTherapyActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(String message) {
-                    Log.i(logger, "error" + message);
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                 }
             });

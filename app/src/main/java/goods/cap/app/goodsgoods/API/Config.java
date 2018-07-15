@@ -14,7 +14,10 @@ public class Config {
     public static final int[] dietCode = new int[]{254001,  254003, 254005, 254004, 254002};
     public static final int[] limitCount = new int[]{103, 42, 10, 23, 91};
 
-    public static String getAbUrl(String oldPath, String newPath){
+    public static String getAbUrl(String oldPath, String newPath) {
+        if(oldPath.isEmpty() || newPath.isEmpty()){
+            return "";
+        }
         int len = oldPath.length();
         for(int i = len - 1; i > 0; --i){
             char temp = oldPath.charAt(i);

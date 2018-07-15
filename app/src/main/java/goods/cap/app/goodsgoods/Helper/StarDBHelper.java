@@ -103,7 +103,7 @@ public class StarDBHelper {
     }
     public List<Recent> getStarList(){
         String sql = "SELECT " + COLUMN_URL + "," + COLUMN_SMY + "," + COLUMN_NO + "," + COLUMN_CN + "," + COLUMN_FLAG
-                + " FROM " + TABLE_NAME + " ORDER BY " + _ID;
+                + " FROM " + TABLE_NAME + " ORDER BY " + _ID + " DESC";
         List<Recent> list = new ArrayList<Recent>();
         mDbHelper = DatabaseHelper.getInstance(context);
         mDb =  mDbHelper.getReadableDatabase();

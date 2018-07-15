@@ -128,6 +128,7 @@ public class PostDtlActivity extends AppCompatActivity {
                                 if (isAnotherUid.equals(uid)) {
                                     shareImg.setVisibility(View.GONE);
                                     shareNm.setVisibility(View.GONE);
+                                    starImg.setVisibility(View.GONE);
                                     isMyPost = true;
                                 }
                             }

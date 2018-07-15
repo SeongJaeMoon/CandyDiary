@@ -147,15 +147,18 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
 //                }
 //            });
 //        }
-
+        searchView.setVoiceSearch(false);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(TextUtils.isEmpty(query) || query.length() < 3) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.search_text), Toast.LENGTH_SHORT).show();
                 }else{
+                    if(searchAdapter != null) {
+                        searchAdapter.clear();
+                    }
                     searching(query);
-                    setSearch(query);
+//                    setSearch(query);
                 }
                 return false;
             }
@@ -168,7 +171,10 @@ public class SearchActivity extends AppCompatActivity implements TagGroup.OnTagC
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                searchAdapter.clear();
+//                if(searchAdapter != null){
+//                    searchAdapter.clear();
+//                }
+//                searchAdapter.clear();
             }
             @Override
             public void onSearchViewClosed() {

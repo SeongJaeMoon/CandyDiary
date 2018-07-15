@@ -135,13 +135,13 @@ public class DetailItemActivity extends AppCompatActivity {
             shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
                 @Override
                 public void onSuccess(Sharer.Result result) {
-                    Log.i(logger, "facebook => "+result.toString());
+//                    Log.i(logger, "facebook => "+result.toString());
                 }
                 @Override
                 public void onCancel() { }
                 @Override
                 public void onError(FacebookException error) {
-                    Log.i(logger, "facebook => "+error.toString());
+//                    Log.i(logger, "facebook => "+error.toString());
                 }
             });
 
@@ -188,10 +188,10 @@ public class DetailItemActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
-                Log.w(logger, e.getMessage());
+//                Log.w(logger, e.getMessage());
             }
         }else{
-            Log.w(logger, "Error");
+//            Log.w(logger, "Error");
         }
     }
 
@@ -216,7 +216,7 @@ public class DetailItemActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(String message) {
-                    Log.i(logger, "error" + message);
+//                    Log.i(logger, "error" + message);
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -304,7 +304,7 @@ public class DetailItemActivity extends AppCompatActivity {
                                 KakaoLinkService.getInstance().sendDefault(DetailItemActivity.this, params, new ResponseCallback<KakaoLinkResponse>() {
                                     @Override
                                     public void onFailure(ErrorResult errorResult) {
-                                        Logger.w(errorResult.toString());
+//                                        Logger.w(errorResult.toString());
                                     }
 
                                     @Override
@@ -399,7 +399,7 @@ public class DetailItemActivity extends AppCompatActivity {
                 recentDBHelper.deletOlder();
             }
         } catch (Exception e) {
-            Log.w(logger, e.getMessage());
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.data_error), Toast.LENGTH_SHORT).show();
         } finally {
             recentDBHelper.close();
         }
@@ -417,7 +417,6 @@ public class DetailItemActivity extends AppCompatActivity {
             }
         }catch (Exception e){
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.star_default_error), Toast.LENGTH_SHORT).show();
-            Log.w(logger, e.getMessage());
         }
     }
     private void setHeadLayout(String title){

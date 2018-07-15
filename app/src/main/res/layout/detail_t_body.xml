@@ -155,6 +155,8 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:id="@+id/hbdcNm"
+                android:textSize="17sp"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <!--효능-->
@@ -162,13 +164,15 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/prvateTherpy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="15sp"/>
             <!--약초 정보-->
             <TextView
                 android:layout_marginTop="5dp"
                 android:id="@+id/stle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -56,8 +56,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         notifyDataSetChanged();
     }
     public void clear(){
-        search.clear();
-        notifyDataSetChanged();
+        if(search != null && search.size() > 0) {
+            search.clear();
+            notifyDataSetChanged();
+        }
     }
 
     public String getLastItemId() {

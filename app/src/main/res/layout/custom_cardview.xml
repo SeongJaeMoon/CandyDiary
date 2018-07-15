@@ -22,6 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         style="@style/detail_properties_textview"/>
     <!--식단 구성-->
     <TextView
@@ -29,6 +31,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         style="@style/detail_properties_textview"/>
     <!--식단 요리 방법-->
     <TextView
@@ -36,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textSize="15sp"
         style="@style/detail_properties_textview"/>
 </LinearLayout>
 

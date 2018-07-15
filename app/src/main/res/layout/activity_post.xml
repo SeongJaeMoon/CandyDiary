@@ -110,7 +110,7 @@
             android:maxLines="1"
             android:padding="15dp"
             android:textColorHint="@color/cardview_shadow_start_color"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:maxLength="20"/>
 
         <EditText
@@ -128,7 +128,7 @@
             android:padding="15dp"
             android:scrollbars="vertical"
             android:textColorHint="@color/cardview_shadow_start_color"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
         <!--android:imeOptions="actionSend|flagNoEnterAction"-->
         <!--<TextView-->
             <!--android:textAlignment="center"-->
