@@ -288,10 +288,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setPermissionDialog();
-
         if(StatActivity.isToast){
             StatActivity.isToast = false;
         }
+        getAppKeyHash();
     }
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
@@ -423,7 +423,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             int key = intent.getIntExtra("tagSearch", 1);
-            Log.i(logger, "key => " + key);
             GoodsApplication.getInstance().setKey(key);
         }
     }

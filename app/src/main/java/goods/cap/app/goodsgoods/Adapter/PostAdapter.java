@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +34,7 @@ import goods.cap.app.goodsgoods.Activity.AnotherUserActivity;
 import goods.cap.app.goodsgoods.Activity.PostDtlActivity;
 import goods.cap.app.goodsgoods.Activity.TagActivity;
 import goods.cap.app.goodsgoods.Activity.UserProfileActivity;
-
-import goods.cap.app.goodsgoods.Fragment.ComFragment;
 import goods.cap.app.goodsgoods.Model.Firebase.Post;
-import goods.cap.app.goodsgoods.Model.Firebase.Stars;
 import goods.cap.app.goodsgoods.R;
 import goods.cap.app.goodsgoods.Util.PostMainSlider;
 import me.gujun.android.taggroup.TagGroup;

@@ -2,7 +2,6 @@ package goods.cap.app.goodsgoods.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +20,6 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import goods.cap.app.goodsgoods.Helper.StatDBHelper;
 import goods.cap.app.goodsgoods.Model.Firebase.Calorie;
-import goods.cap.app.goodsgoods.Model.Statistic;
 import goods.cap.app.goodsgoods.R;
-import goods.cap.app.goodsgoods.Util.PostImageLoader;
-import goods.cap.app.goodsgoods.Util.PostMainSlider;
-import ss.com.bannerslider.Slider;
 
 public class StatDtlActivity extends AppCompatActivity {
     @BindView(R.id.chart) RadarChart mChart;
@@ -272,21 +266,4 @@ public class StatDtlActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-//    private String getNumber(String str){
-//        if(str == null){
-//            return null;
-//        }
-//        String temp = "";
-//        StringBuilder num = new StringBuilder();
-//        for( int i = 0; i < str.length(); i++ ) {
-//            temp = str.substring(i, i + 1);
-//            if(isNum(temp.charAt(0)+"")){
-//                num.append(temp);
-//            }
-//        }
-//        return num.toString();
-//    }
-//
-//    private boolean isNum(String str) { return Pattern.matches("^[0-9]*$", str); }
 }

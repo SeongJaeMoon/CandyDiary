@@ -39,8 +39,6 @@ public class SplashActivity extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ads_id));
         interstitialAd.loadAd(new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("E44604670F4699F07069260DD700FEA7")
                 .build());
         interstitialAd.setAdListener(new AdListener() {
             @Override

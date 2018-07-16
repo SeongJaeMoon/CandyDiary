@@ -162,14 +162,7 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg1 != null){
                                 imgList.remove(0);
-                                int size = imgList.size();
-                                for (int i = 0; i < size; ++i) {
-                                    if (i == 0) addImg1.setImageURI(imgList.get(0));
-                                    else if (i == 1) addImg2.setImageURI(imgList.get(1));
-                                    else if (i == 2) addImg3.setImageURI(imgList.get(2));
-                                    else if (i == 3) addImg4.setImageURI(imgList.get(3));
-                                    else if (i == 4) addImg5.setImageURI(imgList.get(4));
-                                }
+                                setImage();
                             }
                         }
                     });
@@ -244,7 +237,7 @@ public class PostActivity extends AppCompatActivity{
     void clickFour(){
         try {
             if (imgList != null) {
-                if(imgList.size() > 3 && imgList.get(3)!=null){
+                if(imgList.size() > 3 && imgList.get(3) != null){
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
                     alertDialog.setMessage(getResources().getString(R.string.retry_photo));
                     alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -274,7 +267,7 @@ public class PostActivity extends AppCompatActivity{
     void clickFive(){
         try {
             if (imgList != null) {
-                if(imgList.size() > 4 && imgList.get(4)!=null){
+                if(imgList.size() > 4 && imgList.get(4) != null){
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PostActivity.this);
                     alertDialog.setMessage(getResources().getString(R.string.retry_photo));
                     alertDialog.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -288,9 +281,8 @@ public class PostActivity extends AppCompatActivity{
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg5!= null){
                                 imgList.remove(4);
-                                setImage();
+                                addImg5.setImageResource(R.drawable.ic_action_add);
                             }
-
                         }
                     });
                     alertDialog.create().show();
@@ -302,12 +294,15 @@ public class PostActivity extends AppCompatActivity{
     }
     private void setImage(){
         int size = imgList.size();
+        addImg1.setImageResource(R.drawable.ic_action_add);
+        addImg2.setImageResource(R.drawable.ic_action_add);
+        addImg3.setImageResource(R.drawable.ic_action_add);
+        addImg4.setImageResource(R.drawable.ic_action_add);
         for (int i = 0; i < size; ++i) {
             if (i == 0) addImg1.setImageURI(imgList.get(0));
             else if (i == 1) addImg2.setImageURI(imgList.get(1));
             else if (i == 2) addImg3.setImageURI(imgList.get(2));
             else if (i == 3) addImg4.setImageURI(imgList.get(3));
-            else if (i == 4) addImg5.setImageURI(imgList.get(4));
         }
     }
     @Override
@@ -335,16 +330,12 @@ public class PostActivity extends AppCompatActivity{
                 }
             }
             int size = imgList.size();
-            if(size >= 5){
-                imgList.clear();
-            }else {
-                for (int i = 0; i < size; ++i) {
-                    if (i == 0) addImg1.setImageURI(imgList.get(0));
-                    else if (i == 1) addImg2.setImageURI(imgList.get(1));
-                    else if (i == 2) addImg3.setImageURI(imgList.get(2));
-                    else if (i == 3) addImg4.setImageURI(imgList.get(3));
-                    else if (i == 4) addImg5.setImageURI(imgList.get(4));
-                }
+            for (int i = 0; i < size; ++i) {
+                if (i == 0) addImg1.setImageURI(imgList.get(0));
+                else if (i == 1) addImg2.setImageURI(imgList.get(1));
+                else if (i == 2) addImg3.setImageURI(imgList.get(2));
+                else if (i == 3) addImg4.setImageURI(imgList.get(3));
+                else if (i == 4) addImg5.setImageURI(imgList.get(4));
             }
         }
         if (requestCode == PICK_CAMERA){

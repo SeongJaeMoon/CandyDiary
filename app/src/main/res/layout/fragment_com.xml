@@ -106,20 +106,18 @@
                 </LinearLayout>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_below="@id/com_img_list"
-            android:id="@+id/mainTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text=""
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/ng"/>
-
+        <!--<TextView-->
+            <!--android:layout_below="@id/com_img_list"-->
+            <!--android:id="@+id/mainTitle"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAlignment="center"-->
+            <!--android:text=""-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:fontFamily="@font/ng"/>-->
         <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/mainTitle"
+            android:layout_below="@id/com_img_list"
             android:id="@+id/comRView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
