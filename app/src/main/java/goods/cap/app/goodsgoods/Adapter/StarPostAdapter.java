@@ -1,7 +1,6 @@
 package goods.cap.app.goodsgoods.Adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -26,10 +25,6 @@ public class StarPostAdapter extends RecyclerView.Adapter<StarPostAdapter.StarsV
     private List<Stars>stars;
     private Context context;
     private ItemListener mListener;
-
-    public StarPostAdapter(){
-        this.stars = new ArrayList<>();
-    }
 
     public StarPostAdapter(Context context){
         this.stars = new ArrayList<>();

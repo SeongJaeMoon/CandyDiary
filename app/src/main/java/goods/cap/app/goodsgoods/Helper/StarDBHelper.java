@@ -18,8 +18,8 @@ public class StarDBHelper {
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
     private final Context context;
-    private static final String DATABASE_NAME = "star.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "candystar.db";
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "starDB";
     private static final String COLUMN_FLAG  = "flag"; //식단, 민간약초 구분
     private static final String COLUMN_URL = "url"; //식단 이미지 경로, 약초 이미지 경로

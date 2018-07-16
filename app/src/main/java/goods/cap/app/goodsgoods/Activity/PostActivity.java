@@ -21,7 +21,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,6 +33,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -160,10 +161,16 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg1 != null){
-                                addImg1.setImageResource(R.drawable.ic_action_add);
                                 imgList.remove(0);
+                                int size = imgList.size();
+                                for (int i = 0; i < size; ++i) {
+                                    if (i == 0) addImg1.setImageURI(imgList.get(0));
+                                    else if (i == 1) addImg2.setImageURI(imgList.get(1));
+                                    else if (i == 2) addImg3.setImageURI(imgList.get(2));
+                                    else if (i == 3) addImg4.setImageURI(imgList.get(3));
+                                    else if (i == 4) addImg5.setImageURI(imgList.get(4));
+                                }
                             }
-
                         }
                     });
                     alertDialog.create().show();
@@ -190,8 +197,8 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg2 != null){
-                                addImg2.setImageResource(R.drawable.ic_action_add);
                                 imgList.remove(1);
+                                setImage();
                             }
 
                         }
@@ -220,8 +227,8 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg3 != null){
-                                addImg3.setImageResource(R.drawable.ic_action_add);
                                 imgList.remove(2);
+                                setImage();
                             }
 
                         }
@@ -250,8 +257,8 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg4 != null){
-                                addImg4.setImageResource(R.drawable.ic_action_add);
                                 imgList.remove(3);
+                                setImage();
                             }
 
                         }
@@ -280,8 +287,8 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(addImg5!= null){
-                                addImg5.setImageResource(R.drawable.ic_action_add);
                                 imgList.remove(4);
+                                setImage();
                             }
 
                         }
@@ -293,7 +300,16 @@ public class PostActivity extends AppCompatActivity{
             e.printStackTrace();
         }
     }
-
+    private void setImage(){
+        int size = imgList.size();
+        for (int i = 0; i < size; ++i) {
+            if (i == 0) addImg1.setImageURI(imgList.get(0));
+            else if (i == 1) addImg2.setImageURI(imgList.get(1));
+            else if (i == 2) addImg3.setImageURI(imgList.get(2));
+            else if (i == 3) addImg4.setImageURI(imgList.get(3));
+            else if (i == 4) addImg5.setImageURI(imgList.get(4));
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -319,8 +335,8 @@ public class PostActivity extends AppCompatActivity{
                 }
             }
             int size = imgList.size();
-            if(size == 5){
-                addImg1.setImageURI(imgList.get(size - 1));
+            if(size >= 5){
+                imgList.clear();
             }else {
                 for (int i = 0; i < size; ++i) {
                     if (i == 0) addImg1.setImageURI(imgList.get(0));
@@ -337,51 +353,60 @@ public class PostActivity extends AppCompatActivity{
                 return;
             }
             int size = imgList.size();
-            switch (size){
-                case 0:
-                    rotationPic(resultUri.toString(), addImg1);
-                    //addImg1.setImageURI(resultUri);
-                    break;
-                case 1:
-                    rotationPic(resultUri.toString(), addImg2);
-                    addImg2.setImageURI(resultUri);
-                    break;
-                case 2:
-                    rotationPic(resultUri.toString(), addImg3);
-                    //addImg3.setImageURI(resultUri);
-                    break;
-                case 3:
-                    rotationPic(resultUri.toString(), addImg4);
-                    //addImg4.setImageURI(resultUri);
-                    break;
-                case 4:
-                    rotationPic(resultUri.toString(), addImg5);
-                    //addImg5.setImageURI(resultUri);
-                    break;
+            try {
+                switch (size) {
+                    case 0:
+                        Picasso.get()
+                                .load(resultUri.toString())
+                                .placeholder(R.drawable.loading)
+                                .error(R.drawable.ic_action_add)
+                                .fit()
+                                .tag(getApplicationContext())
+                                .into(addImg1);
+                        break;
+                    case 1:
+                        Picasso.get()
+                                .load(resultUri.toString())
+                                .placeholder(R.drawable.loading)
+                                .error(R.drawable.ic_action_add)
+                                .fit()
+                                .tag(getApplicationContext())
+                                .into(addImg2);
+                        break;
+                    case 2:
+                        Picasso.get()
+                                .load(resultUri.toString())
+                                .placeholder(R.drawable.loading)
+                                .error(R.drawable.ic_action_add)
+                                .fit()
+                                .tag(getApplicationContext())
+                                .into(addImg3);
+                        break;
+                    case 3:
+                        Picasso.get()
+                                .load(resultUri.toString())
+                                .placeholder(R.drawable.loading)
+                                .error(R.drawable.ic_action_add)
+                                .fit()
+                                .tag(getApplicationContext())
+                                .into(addImg4);
+                        break;
+                    case 4:
+                        Picasso.get()
+                                .load(resultUri.toString())
+                                .placeholder(R.drawable.loading)
+                                .error(R.drawable.ic_action_add)
+                                .fit()
+                                .tag(getApplicationContext())
+                                .into(addImg5);
+                        break;
+                }
+                imgList.add(resultUri);
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.choose_error), Toast.LENGTH_SHORT).show();
             }
-            imgList.add(resultUri);
         }
     }
-
-    private void rotationPic(String imageFilePath, ImageView imageView){
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imageFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation;
-        int exifDegree;
-        if (exif != null) {
-            exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            exifDegree = exifOrientationToDegrees(exifOrientation);
-        } else {
-            exifDegree = 0;
-        }
-        imageView.setImageBitmap(rotate(bitmap, exifDegree));
-    }
-
     private File createImageFile() throws IOException {
         String imageFileName = "goods_" + sdf.format(new Date(System.currentTimeMillis())) + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -393,21 +418,7 @@ public class PostActivity extends AppCompatActivity{
         imagePath = image.getAbsolutePath();
         return image;
     }
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-    private Bitmap rotate(Bitmap bitmap, float degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-    }
+
     private void postingClick(){
         String title = etTitle.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();

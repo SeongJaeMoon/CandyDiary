@@ -19,8 +19,8 @@ public class StatDBHelper {
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
     private final Context context;
-    private static final String DATABASE_NAME = "stat.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final String DATABASE_NAME = "candystat.db";
+    private static final int DATABASE_VERSION = 7;
     private static final String TABLE_NAME = "statCAL";//표준
     private static final String TABLE_NAME1 = "calCAL";//식품정보
     //표준

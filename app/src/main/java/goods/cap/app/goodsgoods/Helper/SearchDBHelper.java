@@ -16,8 +16,8 @@ public class SearchDBHelper {
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
     private final Context context;
-    private static final String DATABASE_NAME = "search.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "candysearch.db";
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "searchDB";
     private static final String COLUMN_WORD  = "keyword"; //검색 키워드
     private static final String _ID = "_id";

@@ -86,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @BindView(R.id.textView2)TextView emailText;
     @BindView(R.id.textView3)TextView starsText;//즐겨찾기 목록
     @BindView(R.id.textView4)TextView postsText;//포스팅 목록
-    @BindView(R.id.textView5)TextView statisticText;
+//    @BindView(R.id.textView5)TextView statisticText;
     @BindView(R.id.my_toolbar)Toolbar toolbar;
     @BindView(R.id.postTitle)TextView postTitle;
     @BindView(R.id.post_list)RecyclerView postList;
@@ -107,9 +107,10 @@ public class UserProfileActivity extends AppCompatActivity {
     private DatabaseReference postRef;
     private DatabaseReference starRef;
     private DatabaseReference likeRef;
-    private String token;
-    private AuthCredential credential;
+//    private String token;
+//    private AuthCredential credential;
     private FirebaseAuth.AuthStateListener authListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,8 +136,6 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
                     startActivity(new Intent(UserProfileActivity.this, SignInActivity.class));
                     finish();
                 }
@@ -191,7 +190,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 postsText.setText(String.format(Locale.KOREA, "%s%d", getResources().getString(R.string.my_post), postsCount));
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
         Query starsQuery = starRef.orderByKey();
         starsQuery.addValueEventListener(new ValueEventListener() {
@@ -276,12 +275,12 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         Slider.init(new PostImageLoader(this));
         //식단 관리 클릭
-        statisticText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserProfileActivity.this, StatActivity.class));
-            }
-        });
+//        statisticText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserProfileActivity.this, StatActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//            }
+//        });
     }
     @OnClick(R.id.textView)
     void nameChange(){
@@ -817,7 +816,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     public void run() {
                         slider.setAdapter(postAdapter);
                         slider.setSelectedSlide(0);
-                        slider.setInterval(5000);
                         slider.setOnSlideClickListener(new OnSlideClickListener() {
                             @Override
                             public void onSlideClick(int position) {
@@ -830,7 +828,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             }
                         });
                     }
-                }, 1500);
+                }, 1000);
             }
         }
         public void setTags(List<String> tags){

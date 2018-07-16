@@ -3,14 +3,9 @@ package goods.cap.app.goodsgoods.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +16,6 @@ import goods.cap.app.goodsgoods.Helper.StatDBHelper;
 import goods.cap.app.goodsgoods.Model.Recent;
 import goods.cap.app.goodsgoods.Model.Statistic;
 import goods.cap.app.goodsgoods.R;
-import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
 public class StatImageActivity extends AppCompatActivity {
     @BindView(R.id.rvStat)ListView rvStat;

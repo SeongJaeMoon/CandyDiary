@@ -89,9 +89,10 @@
                 app:srcCompat="@drawable/ic_action_add"/>
         </LinearLayout>
         <TextView
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:id="@+id/btn_add"
             android:text="@string/post_add"
+            android:layout_margin="5dp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"

@@ -102,7 +102,7 @@ public class PostDtlActivity extends AppCompatActivity {
                                           wallpaper.setSelectedSlide(0);
                                           wallpaper.setInterval(5000);
                                       }
-                                  }, 1500);
+                                  }, 1000);
                               }
                               Map<String, Object>tagMap = post.getTags();
                               if(tagMap != null){

@@ -28,10 +28,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //테스트 종료 후 setAds로 변경 필요
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                SplashActivity.this.finish();
                 setAds();
             }
         }, 3000);
@@ -43,6 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ads_id));
         interstitialAd.loadAd(new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("E44604670F4699F07069260DD700FEA7")
                 .build());
         interstitialAd.setAdListener(new AdListener() {
             @Override

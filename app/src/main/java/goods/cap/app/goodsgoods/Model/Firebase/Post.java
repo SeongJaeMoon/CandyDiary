@@ -8,8 +8,9 @@ public class Post {
     private Map<String, Object> tags;
     private Map<String, Object> images;
 
-    public Post(){}
+    public Post(){
 
+    }
     public Post(String desc, String title, String uid, String date, Map<String, Object> tags, Map<String, Object> images) {
         this.desc = desc;
         this.title = title;
@@ -73,5 +74,18 @@ public class Post {
 
     public void setImages(Map<String, Object> images) {
         this.images = images;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "fkey='" + fkey + '\'' +
+                ", desc='" + desc + '\'' +
+                ", title='" + title + '\'' +
+                ", uid='" + uid + '\'' +
+                ", date='" + date + '\'' +
+                ", tags=" + tags +
+                ", images=" + images +
+                '}';
     }
 }

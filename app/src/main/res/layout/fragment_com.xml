@@ -17,10 +17,9 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="@string/most_popular"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:textColor="@color/colorPrimary"
             android:fontFamily="@font/ng"/>
-
         <android.support.v7.widget.CardView
             android:layout_below="@id/com_title"
             android:id="@+id/com_img_list"

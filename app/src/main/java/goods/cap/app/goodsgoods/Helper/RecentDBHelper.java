@@ -17,8 +17,8 @@ public class RecentDBHelper {
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
     private final Context context;
-    private static final String DATABASE_NAME = "recent.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final String DATABASE_NAME = "candyrecent.db";
+    private static final int DATABASE_VERSION = 7;
     private static final String TABLE_NAME = "recentDB";
     // recent -> 0: Diet, 1: Therapy
     private static final String COLUMN_FLAG  = "flag"; //식단, 민간약초 구분

@@ -91,17 +91,18 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             app:srcCompat="@color/colorPrimary"/>
+
         <ss.com.bannerslider.Slider
             android:id="@+id/banner_slider"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:scaleType="center"
             app:slider_animateIndicators="true"
             app:slider_indicatorSize="10dp"
-            app:slider_loopSlides="true"
             app:slider_selectedSlideIndicator="@drawable/indicator_circle_selected"
             app:slider_unselectedSlideIndicator="@drawable/indicator_circle_unselected"
             android:adjustViewBounds="true"/>
+        <!--app:slider_loopSlides="true"-->
 
         <LinearLayout
             android:layout_width="match_parent"
