@@ -262,16 +262,16 @@ public class DetailTherapyActivity extends AppCompatActivity {
                                 dbRef3.push().child(uid).setValue(sdf.format(new Date(System.currentTimeMillis())));
                                 FeedTemplate params = FeedTemplate
                                         .newBuilder(ContentObject.newBuilder(shareTitle, imgUrl,
-                                                LinkObject.newBuilder().setWebUrl("market://details?id=goods.cap.app.goodsgoods")
+                                                LinkObject.newBuilder().setWebUrl("https://play.google.com/store/apps/details?id=goods.cap.app.goodsgoods")
                                                         .setMobileWebUrl("market://details?id=goods.cap.app.goodsgoods").build())
                                                 .setDescrption(shareText)
                                                 .build())
                                         .setSocial(SocialObject.newBuilder().setLikeCount((int) like).setCommentCount((int) comment)
                                                 .setSharedCount(((int) share)).build())
                                         .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                                                .setMobileWebUrl("'market://details?id=goods.cap.app.goodsgoods")
+                                                .setMobileWebUrl("market://details?id=goods.cap.app.goodsgoods")
                                                 .setAndroidExecutionParams("market://details?id=goods.cap.app.goodsgoods")
-                                                .setWebUrl("'market://details?id=goods.cap.app.goodsgoods")
+                                                .setWebUrl("https://play.google.com/store/apps/details?id=goods.cap.app.goodsgoods")
                                                 .build()))
                                         .build();
 

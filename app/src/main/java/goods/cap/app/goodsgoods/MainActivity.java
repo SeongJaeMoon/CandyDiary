@@ -291,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
         if(StatActivity.isToast){
             StatActivity.isToast = false;
         }
-        getAppKeyHash();
     }
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
@@ -497,21 +496,6 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    private void getAppKeyHash() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                Log.e("Hash key:", "*****"+something+"*****");
-            }
-        } catch (Exception e){
-            Log.e("name not found", e.toString());
-        }
     }
 
 }
